@@ -4,9 +4,9 @@
 **Canonical plan:** [`FortSite_Fresh_Start_Master_Roadmap_V3.md`](../../FortSite_Fresh_Start_Master_Roadmap_V3.md).  
 **Rule:** a phase is **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, or **VERIFIED COMPLETE**. Do not infer completion from a document, a menu item, or a table.
 
-All 67 phases are **NOT STARTED**. Evidence for every phase is **none**. Phase 01 documents existing in the repository are a draft for later sign-off. They do not verify Phase 01 complete.
+Phase 02 is **VERIFIED COMPLETE**. Phase 01 remains **NOT STARTED** pending product-owner sign-off. Phases 03–67 remain **NOT STARTED**.
 
-No application code, package, SQL migration, business table, Auth configuration, Storage bucket, Edge Function, Realtime setting, Supabase link, or remote project mutation exists as part of this register.
+Phase 01 documents under `docs/fortsite/` are a draft for later sign-off. They do not verify Phase 01 complete. Phase 02 added the web application foundation, package lockfile, and engineering record. It did not add SQL migrations, business tables, Auth configuration, Storage buckets, Edge Functions, Realtime settings, a Supabase link, `@supabase/supabase-js`, or any remote project mutation.
 
 ## Why foundations come first
 
@@ -29,7 +29,7 @@ A missing prerequisite stops the dependent phase. Do not skip ahead with a short
 | Phase | Name | Dependencies | Status | Evidence |
 |---:|---|---|---|---|
 | 01 | Product charter, workflow requirements and architecture blueprint | None. This is the project starting point. | NOT STARTED | none |
-| 02 | Repository bootstrap and engineering standards | Phase 01. | NOT STARTED | none |
+| 02 | Repository bootstrap and engineering standards | Phase 01. | VERIFIED COMPLETE | [`docs/engineering/phase-02-bootstrap.md`](../engineering/phase-02-bootstrap.md); `npm ci`, format check, lint, typecheck, tests, and production build pass |
 | 03 | Construction design system and 21st.dev component governance | Phase 02. | NOT STARTED | none |
 | 04 | Supabase environments, migrations and deployment pipeline | Phases 01–02. | NOT STARTED | none |
 | 05 | Authentication, profiles and session lifecycle | Phases 02 and 04. | NOT STARTED | none |
@@ -96,7 +96,7 @@ A missing prerequisite stops the dependent phase. Do not skip ahead with a short
 | 66 | Complete end-to-end validation, restore drills, pilot and release readiness | Phases 01–65. Government production connectors remain disabled; use test adapters and fixtures. | NOT STARTED | none |
 | 67 | FINAL: Nepal IRD/CBMS and India IRP government billing integrations | Phases 09, 13, 48–54 and 66. Live activation also requires an approved authority or provider path and applicable credentials. | NOT STARTED | none |
 
-Count: 67 phases. Status count: 67 NOT STARTED, 0 IN PROGRESS, 0 BLOCKED, 0 VERIFIED COMPLETE.
+Count: 67 phases. Status count: 66 NOT STARTED, 0 IN PROGRESS, 0 BLOCKED, 1 VERIFIED COMPLETE (Phase 02).
 
 Phase 67 is the final numbered phase. Its dependency list includes Phase 66. Phase 66 cannot enable production government connectors.
 
@@ -126,4 +126,4 @@ Until that sign-off, Phase 01 remains **NOT STARTED**.
 
 ## What this register is not
 
-It is not a statement that any feature works. It is not permission to start Phase 02 inside the Phase 01 change. It is not a remote Supabase configuration.
+It is not a statement that business features work. Phase 02 completion is only the web foundation. It is not permission to start Phase 03 or later without their own gates. It is not a remote Supabase configuration.
