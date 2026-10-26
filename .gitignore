@@ -18,8 +18,10 @@ lerna-debug.log*
 
 # Local environment files (commit .env.example only)
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+*.dump
+*.sql.gz
 
 # Editor and OS
 .vscode/*

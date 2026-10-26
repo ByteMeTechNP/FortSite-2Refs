@@ -14,8 +14,9 @@ export function FoundationPage() {
         phases.
       </p>
       <p className="text-muted-foreground text-sm">
-        Environment: {appEnv.appEnv}. Business features, authentication, and
-        Supabase are not implemented in Phase 02.
+        Environment: {appEnv.appEnv}. Authentication and business modules are
+        not implemented yet. The browser uses the public Supabase API only, and
+        this page does not query data.
       </p>
     </main>
   );

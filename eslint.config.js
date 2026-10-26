@@ -13,6 +13,8 @@ export default defineConfig([
     'docs/fortsite',
     'FortSite_Fresh_Start_Master_Roadmap_V3.md',
     'FortSite_Fresh_Start_Master_Roadmap_V3.pdf',
+    'FortSite_Fresh_Start_Master_Roadmap_V4_Cloud.md',
+    'FortSite_Fresh_Start_Master_Roadmap_V4_Cloud.pdf',
   ]),
   js.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
@@ -51,6 +53,7 @@ export default defineConfig([
       globals: {
         console: 'readonly',
         process: 'readonly',
+        atob: 'readonly',
       },
     },
   },
