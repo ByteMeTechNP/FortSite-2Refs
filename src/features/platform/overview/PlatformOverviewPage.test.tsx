@@ -32,6 +32,7 @@ describe('PlatformOverviewPage', () => {
           counts: {
             pending_setup: 0,
             active: 0,
+            paused: 0,
             suspended: 0,
             archived: 0,
             total: 0,
@@ -66,6 +67,7 @@ describe('PlatformOverviewPage', () => {
           counts: {
             pending_setup: 1,
             active: 2,
+            paused: 0,
             suspended: 0,
             archived: 0,
             total: 3,

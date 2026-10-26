@@ -26,6 +26,7 @@ const readyState: PlatformOverviewLoadState = {
     counts: {
       pending_setup: 1,
       active: 1,
+      paused: 0,
       suspended: 0,
       archived: 0,
       total: 2,

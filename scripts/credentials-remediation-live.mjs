@@ -124,6 +124,7 @@ try {
         counts &&
         counts.pending_setup +
           counts.active +
+          counts.paused +
           counts.suspended +
           counts.archived ===
           counts.total &&

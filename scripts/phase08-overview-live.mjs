@@ -68,6 +68,7 @@ const ALLOWED_COMPANY_KEYS = new Set([
 const ALLOWED_COUNT_KEYS = new Set([
   'pending_setup',
   'active',
+  'paused',
   'suspended',
   'archived',
   'total',
@@ -122,6 +123,7 @@ try {
         countKeys.length === ALLOWED_COUNT_KEYS.size &&
         counts.pending_setup +
           counts.active +
+          counts.paused +
           counts.suspended +
           counts.archived ===
           counts.total &&

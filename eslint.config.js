@@ -15,6 +15,7 @@ export default defineConfig([
     'FortSite_Fresh_Start_Master_Roadmap_V3.pdf',
     'FortSite_Fresh_Start_Master_Roadmap_V4_Cloud.md',
     'FortSite_Fresh_Start_Master_Roadmap_V4_Cloud.pdf',
+    'supabase/functions/**',
   ]),
   js.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,

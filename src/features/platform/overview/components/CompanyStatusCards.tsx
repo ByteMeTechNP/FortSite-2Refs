@@ -33,6 +33,11 @@ const STATUS_CARDS: ReadonlyArray<{
     description: 'Lifecycle status active',
   },
   {
+    key: 'paused',
+    title: 'Paused',
+    description: 'Lifecycle status paused',
+  },
+  {
     key: 'suspended',
     title: 'Suspended',
     description: 'Lifecycle status suspended',

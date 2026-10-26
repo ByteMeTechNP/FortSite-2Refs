@@ -70,12 +70,14 @@ export function parsePlatformCompanyOverview(
   }
   const pending = asNonNegativeInt(value.counts.pending_setup);
   const active = asNonNegativeInt(value.counts.active);
+  const paused = asNonNegativeInt(value.counts.paused);
   const suspended = asNonNegativeInt(value.counts.suspended);
   const archived = asNonNegativeInt(value.counts.archived);
   const total = asNonNegativeInt(value.counts.total);
   if (
     pending === null ||
     active === null ||
+    paused === null ||
     suspended === null ||
     archived === null ||
     total === null
@@ -96,6 +98,7 @@ export function parsePlatformCompanyOverview(
   const counts = {
     pending_setup: pending,
     active,
+    paused,
     suspended,
     archived,
     total,
