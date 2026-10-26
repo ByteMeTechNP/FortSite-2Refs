@@ -67,6 +67,7 @@ const users = Object.fromEntries(fixtures.users.map((u) => [u.label, u]));
 const {
   companyA,
   companyB,
+  companyMulti,
   companySuspended,
   inviteValid,
   inviteExpired,
@@ -123,10 +124,12 @@ try {
   }
 
   {
-    const { data: cos, error: e1 } = await outsider
+    // wrongEmail never successfully accepts an invite, so stays a non-member.
+    // outsider may already hold membership from the acceptance scenarios.
+    const { data: cos, error: e1 } = await wrongEmail
       .from('companies')
       .select('id');
-    const { data: mems, error: e2 } = await outsider
+    const { data: mems, error: e2 } = await wrongEmail
       .from('company_memberships')
       .select('id');
     record(
@@ -352,7 +355,10 @@ try {
     const companyIds = new Set((aRows || []).map((r) => r.company_id));
     record(
       '13 Multi-company user has separate memberships',
-      !e1 && companyIds.has(companyA.id) && companyIds.has(companyB.id),
+      !e1 &&
+        companyIds.has(companyA.id) &&
+        companyIds.has(companyMulti.id) &&
+        !companyIds.has(companyB.id),
       `count:${companyIds.size}`,
     );
   }

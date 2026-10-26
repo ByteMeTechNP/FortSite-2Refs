@@ -58,3 +58,9 @@ An active member can read a suspended or archived company for status visibility.
 ## Client contract
 
 [`src/features/tenancy/accept-invitation.ts`](../../src/features/tenancy/accept-invitation.ts) calls the acceptance RPC and maps all failures to a generic unavailable message. The Auth invitation page still only completes the Auth password session; wiring membership acceptance into that page is a later explicit change.
+
+## Cloud evidence
+
+- Migration applied: MCP name `phase_06_company_tenancy`, version `20261026171655`.
+- Live suite: `scripts/phase06-rls-live.mjs` **PASSED 17/17**.
+- Temporary Phase 06 companies and Auth fixture users were removed after the suite.

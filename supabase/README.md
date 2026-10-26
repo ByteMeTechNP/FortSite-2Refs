@@ -9,9 +9,9 @@ This directory is the Git source of truth for SQL migrations. FortSite does not 
 
 There is no `config.toml`, `seed.sql`, or `functions/` directory. See [docs/fortsite/migration-workflow.md](../docs/fortsite/migration-workflow.md).
 
-| Migration file                                | Cloud status                                  |
-| --------------------------------------------- | --------------------------------------------- |
-| `20261026120000_user_profiles.sql`            | Applied as `user_profiles` / `20261026170211` |
-| `20261026180000_phase_06_company_tenancy.sql` | Pending apply as `phase_06_company_tenancy`   |
+| Migration file                                | Cloud status                                             |
+| --------------------------------------------- | -------------------------------------------------------- |
+| `20261026120000_user_profiles.sql`            | Applied as `user_profiles` / `20261026170211`            |
+| `20261026180000_phase_06_company_tenancy.sql` | Applied as `phase_06_company_tenancy` / `20261026171655` |
 
 Do not apply migrations without an explicit approval for the exact SQL body.
