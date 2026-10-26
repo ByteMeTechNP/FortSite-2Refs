@@ -7,6 +7,9 @@ export const ROUTE_PATHS = {
   authCallback: '/auth/callback',
   authAcceptInvitation: '/auth/accept-invitation',
   account: '/account',
+  platform: '/platform',
+  platformCompanies: '/platform/companies',
+  platformUnauthorized: '/platform/unauthorized',
   notFound: '*',
 } as const;
 
