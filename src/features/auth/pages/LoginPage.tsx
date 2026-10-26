@@ -64,7 +64,7 @@ export function LoginPage() {
   return (
     <AuthPageShell
       title="Sign in"
-      description="Use the email and password for your invited FortSite account. There is no public registration."
+      description="Use the email and password for your provisioned FortSite account. There is no public registration."
     >
       <form
         className="flex flex-col gap-4"

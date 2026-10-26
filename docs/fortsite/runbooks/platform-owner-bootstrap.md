@@ -8,7 +8,7 @@
 
 1. Phase 07 migration `phase_07_platform_owner` is applied and verified.
 2. The operator owns the Supabase Cloud project and can use the Dashboard SQL editor or an approved trusted admin path.
-3. The intended Auth user already exists, is email-confirmed, and was created or invited through the Dashboard (not a public signup path invented for this purpose).
+3. The intended Auth user already exists and was created in the Supabase Dashboard with **Add user**, never **Send invitation**. Public sign-up is not a bootstrap path. Do not invent the email.
 4. No active `platform_admins` row exists yet.
 5. Placeholders in the template are replaced: `__TARGET_USER_ID__`, `__REASON_CODE__`.
 
@@ -36,7 +36,8 @@ Do not silently replace an existing owner. Use the recovery runbook instead.
 
 ## What this runbook does not do
 
-- Does not create Auth users from the browser.
+- Does not create Auth users from the browser or by invitation email.
+- Sets `account_security.must_change_password` for that Auth UUID so the owner must change the Dashboard password before platform data access. The password itself is not stored in FortSite tables.
 - Does not expose a public bootstrap RPC.
 - Does not put service-role keys in `VITE_*` variables.
 - Does not grant company membership or tenant data access.

@@ -12,6 +12,7 @@ import { LoadingState } from '@/components/states/LoadingState';
 import { ProtectedRoute } from '@/features/auth/components/protected-route';
 import { AcceptInvitationPage } from '@/features/auth/pages/AcceptInvitationPage';
 import { AccountPage } from '@/features/auth/pages/AccountPage';
+import { ChangeInitialPasswordPage } from '@/features/auth/pages/ChangeInitialPasswordPage';
 import { AuthCallbackPage } from '@/features/auth/pages/AuthCallbackPage';
 import { ForgotPasswordPage } from '@/features/auth/pages/ForgotPasswordPage';
 import { LoginPage } from '@/features/auth/pages/LoginPage';
@@ -53,6 +54,10 @@ export function AppRouter() {
       <Route
         path={ROUTE_PATHS.authAcceptInvitation}
         element={<AcceptInvitationPage />}
+      />
+      <Route
+        path={ROUTE_PATHS.authChangeInitialPassword}
+        element={<ChangeInitialPasswordPage />}
       />
       <Route
         path={ROUTE_PATHS.account}

@@ -6,6 +6,7 @@ export const ROUTE_PATHS = {
   authResetPassword: '/auth/reset-password',
   authCallback: '/auth/callback',
   authAcceptInvitation: '/auth/accept-invitation',
+  authChangeInitialPassword: '/auth/change-initial-password',
   account: '/account',
   platform: '/platform',
   platformCompanies: '/platform/companies',

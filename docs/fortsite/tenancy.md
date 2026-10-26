@@ -10,7 +10,7 @@ Phase 06 defines company tenants, memberships, and invitations. It does not crea
 | Profile | `user_profiles` display fields (Phase 05) | Membership or permission |
 | Company | Tenant boundary in `companies` | Role or subscription |
 | Membership | `company_memberships` link of user to company | Role, project scope, or assignment |
-| Invitation | `company_invitations` pending link by email | Bearer token or role grant |
+| Invitation | Historical `company_invitations` rows only. New acceptance is retired | A way to create an Auth user or a membership |
 | Operational eligibility | Trusted helper `company_is_operational` | Frontend flag or JWT claim |
 
 A signed-in user with no active membership sees no company rows. OPEN-11 (multi-company product rule) remains unsigned; the schema allows one Auth user to hold memberships in more than one company via unique `(company_id, user_id)`.
@@ -33,11 +33,12 @@ Statuses: `pending`, `accepted`, `revoked`, `expired`. Email stored trimmed and 
 
 | Function | Security | Behavior |
 | --- | --- | --- |
-| `is_active_company_member(company_id)` | INVOKER | Current `auth.uid()` has `active` membership |
-| `company_is_operational(company_id)` | INVOKER | Active membership and company `lifecycle_status = active`. Phase 10 will extend with subscription checks once those tables exist. |
-| `accept_company_invitation(invitation_id)` | DEFINER | Matches confirmed Auth email to a pending, unexpired invite; creates membership only; no role |
+| `is_active_company_member(company_id)` | INVOKER | Active membership, and no pending initial password change |
+| `company_is_operational(company_id)` | INVOKER | Active membership, active company lifecycle, and no pending initial password change. Phase 10 will extend with subscription checks. |
+| `accept_company_invitation(invitation_id)` | DEFINER, EXECUTE revoked from clients | Always raises `invitation_retired`. Does not create a membership. The table stays for history. |
+| `password_change_required()` | DEFINER | True only when `account_security.must_change_password` is set for `auth.uid()` |
 
-`accept_company_invitation` is `SECURITY DEFINER` because authenticated clients have no write grants on invitations or memberships. It sets `search_path = ''`, schema-qualifies objects, and never accepts a client-supplied company id, email, or role. Wrong email, expired, revoked, missing, and already-accepted-by-another-user failures use the same `invitation_unavailable` error. Suspended or removed memberships are not reactivated.
+`is_active_company_member` and `company_is_operational` are false while an initial password change is required. A historical invitation row cannot be accepted by a client.
 
 ## RLS matrix
 
@@ -51,13 +52,13 @@ An active member can read a suspended or archived company for status visibility.
 
 ## Later phases
 
-- **Phases 07–09** create companies and the first Company Admin invitation through platform-authorized paths. Phase 06 leaves no public insert path on `companies`.
+- **Phases 07–09** create companies through platform-authorized paths. The first Company Admin account is a later panel provision, not an email invitation. Phase 06 leaves no public insert path on `companies`.
 - **Phase 10** extends `company_is_operational` with subscription eligibility without changing membership identity.
 - **Phase 12** adds role bindings in separate tables. Membership rows stay role-free.
 
 ## Client contract
 
-[`src/features/tenancy/accept-invitation.ts`](../../src/features/tenancy/accept-invitation.ts) calls the acceptance RPC and maps all failures to a generic unavailable message. The Auth invitation page still only completes the Auth password session; wiring membership acceptance into that page is a later explicit change.
+[`src/features/tenancy/accept-invitation.ts`](../../src/features/tenancy/accept-invitation.ts) refuses every call and does not contact the database. `/auth/accept-invitation` is a retired notice.
 
 ## Cloud evidence
 

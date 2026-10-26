@@ -6,11 +6,11 @@ const INTERNAL_PATHS = new Set<string>([
   ROUTE_PATHS.authForgotPassword,
   ROUTE_PATHS.authResetPassword,
   ROUTE_PATHS.authCallback,
-  ROUTE_PATHS.authAcceptInvitation,
   ROUTE_PATHS.home,
   ROUTE_PATHS.platform,
   ROUTE_PATHS.platformCompanies,
   ROUTE_PATHS.platformUnauthorized,
+  ROUTE_PATHS.authChangeInitialPassword,
 ]);
 
 /**
