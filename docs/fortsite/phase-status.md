@@ -4,9 +4,9 @@
 **Canonical plan:** [`FortSite_Fresh_Start_Master_Roadmap_V4_Cloud.md`](../../FortSite_Fresh_Start_Master_Roadmap_V4_Cloud.md).  
 **Rule:** a phase is **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, or **VERIFIED COMPLETE**. Do not infer completion from a document, a menu item, or a table.
 
-Phases 02, 03, 04, and 06 are **VERIFIED COMPLETE**. Phase 05 is **IN PROGRESS**. Phase 01 remains **NOT STARTED** pending product-owner sign-off. Phases 07–67 remain **NOT STARTED**.
+Phases 02, 03, 04, and 06 are **VERIFIED COMPLETE**. Phases 05 and 07 are **IN PROGRESS**. Phase 01 remains **NOT STARTED** pending product-owner sign-off. Phases 08–67 remain **NOT STARTED**.
 
-Phase 01 documents under `docs/fortsite/` are a draft for later sign-off. They do not verify Phase 01 complete. Phase 02 added the web application foundation and package lockfile. Phase 03 added the construction design tokens, local UI primitives, and a development-only gallery. Phase 04 added the public Supabase browser client and the Cloud migration workflow. Phase 05 added Auth screens, applied `user_profiles` after approval, set the approved Auth redirect origin, and ran live Auth/RLS with dedicated Cloud fixtures. Dashboard Site URL / redirect allow-list still needs a manual paste (no MCP Auth writer). Phase 06 applied company tenancy schema and proved Cloud API tenant isolation (17/17); it did not start Phase 07.
+Phase 01 documents under `docs/fortsite/` are a draft for later sign-off. They do not verify Phase 01 complete. Phase 02 added the web application foundation and package lockfile. Phase 03 added the construction design tokens, local UI primitives, and a development-only gallery. Phase 04 added the public Supabase browser client and the Cloud migration workflow. Phase 05 added Auth screens, applied `user_profiles` after approval, set the approved Auth redirect origin, and ran live Auth/RLS with dedicated Cloud fixtures. Dashboard Site URL / redirect allow-list still needs a manual paste (no MCP Auth writer). Phase 06 applied company tenancy schema and proved Cloud API tenant isolation (17/17). Phase 07 adds the Platform Owner registry and helpers; live first-owner bootstrap stays blocked until an operator supplies the Auth UUID. It did not start Phase 08.
 
 ## Why foundations come first
 
@@ -34,7 +34,7 @@ A missing prerequisite stops the dependent phase. Do not skip ahead with a short
 | 04 | Supabase Cloud/MCP environments, migrations and deployment controls | Phases 01–02. | VERIFIED COMPLETE | [`docs/engineering/phase-04-supabase.md`](../engineering/phase-04-supabase.md); MCP identity reads; format/lint/typecheck/tests/build/secret scan pass; no remote write |
 | 05 | Authentication, profiles and session lifecycle | Phases 02 and 04. | IN PROGRESS | [`docs/fortsite/authentication.md`](authentication.md); [`docs/engineering/phase-05-auth.md`](../engineering/phase-05-auth.md); `user_profiles` applied (`20261026170211`); `VITE_AUTH_REDIRECT_ORIGIN=http://127.0.0.1:5173`; live RLS 8/8; dashboard Auth URL allow-list paste still open |
 | 06 | Company tenancy, memberships and tenant-safe data foundations | Phases 04–05. | VERIFIED COMPLETE | [`docs/fortsite/tenancy.md`](tenancy.md); [`docs/engineering/phase-06-tenancy.md`](../engineering/phase-06-tenancy.md); `phase_06_company_tenancy` / `20261026171655`; live RLS 17/17; fixtures cleaned |
-| 07 | Secure platform-owner identity and privileged operations boundary | Phases 04–06. | NOT STARTED | none |
+| 07 | Secure platform-owner identity and privileged operations boundary | Phases 04–06. | IN PROGRESS | [`docs/fortsite/platform-owner-authority.md`](platform-owner-authority.md); [`docs/engineering/phase-07-platform-owner.md`](../engineering/phase-07-platform-owner.md); `phase_07_platform_owner` / `20261026173350`; live authority 18/18; live first-owner bootstrap BLOCKED |
 | 08 | Super Admin panel shell and platform overview | Phases 02–03 and 07. | NOT STARTED | none |
 | 09 | Company onboarding and lifecycle management | Phases 06–08. | NOT STARTED | none |
 | 10 | Subscription plans, entitlements and manual payment records | Phases 07–09. | NOT STARTED | none |
@@ -96,7 +96,7 @@ A missing prerequisite stops the dependent phase. Do not skip ahead with a short
 | 66 | Complete end-to-end validation, restore drills, pilot and release readiness | Phases 01–65. Government production connectors remain disabled; use test adapters and fixtures. | NOT STARTED | none |
 | 67 | FINAL: Nepal IRD/CBMS and India IRP government billing integrations | Phases 09, 13, 48–54 and 66. Live activation also requires an approved authority or provider path and applicable credentials. | NOT STARTED | none |
 
-Count: 67 phases. Status count: 62 NOT STARTED, 1 IN PROGRESS (Phase 05), 0 BLOCKED, 4 VERIFIED COMPLETE (Phases 02–04 and 06).
+Count: 67 phases. Status count: 61 NOT STARTED, 2 IN PROGRESS (Phases 05 and 07), 0 BLOCKED, 4 VERIFIED COMPLETE (Phases 02–04 and 06).
 
 Phase 67 is the final numbered phase. Its dependency list includes Phase 66. Phase 66 cannot enable production government connectors.
 

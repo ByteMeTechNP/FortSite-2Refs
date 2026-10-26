@@ -28,6 +28,8 @@ lerna-debug.log*
 .env.phase05-fixtures.pending.json
 .env.phase06-fixtures.local.json
 .env.phase06-fixtures.pending.json
+.env.phase07-fixtures.local.json
+.env.phase07-fixtures.pending.json
 .env.*.fixtures.local.json
 .env.*.fixtures.pending.json
 
