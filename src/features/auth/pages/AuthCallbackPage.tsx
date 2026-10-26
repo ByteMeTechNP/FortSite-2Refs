@@ -34,8 +34,32 @@ export function AuthCallbackPage() {
         const search = window.location.search.toLowerCase();
         const isRecovery =
           hash.includes('type=recovery') || search.includes('type=recovery');
+        const isRetiredAccountLink =
+          hash.includes('type=invite') ||
+          search.includes('type=invite') ||
+          hash.includes('type=signup') ||
+          search.includes('type=signup');
 
         const client = getBrowserSupabaseClient();
+
+        if (isRetiredAccountLink) {
+          await client.auth.signOut().catch(() => {
+            // Still refuse the link if sign-out fails.
+          });
+          if (cancelled) {
+            return;
+          }
+          window.history.replaceState(
+            {},
+            document.title,
+            ROUTE_PATHS.authCallback,
+          );
+          setError(
+            'Account invitations and public sign-up links are not accepted. Sign in with an account an administrator has already created.',
+          );
+          return;
+        }
+
         const { data, error: sessionError } = await client.auth.getSession();
 
         if (cancelled) {

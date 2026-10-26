@@ -8,6 +8,7 @@ import {
   supabaseConfigErrorMessage,
   type EnvInput,
 } from '@/config/env';
+import { InitialPasswordGate } from '@/features/auth/components/initial-password-gate';
 import { AuthProvider } from '@/features/auth/context/auth-context';
 import type { AuthApi } from '@/features/auth/api/auth-api';
 
@@ -29,7 +30,9 @@ export function App({ supabaseEnv, authApi }: AppProps = {}) {
     <AppErrorBoundary>
       <BrowserRouter>
         <AuthProvider authApi={authApi}>
-          <AppRouter />
+          <InitialPasswordGate>
+            <AppRouter />
+          </InitialPasswordGate>
         </AuthProvider>
       </BrowserRouter>
     </AppErrorBoundary>

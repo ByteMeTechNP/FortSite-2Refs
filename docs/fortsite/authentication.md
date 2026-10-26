@@ -21,7 +21,8 @@ The browser uses only `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`. A
 | `/auth/forgot-password` | Request a password-reset email |
 | `/auth/reset-password` | Set a new password with a recovery session |
 | `/auth/callback` | Process Auth email redirects |
-| `/auth/accept-invitation` | Complete an Auth invitation and set a password |
+| `/auth/accept-invitation` | Retired. Does not create an account or set a password |
+| `/auth/change-initial-password` | Required password change for a newly provisioned account |
 | `/account` | Signed-in shell: profile, sign-out, no-access notice |
 
 ## Session lifecycle
@@ -48,7 +49,8 @@ Password reset and invitation emails need:
 Set in local env via `VITE_AUTH_REDIRECT_ORIGIN` (see `.env.example`). Paste the matching dashboard allow-list (MCP has no Auth URL writer):
 
 - Site URL: `http://127.0.0.1:5173`
-- Additional redirect URLs: `http://127.0.0.1:5173/auth/callback`, `http://127.0.0.1:5173/auth/accept-invitation`, `http://127.0.0.1:5173/auth/reset-password`
+- Additional redirect URLs: `http://127.0.0.1:5173/auth/callback`, `http://127.0.0.1:5173/auth/reset-password`
+- Remove `http://127.0.0.1:5173/auth/accept-invitation` from the allow-list when pasting URLs. Invitation links are retired.
 
 Do not use a wildcard. Do not invent a production domain.
 
@@ -57,7 +59,7 @@ Do not use a wildcard. Do not invent a production domain.
 The connected MCP has no Auth-settings inspection or writer. Confirm in the Supabase dashboard:
 
 - Email provider enabled
-- Public sign-up enabled/disabled (desired default: disabled; invitations only)
+- Public sign-up **disabled**. New accounts are panel-provisioned. There is no invitation sign-up.
 - Email confirmation policy
 - Password policy
 - Site URL and redirect allow-list (approved values above)

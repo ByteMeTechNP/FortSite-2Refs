@@ -1,5 +1,8 @@
 -- MANUAL CONTROLLED OPERATION — NEVER AUTO-RUN.
 -- Phase 07 first Platform Owner bootstrap template.
+-- Create the Auth user in the Supabase Dashboard with Add user.
+-- Never use Send invitation. This script does not create an Auth user
+-- and does not store a password.
 -- Replace every __PLACEHOLDER__ before execution in a trusted Cloud SQL
 -- session owned by the project operator. Do not commit filled values.
 -- Do not add this file to supabase/migrations/.
@@ -68,6 +71,19 @@ begin
     'succeeded',
     reason_code,
     jsonb_build_object('source', 'bootstrap-platform-owner.template.sql')
+  );
+
+  insert into public.account_security (
+    user_id,
+    must_change_password,
+    required_at,
+    completed_at
+  )
+  values (
+    target,
+    true,
+    now(),
+    null
   );
 end;
 $$;

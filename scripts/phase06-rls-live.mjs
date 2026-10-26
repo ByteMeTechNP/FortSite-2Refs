@@ -1,5 +1,8 @@
 /**
- * Live Phase 06 tenant-isolation checks against Supabase Cloud.
+ * Historical Phase 06 tenant-isolation checks against Supabase Cloud.
+ * Invitation acceptance was retired by panel_managed_credentials.
+ * Do not treat a fresh run of the accept_* cases as the current contract.
+ * Use scripts/credentials-remediation-live.mjs for the retired flow.
  * Requires gitignored .env.phase06-fixtures.local.json from the fixture setup.
  * Assertions use the publishable key and user sessions only.
  * Never prints passwords or tokens.

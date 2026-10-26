@@ -20,6 +20,9 @@ describe('resolveInternalReturnPath', () => {
     expect(resolveInternalReturnPath('https://evil.example')).toBe('/account');
     expect(resolveInternalReturnPath('//evil.example')).toBe('/account');
     expect(resolveInternalReturnPath('/company/secret')).toBe('/account');
+    expect(resolveInternalReturnPath('/auth/accept-invitation')).toBe(
+      '/account',
+    );
     expect(resolveInternalReturnPath('\\evil')).toBe('/account');
   });
 });
