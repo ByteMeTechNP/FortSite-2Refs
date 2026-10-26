@@ -8,6 +8,7 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { LoadingState } from '@/components/states/LoadingState';
+import { PlansSubscriptionsTabs } from '@/features/platform/subscriptions/PlansSubscriptionsTabs';
 import { EmptyState } from '@/components/states/EmptyState';
 import {
   Table,
@@ -122,14 +123,15 @@ export function PlansPage({
   }
 
   return (
-    <main className="flex flex-col gap-8 px-4 py-6 sm:px-6 sm:py-8">
+    <main className="flex flex-col gap-6">
       <PageHeader
         eyebrow="Plans"
         title="Subscription plans"
         description="Create drafts, publish immutable versions, and retire plans. Prices are owner-configured. There is no payment gateway."
       />
+      <PlansSubscriptionsTabs active="plans" />
 
-      <section className="border-border bg-card flex max-w-xl flex-col gap-4 rounded-[length:var(--fs-radius-card)] border p-4 sm:p-6">
+      <section className="border-border bg-card flex max-w-xl flex-col gap-4 rounded-xl border p-4 sm:p-6">
         <h2 className="text-lg font-semibold">New draft</h2>
         {message ? (
           <Alert variant="danger">
@@ -137,7 +139,7 @@ export function PlansPage({
             <AlertDescription>{message}</AlertDescription>
           </Alert>
         ) : null}
-        <div className="flex flex-col gap-2">
+        <div className="grid gap-2">
           <Label htmlFor="plan-code">Plan code</Label>
           <Input
             id="plan-code"
@@ -147,7 +149,7 @@ export function PlansPage({
             }}
           />
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="grid gap-2">
           <Label htmlFor="plan-name">Name</Label>
           <Input
             id="plan-name"
@@ -157,7 +159,7 @@ export function PlansPage({
             }}
           />
         </div>
-        <fieldset className="flex flex-col gap-2">
+        <fieldset className="grid gap-2">
           <legend className="text-sm font-medium">Country</legend>
           {(['Nepal', 'India'] as const).map((country) => (
             <label key={country} className="flex items-center gap-2 text-sm">
@@ -176,11 +178,11 @@ export function PlansPage({
             </label>
           ))}
         </fieldset>
-        <div className="flex flex-col gap-2">
+        <div className="grid gap-2">
           <Label htmlFor="plan-interval">Billing interval</Label>
           <select
             id="plan-interval"
-            className="border-input bg-background h-9 rounded-[length:var(--fs-radius-control)] border px-3 text-sm"
+            className="border-input focus-visible:border-ring focus-visible:ring-ring/50 h-9 w-full rounded-full border bg-transparent px-3 text-sm outline-none focus-visible:ring-3"
             value={draft.billingInterval}
             onChange={(event) => {
               setDraft((current) => ({
@@ -195,7 +197,7 @@ export function PlansPage({
             <option value="lifetime">Lifetime</option>
           </select>
         </div>
-        <fieldset className="flex flex-col gap-2">
+        <fieldset className="grid gap-2">
           <legend className="text-sm font-medium">Price kind</legend>
           {(['paid', 'free'] as const).map((kind) => (
             <label key={kind} className="flex items-center gap-2 text-sm">
@@ -215,7 +217,7 @@ export function PlansPage({
             </label>
           ))}
         </fieldset>
-        <div className="flex flex-col gap-2">
+        <div className="grid gap-2">
           <Label htmlFor="plan-amount">Amount</Label>
           <Input
             id="plan-amount"
@@ -229,7 +231,7 @@ export function PlansPage({
           />
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="flex flex-col gap-2">
+          <div className="grid gap-2">
             <Label htmlFor="trial-days">Trial days</Label>
             <Input
               id="trial-days"
@@ -242,7 +244,7 @@ export function PlansPage({
               }}
             />
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="grid gap-2">
             <Label htmlFor="grace-days">Grace days</Label>
             <Input
               id="grace-days"
@@ -281,7 +283,7 @@ export function PlansPage({
         />
       ) : null}
       {!loading && !error && plans.length > 0 ? (
-        <div className="border-border overflow-x-auto rounded-[length:var(--fs-radius-card)] border">
+        <div className="border-border bg-card overflow-hidden rounded-xl border">
           <Table>
             <TableHeader>
               <TableRow>

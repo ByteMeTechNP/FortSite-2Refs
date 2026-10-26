@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button';
+
 type ErrorStateProps = Readonly<{
   title?: string;
   message: string;
@@ -12,19 +14,16 @@ export function ErrorState({
   retryLabel = 'Try again',
 }: ErrorStateProps) {
   return (
-    <section role="alert" className="text-foreground flex flex-col gap-3">
-      <h2 className="text-lg font-semibold">{title}</h2>
-      <p className="text-foreground-secondary text-sm leading-relaxed">
-        {message}
-      </p>
+    <section
+      role="alert"
+      className="border-destructive/20 flex flex-col items-start gap-3 rounded-xl border bg-[#FEE2E2] px-4 py-4 text-sm text-[#991B1B]"
+    >
+      <h2 className="text-sm font-medium">{title}</h2>
+      <p>{message}</p>
       {onRetry ? (
-        <button
-          type="button"
-          onClick={onRetry}
-          className="border-input bg-card text-foreground hover:bg-muted focus-visible:outline-ring h-11 w-fit rounded-full border px-4 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2"
-        >
+        <Button type="button" variant="outline" size="sm" onClick={onRetry}>
           {retryLabel}
-        </button>
+        </Button>
       ) : null}
     </section>
   );

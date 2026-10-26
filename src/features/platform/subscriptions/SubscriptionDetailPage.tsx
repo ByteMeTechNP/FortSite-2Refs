@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { CurrencyAmount } from '@/components/shared/currency-amount';
 import { LoadingState } from '@/components/states/LoadingState';
 import {
   createBrowserSubscriptionApi,
@@ -142,7 +143,7 @@ export function SubscriptionDetailView({
   const currency = detail.subscription.billing_currency;
 
   return (
-    <main className="flex flex-col gap-8 px-4 py-6 sm:px-6 sm:py-8">
+    <main className="flex flex-col gap-6">
       <PageHeader
         breadcrumb={
           <Link
@@ -180,9 +181,9 @@ export function SubscriptionDetailView({
         </Alert>
       ) : null}
 
-      <section className="border-border flex max-w-xl flex-col gap-3 rounded-[length:var(--fs-radius-card)] border p-4">
+      <section className="border-border flex max-w-xl flex-col gap-3 rounded-xl border p-4">
         <h3 className="font-semibold">Lifecycle actions</h3>
-        <p className="text-foreground-secondary text-sm">
+        <p className="text-muted-foreground text-sm">
           These change the subscription only. They do not change company
           lifecycle.
         </p>
@@ -339,9 +340,9 @@ export function SubscriptionDetailView({
         ) : null}
       </section>
 
-      <section className="border-border flex max-w-xl flex-col gap-3 rounded-[length:var(--fs-radius-card)] border p-4">
+      <section className="border-border flex max-w-xl flex-col gap-3 rounded-xl border p-4">
         <h3 className="font-semibold">Record manual payment</h3>
-        <p className="text-foreground-secondary text-sm">
+        <p className="text-muted-foreground text-sm">
           Currency is locked to {currency}. Recording a payment does not renew
           or reactivate the subscription.
         </p>
@@ -365,7 +366,7 @@ export function SubscriptionDetailView({
         <Label htmlFor="pay-method">Method</Label>
         <select
           id="pay-method"
-          className="border-input bg-background h-9 rounded-[length:var(--fs-radius-control)] border px-3 text-sm"
+          className="border-input focus-visible:border-ring focus-visible:ring-ring/50 h-9 w-full rounded-full border bg-transparent px-3 text-sm outline-none focus-visible:ring-3"
           value={method}
           onChange={(event) => {
             setMethod(event.target.value as PaymentMethod);
@@ -401,11 +402,15 @@ export function SubscriptionDetailView({
         >
           Record payment
         </Button>
-        <ul className="text-foreground-secondary mt-2 flex flex-col gap-1 text-sm">
+        <ul className="text-muted-foreground mt-2 flex flex-col gap-1 text-sm">
           {detail.payments.map((payment) => (
             <li key={payment.id}>
-              {payment.received_on}: {payment.amount} {payment.currency} via{' '}
-              {payment.payment_method} ({payment.status})
+              {payment.received_on}:{' '}
+              <CurrencyAmount
+                amount={payment.amount}
+                currency={payment.currency}
+              />{' '}
+              via {payment.payment_method} ({payment.status})
             </li>
           ))}
         </ul>

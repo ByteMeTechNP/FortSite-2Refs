@@ -1,5 +1,7 @@
 import { BrowserRouter } from 'react-router';
 
+import { TooltipProvider } from '@/components/ui/tooltip';
+
 import { AppRouter } from '@/app/router';
 import { ConfigurationError } from '@/components/states/ConfigurationError';
 import { AppErrorBoundary } from '@/components/states/AppErrorBoundary';
@@ -28,13 +30,15 @@ export function App({ supabaseEnv, authApi }: AppProps = {}) {
 
   return (
     <AppErrorBoundary>
-      <BrowserRouter>
-        <AuthProvider authApi={authApi}>
-          <InitialPasswordGate>
-            <AppRouter />
-          </InitialPasswordGate>
-        </AuthProvider>
-      </BrowserRouter>
+      <TooltipProvider>
+        <BrowserRouter>
+          <AuthProvider authApi={authApi}>
+            <InitialPasswordGate>
+              <AppRouter />
+            </InitialPasswordGate>
+          </AuthProvider>
+        </BrowserRouter>
+      </TooltipProvider>
     </AppErrorBoundary>
   );
 }

@@ -66,7 +66,7 @@ export function CompanyStatusCards({ counts }: CompanyStatusCardsProps) {
           <Link
             key={card.key}
             to={href}
-            className="focus-visible:ring-ring rounded-[length:var(--fs-radius-card)] outline-none focus-visible:ring-2"
+            className="focus-visible:ring-ring rounded-xl outline-none focus-visible:ring-3"
           >
             <Card
               size="sm"
@@ -74,7 +74,7 @@ export function CompanyStatusCards({ counts }: CompanyStatusCardsProps) {
             >
               <CardHeader>
                 <CardDescription>{card.title}</CardDescription>
-                <CardTitle className="text-3xl font-semibold tabular-nums">
+                <CardTitle className="text-2xl font-semibold tabular-nums">
                   {value}
                 </CardTitle>
                 <CardDescription>{card.description}</CardDescription>

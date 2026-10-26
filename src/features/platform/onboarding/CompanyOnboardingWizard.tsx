@@ -112,7 +112,7 @@ export function CompanyOnboardingWizard({
   }
 
   return (
-    <main className="flex flex-col gap-8 px-4 py-6 sm:px-6 sm:py-8">
+    <main className="flex flex-col gap-6">
       <PageHeader
         eyebrow="Companies"
         title="Create a company"
@@ -132,7 +132,7 @@ export function CompanyOnboardingWizard({
                   ? 'border-primary bg-primary/15 text-foreground font-medium'
                   : done
                     ? 'border-border bg-card text-foreground'
-                    : 'border-border text-foreground-secondary',
+                    : 'border-border text-muted-foreground',
               ].join(' ')}
             >
               <span
@@ -140,7 +140,7 @@ export function CompanyOnboardingWizard({
                   'flex size-5 items-center justify-center rounded-full text-xs font-semibold',
                   active || done
                     ? 'bg-primary text-primary-foreground'
-                    : 'bg-muted text-foreground-secondary',
+                    : 'bg-muted text-muted-foreground',
                 ].join(' ')}
                 aria-hidden="true"
               >
@@ -193,7 +193,7 @@ export function CompanyOnboardingWizard({
       >
         {step === 0 ? (
           <>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="legal-name">Legal name</Label>
               <Input
                 id="legal-name"
@@ -204,7 +204,7 @@ export function CompanyOnboardingWizard({
                 required
               />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="display-name">Display name</Label>
               <Input
                 id="display-name"
@@ -214,7 +214,7 @@ export function CompanyOnboardingWizard({
                 }}
               />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="contact-email">Contact email</Label>
               <Input
                 id="contact-email"
@@ -225,7 +225,7 @@ export function CompanyOnboardingWizard({
                 }}
               />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="contact-phone">Contact phone</Label>
               <Input
                 id="contact-phone"
@@ -235,7 +235,7 @@ export function CompanyOnboardingWizard({
                 }}
               />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="locality">Locality</Label>
               <Input
                 id="locality"
@@ -268,13 +268,13 @@ export function CompanyOnboardingWizard({
               </label>
             ))}
             {jurisdiction ? (
-              <p className="text-foreground-secondary text-sm">
+              <p className="text-muted-foreground text-sm">
                 Locked currency {jurisdiction.currency}. Locked timezone{' '}
                 {jurisdiction.timezone}. Compliance route{' '}
                 {jurisdiction.routeKey} stays not connected, pending Phase 67.
               </p>
             ) : (
-              <p className="text-foreground-secondary text-sm">
+              <p className="text-muted-foreground text-sm">
                 Choose a country to lock currency and timezone. There is no
                 separate currency field.
               </p>
@@ -284,7 +284,7 @@ export function CompanyOnboardingWizard({
 
         {step === 2 ? (
           <>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="admin-email">Founding administrator email</Label>
               <Input
                 id="admin-email"
@@ -296,7 +296,7 @@ export function CompanyOnboardingWizard({
                 required
               />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="admin-name">Founding administrator name</Label>
               <Input
                 id="admin-name"
@@ -326,11 +326,11 @@ export function CompanyOnboardingWizard({
 
         {step === 3 ? (
           <>
-            <p className="text-foreground-secondary text-sm leading-relaxed">
+            <p className="text-muted-foreground text-sm leading-relaxed">
               Subscription intent is pending Phase 10. A plan code does not set
               a price, limit, duration, or entitlement.
             </p>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="plan-code">Requested plan code</Label>
               <Input
                 id="plan-code"
@@ -354,18 +354,18 @@ export function CompanyOnboardingWizard({
         ) : null}
 
         {step === 4 && jurisdiction ? (
-          <div className="border-border flex flex-col gap-2 rounded-[length:var(--fs-radius-card)] border p-4 text-sm">
+          <div className="border-border flex flex-col gap-2 rounded-xl border p-4 text-sm">
             <p>
-              <span className="text-foreground-secondary">Legal name. </span>
+              <span className="text-muted-foreground">Legal name. </span>
               {draft.legalName}
             </p>
             <p>
-              <span className="text-foreground-secondary">Country. </span>
+              <span className="text-muted-foreground">Country. </span>
               {draft.registrationCountry} / {jurisdiction.currency} /{' '}
               {jurisdiction.timezone}
             </p>
             <p>
-              <span className="text-foreground-secondary">Administrator. </span>
+              <span className="text-muted-foreground">Administrator. </span>
               {draft.adminDisplayName} ({draft.adminEmail})
             </p>
             <p>
@@ -395,7 +395,7 @@ export function CompanyOnboardingWizard({
             </Button>
           ) : (
             <Link
-              className="text-foreground-secondary self-center text-sm hover:underline"
+              className="text-muted-foreground self-center text-sm hover:underline"
               to={ROUTE_PATHS.platformCompanies}
             >
               Cancel

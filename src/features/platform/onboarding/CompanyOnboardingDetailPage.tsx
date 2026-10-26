@@ -6,7 +6,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { ErrorState } from '@/components/states/ErrorState';
 import { LoadingState } from '@/components/states/LoadingState';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
+import { StatusBadge } from '@/components/shared/status-badge';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/features/auth/context/auth-context';
 import {
@@ -147,7 +147,7 @@ export function CompanyOnboardingDetailView({
   );
 
   return (
-    <main className="flex flex-col gap-8 px-4 py-6 sm:px-6 sm:py-8">
+    <main className="flex flex-col gap-6">
       <PageHeader
         breadcrumb={
           <Link
@@ -187,21 +187,19 @@ export function CompanyOnboardingDetailView({
           <section className="flex flex-col gap-3 text-sm">
             <p className="font-mono">{detail.company.companyCode}</p>
             <p>
-              <Badge variant="secondary">
-                {detail.company.lifecycleStatus}
-              </Badge>
+              <StatusBadge value={detail.company.lifecycleStatus} />
             </p>
             <p>
               {detail.company.registrationCountry} /{' '}
               {detail.company.defaultCurrency} / {detail.company.timezone}
             </p>
-            <p className="text-foreground-secondary">
+            <p className="text-muted-foreground">
               Compliance is not connected. Government filing is pending Phase 67
               {detail.compliance
                 ? ` (${detail.compliance.routeKey}, ${detail.compliance.setupState}).`
                 : '.'}
             </p>
-            <p className="text-foreground-secondary">
+            <p className="text-muted-foreground">
               Subscription intent
               {detail.subscriptionIntent?.requestedPlanCode
                 ? ` ${detail.subscriptionIntent.requestedPlanCode}`
@@ -214,18 +212,18 @@ export function CompanyOnboardingDetailView({
             </p>
           </section>
 
-          <section className="border-border flex flex-col gap-3 rounded-[length:var(--fs-radius-card)] border p-4">
+          <section className="border-border flex flex-col gap-3 rounded-xl border p-4">
             <h3 className="text-lg font-semibold">
               Resolve subscription intent
             </h3>
-            <p className="text-foreground-secondary text-sm">
+            <p className="text-muted-foreground text-sm">
               Choose the term here. A missing or unpublished plan code blocks
               resolution without substituting another plan.
             </p>
             <Label htmlFor="resolve-interval">Term</Label>
             <select
               id="resolve-interval"
-              className="border-input bg-background h-9 max-w-xs rounded-[length:var(--fs-radius-control)] border px-3 text-sm"
+              className="border-input focus-visible:border-ring focus-visible:ring-ring/50 h-9 w-full max-w-xs rounded-full border bg-transparent px-3 text-sm outline-none focus-visible:ring-3"
               value={termInterval}
               onChange={(event) => {
                 setTermInterval(event.target.value as BillingInterval | '');
@@ -239,7 +237,7 @@ export function CompanyOnboardingDetailView({
               ))}
             </select>
             {termInterval === 'annual' ? (
-              <div className="flex flex-col gap-2">
+              <div className="grid gap-2">
                 <Label htmlFor="annual-end">Annual ends at (UTC ISO)</Label>
                 <Input
                   id="annual-end"
@@ -306,7 +304,7 @@ export function CompanyOnboardingDetailView({
                   {detail.provisioning.adminDisplayName} (
                   {detail.provisioning.adminEmail})
                 </p>
-                <p className="text-foreground-secondary text-sm">
+                <p className="text-muted-foreground text-sm">
                   Provisioning {detail.provisioning.state}. Credential handoff{' '}
                   {detail.provisioning.handoff === 'issued'
                     ? 'issued'
@@ -333,7 +331,7 @@ export function CompanyOnboardingDetailView({
                 </Button>
               </>
             ) : (
-              <p className="text-foreground-secondary text-sm">
+              <p className="text-muted-foreground text-sm">
                 No founding administrator has been recorded.
               </p>
             )}

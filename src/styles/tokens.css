@@ -1,140 +1,115 @@
 /**
- * FortSite design tokens — single source of truth for brand hex values.
- * Components must use semantic variables/utilities, not these raw anchors.
- * Light theme only. Dark mode is out of scope.
- * Visual contract: UI redesign checkpoint (V3 quiet industrial).
+ * FortSite design tokens — single source of hex values.
+ * Pinned visual source: ByteMeTechNP/fortsite
+ * e11188e22570c17ab8939e1c6acaa4e8a0bb2032 src/index.css.
+ *
+ * Contrast fixes (reference intent kept, smallest change that passes):
+ * - --input is #64748b. Reference #e2e8f0 on #ffffff is 1.23:1 (fails 3:1).
+ * - --ring is #d97706. Reference #f59e0b on #ffffff is 2.15:1 (fails 3:1).
+ *   #d97706 on #ffffff is 3.19:1.
+ * Decorative --border stays #e2e8f0.
  */
 
 :root {
-  /* Brand anchors */
-  --fs-amber: #f59e0b;
-  --fs-amber-soft: #fef3c7;
-  --fs-graphite: #1f2937;
-  --fs-graphite-raised: #374151;
-  --fs-graphite-border: #4b5563;
-  --fs-blueprint: #2563eb;
-  --fs-canvas: #f8fafc;
-  --fs-surface: #ffffff;
-  --fs-surface-subtle: #f1f5f9;
-  --fs-surface-hover: #e2e8f0;
-  --fs-steel: #e2e8f0;
-  --fs-separator: #cbd5e1;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #f59e0b;
+  --primary-foreground: #111827;
+  --primary-hover: #d97706;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #1f2937;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #fef3c7;
+  --accent-foreground: #111827;
+  --destructive: #dc2626;
+  --border: #e2e8f0;
+  --input: #64748b;
+  --ring: #d97706;
+  --chart-1: #f59e0b;
+  --chart-2: #2563eb;
+  --chart-3: #1f2937;
+  --chart-4: #16a34a;
+  --chart-5: #d97706;
+  --radius: 0.875rem;
+  --sidebar: #1f2937;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-primary: #f59e0b;
+  --sidebar-primary-foreground: #111827;
+  --sidebar-accent: #374151;
+  --sidebar-accent-foreground: #f8fafc;
+  --sidebar-border: #374151;
+  --sidebar-ring: #f59e0b;
+  --success: #16a34a;
+  --success-foreground: #dcfce7;
+  --warning: #d97706;
+  --info: #2563eb;
+  --blueprint: #2563eb;
 
-  /* Stronger control border — separators fail non-text contrast for interactive edges */
-  --fs-border-strong: #64748b;
+  /* Status surfaces. Text colors are the darker passing pairs. */
+  --success-bg: #dcfce7;
+  --success-text: #166534;
+  --success-border: #86efac;
+  --warning-bg: #fef3c7;
+  --warning-text: #92400e;
+  --warning-border: #fcd34d;
+  --danger-bg: #fee2e2;
+  --danger-text: #991b1b;
+  --danger-border: #fca5a5;
+  --info-bg: #dbeafe;
+  --info-text: #1d4ed8;
+  --info-border: #93c5fd;
 
-  /* Semantic application surfaces */
-  --fs-background: var(--fs-canvas);
-  --fs-foreground: #0f172a;
+  /* Aliases so older class strings resolve to the reference scale. */
+  --fs-radius-card: 0.875rem;
+  --fs-radius-control: 9999px;
+  --fs-radius-dialog: 0.875rem;
+  --fs-shadow-card: 0 0 #0000;
+  --fs-content-max: 72rem;
+  --fs-text-page-title: 1.5rem;
+  --fs-auth-max: 28rem;
+  --fs-link: var(--blueprint);
   --fs-foreground-secondary: #475569;
-  --fs-surface-muted: var(--fs-surface-subtle);
-  --fs-border: var(--fs-separator);
-  --fs-input-border: var(--fs-border-strong);
-  --fs-ring: var(--fs-blueprint);
-  --fs-link: var(--fs-blueprint);
+  --fs-shell-width: 16rem;
+  --fs-topbar-height: 4rem;
+  --fs-ring: var(--ring);
+}
 
-  /* Primary action: Amber + Graphite text (never white on Amber) */
-  --fs-primary: var(--fs-amber);
-  --fs-primary-foreground: var(--fs-graphite);
-  --fs-primary-hover: #d97706;
-
-  /* Secondary / outline / ghost */
-  --fs-secondary: #e5e7eb;
-  --fs-secondary-foreground: var(--fs-graphite);
-  --fs-secondary-hover: #d1d5db;
-
-  /* Destructive */
-  --fs-destructive: #dc2626;
-  --fs-destructive-foreground: #ffffff;
-  --fs-destructive-hover: #b91c1c;
-
-  /* Status: pale surfaces + dark text; never color-only */
-  --fs-success: #166534;
-  --fs-success-foreground: #166534;
-  --fs-success-bg: #dcfce7;
-  --fs-success-border: #86efac;
-
-  --fs-warning: #92400e;
-  --fs-warning-foreground: #92400e;
-  --fs-warning-bg: #fef3c7;
-  --fs-warning-border: #fcd34d;
-
-  --fs-danger: #991b1b;
-  --fs-danger-foreground: #991b1b;
-  --fs-danger-bg: #fee2e2;
-  --fs-danger-border: #fca5a5;
-
-  /* Info: #1D4ED8 on #DBEAFE ≈ 5.49:1 (passes 4.5:1) */
-  --fs-info: #1d4ed8;
-  --fs-info-foreground: #1d4ed8;
-  --fs-info-bg: #dbeafe;
-  --fs-info-border: #93c5fd;
-
-  /*
-   * Muted text #64748B on #F1F5F9 fails (~4.34:1). Use secondary on subtle surfaces.
-   * Muted is for helper copy on white/canvas when contrast ≥ 4.5:1.
-   */
-  --fs-muted-foreground: #64748b;
-  --fs-disabled-foreground: #94a3b8;
-
-  /* Platform shell */
-  --fs-shell: var(--fs-graphite);
-  --fs-shell-raised: var(--fs-graphite-raised);
-  --fs-shell-border: var(--fs-graphite-border);
-  --fs-shell-foreground: #f8fafc;
-  --fs-shell-muted: #cbd5e1;
-  --fs-shell-active-marker: var(--fs-amber);
-
-  /* Typography */
-  --fs-font-sans:
-    'Geist Variable', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica,
-    Arial, sans-serif;
-  --fs-text-xs: 0.75rem;
-  --fs-text-sm: 0.875rem;
-  --fs-text-base: 1rem;
-  --fs-text-lg: 1.125rem;
-  --fs-text-xl: 1.25rem;
-  --fs-text-2xl: 1.5rem;
-  --fs-text-3xl: 1.875rem;
-  --fs-text-page-title: 1.75rem; /* 28px */
-  --fs-text-page-title-sm: 1.5rem; /* 24px mobile */
-  --fs-leading-tight: 1.25;
-  --fs-leading-normal: 1.5;
-  --fs-leading-relaxed: 1.625;
-
-  /* Spacing (4px base) — V3 scale */
-  --fs-space-1: 0.25rem; /* 4 */
-  --fs-space-2: 0.5rem; /* 8 */
-  --fs-space-3: 0.75rem; /* 12 */
-  --fs-space-4: 1rem; /* 16 */
-  --fs-space-5: 1.25rem; /* 20 */
-  --fs-space-6: 1.5rem; /* 24 */
-  --fs-space-8: 2rem; /* 32 */
-  --fs-space-10: 2.5rem; /* 40 */
-  --fs-space-12: 3rem; /* 48 */
-  --fs-space-14: 3.5rem; /* 56 */
-  --fs-space-16: 4rem; /* 64 */
-  --fs-space-20: 5rem; /* 80 */
-  --fs-content-max: 97.5rem; /* 1560px */
-  --fs-auth-max: 26.25rem; /* 420px */
-  --fs-shell-width: 15.75rem; /* 252px */
-  --fs-topbar-height: 4rem; /* 64px */
-
-  /* Radii */
-  --fs-radius-card: 0.875rem; /* 14px */
-  --fs-radius-control: 0.5625rem; /* 9px inputs */
-  --fs-radius-dialog: 1rem; /* 16px */
-  --fs-radius-menu: 0.75rem; /* 12px */
-  --fs-radius-pill: 9999px;
-
-  /* Elevation — one soft overlay; cards prefer 1px border */
-  --fs-shadow-card: 0 1px 2px rgb(15 23 42 / 4%);
-  --fs-shadow-overlay: 0 8px 24px rgb(15 23 42 / 12%);
-
-  /* Motion */
-  --fs-duration-fast: 120ms;
-  --fs-duration-normal: 180ms;
-  --fs-ease: cubic-bezier(0.4, 0, 0.2, 1);
-
-  /* Breakpoint intents (Tailwind defaults): sm 640, md 768, lg 1024, xl 1280, 2xl 1536 */
+.dark {
+  --background: #111827;
+  --foreground: #f8fafc;
+  --card: #1f2937;
+  --card-foreground: #f8fafc;
+  --popover: #1f2937;
+  --popover-foreground: #f8fafc;
+  --primary: #f59e0b;
+  --primary-foreground: #111827;
+  --primary-hover: #d97706;
+  --secondary: #374151;
+  --secondary-foreground: #f8fafc;
+  --muted: #374151;
+  --muted-foreground: #94a3b8;
+  --accent: #374151;
+  --accent-foreground: #f8fafc;
+  --destructive: #dc2626;
+  --border: #374151;
+  --input: #94a3b8;
+  --ring: #d97706;
+  --sidebar: #111827;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-primary: #f59e0b;
+  --sidebar-primary-foreground: #111827;
+  --sidebar-accent: #1f2937;
+  --sidebar-accent-foreground: #f8fafc;
+  --sidebar-border: #374151;
+  --sidebar-ring: #f59e0b;
+  --success: #16a34a;
+  --success-foreground: #dcfce7;
+  --warning: #d97706;
+  --info: #2563eb;
+  --blueprint: #2563eb;
 }

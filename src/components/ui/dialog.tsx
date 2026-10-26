@@ -1,9 +1,11 @@
-import { cn } from 'cn';
-import { XIcon } from 'lucide-react';
-import { Dialog as DialogPrimitive } from 'radix-ui';
+'use client';
+
 import * as React from 'react';
+import { cn } from 'cn';
+import { Dialog as DialogPrimitive } from 'radix-ui';
 
 import { Button } from '@/components/ui/button';
+import { XIcon } from 'lucide-react';
 
 function Dialog({
   ...props
@@ -143,7 +145,7 @@ function DialogDescription({
     <DialogPrimitive.Description
       data-slot="dialog-description"
       className={cn(
-        'text-foreground-secondary *:[a]:hover:text-foreground text-sm *:[a]:underline *:[a]:underline-offset-3',
+        'text-muted-foreground *:[a]:hover:text-foreground text-sm *:[a]:underline *:[a]:underline-offset-3',
         className,
       )}
       {...props}

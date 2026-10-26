@@ -1,36 +1,21 @@
 # FortSite design system
 
-**Phase:** 03 (tokens) + UI redesign checkpoint (V3 shell and page grammar)  
-**Status:** Active visual contract for screens through Phase 10.  
-**Token source of truth:** [`src/styles/tokens.css`](../../src/styles/tokens.css)
+**Visual source:** [ByteMeTechNP/fortsite](https://github.com/ByteMeTechNP/fortsite) `e11188e22570c17ab8939e1c6acaa4e8a0bb2032`  
+**Token source of truth:** [`src/styles/tokens.css`](../../src/styles/tokens.css)  
+**Parity notes:** [`docs/ui-reference-parity/reference-source.md`](../ui-reference-parity/reference-source.md)
 
-This guide is for developers building FortSite screens. Brand hex values live only
-in `tokens.css`. Components consume semantic CSS variables and Tailwind utilities.
+Brand hex values live only in `tokens.css`, copied from the pinned reference
+`src/index.css`. Components consume semantic CSS variables and Tailwind utilities.
 
-## Brand anchors
+Documented contrast fixes (reference intent kept):
 
-| Token | Value | Use |
-|---|---|---|
-| Construction Amber | `#F59E0B` | Primary action surface |
-| Amber soft | `#FEF3C7` | Soft amber wash |
-| Graphite | `#1F2937` | Platform shell; primary-button text |
-| Graphite raised | `#374151` | Active shell nav item |
-| Blueprint Blue | `#2563EB` | Opt-in text links and focus rings |
-| Primary text | `#0F172A` | Body / page titles |
-| Secondary text | `#475569` | Captions; required on subtle surfaces |
-| Muted text | `#64748B` | Helper copy on white/canvas only (≥4.5:1) |
-| Canvas | `#F8FAFC` | Page background |
-| Surface | `#FFFFFF` | Cards, dialogs, inputs |
-| Surface subtle | `#F1F5F9` | Muted panels |
-| Separator | `#CBD5E1` | Non-interactive separators only |
-| Input border | `#64748B` | Interactive control edges (non-text ≥3:1) |
-| Info | `#1D4ED8` on `#DBEAFE` | Info badges (~5.49:1) |
+- Input border `#64748B` instead of reference `#E2E8F0` (1.23:1 on white, fails 3:1).
+- Focus ring `#D97706` instead of reference `#F59E0B` (2.15:1 on white, fails 3:1). `#D97706` on white is 3.19:1.
+- Status and error text on pale fills uses `#166534` / `#991B1B`. Reference `#16A34A` on `#DCFCE7` is 3.00:1, and `#DC2626` on `#FEE2E2` is 3.95:1.
+- Decorative border stays `#E2E8F0`.
+- Muted `#64748B` on `#F1F5F9` is 4.34:1. Use it on white or canvas (`#F8FAFC`, 4.55:1), not on the muted fill.
 
-Primary buttons use Amber with Graphite text. Never use white text on Amber.
-
-Do not use muted `#64748B` on subtle `#F1F5F9` for readable captions (~4.34:1 fails).
-Use `text-foreground-secondary` (`#475569`) there. Separator `#CBD5E1` is not an
-input, button, or focus edge.
+Primary buttons are Amber `#F59E0B` with text `#111827`. Never use white text on Amber.
 
 ## Link rule
 
@@ -42,12 +27,12 @@ and button-as-link patterns must stay ununderlined. Real text links opt in with
 
 Prefer semantic utilities:
 
-- `bg-background`, `text-foreground`, `text-foreground-secondary`, `bg-card`
-- `text-muted-foreground` only on white/canvas when contrast passes
+- `bg-background`, `text-foreground`, `bg-card`
+- `text-muted-foreground` on white or canvas. It fails 4.5:1 on `#F1F5F9`.
 - `bg-primary`, `text-primary-foreground`
 - `border-border` (separators), `border-input` (controls)
 - `text-link`, `ring-ring`
-- Shell: `bg-shell`, `text-shell-foreground`, `bg-shell-raised`
+- Shell: `bg-sidebar`, `text-sidebar-foreground`, `bg-sidebar-accent`
 - Status: `bg-success-bg`, `text-success-foreground`, and the matching warning,
   danger, and info pairs
 
@@ -56,31 +41,31 @@ add it in `tokens.css` and map it in `src/styles/index.css`.
 
 ## Platform shell
 
-[`PlatformLayout`](../../src/features/platform/layout/PlatformLayout.tsx) is Graphite,
-252px expanded on desktop, with a Dialog drawer on mobile/tablet. There is no
-collapsed icon rail. Page titles live in [`PageHeader`](../../src/components/layout/PageHeader.tsx),
-not the 64px white top bar. Nav: Overview, Companies, Plans, Subscriptions only.
-There is no company workspace shell through Phase 10.
+[`PlatformLayout`](../../src/features/platform/layout/PlatformLayout.tsx) follows the
+reference Super Admin shell: Graphite sidebar `w-64`, header `h-16`, Hammer tile,
+and a `w-72` sheet below `md`. Mounted nav is Overview, Companies, Plans, and
+Subscriptions. The copied company-admin shell is not routed.
 
 ## Typography and spacing
 
-- Font: Geist Variable with a system fallback.
-- Page title: 28px / 600 (24px on small screens) via `PageHeader`.
-- Prefer tabular numbers for dense numeric columns only.
-- Spacing scale: 4, 8, 12, 16, 20, 24, 32, 40, 48, 56, 64, 80.
-- Content max width is `--fs-content-max` (~1560px). Auth card ~420px.
+- Font: Geist Variable (`--font-sans: "Geist Variable", sans-serif`).
+- Page title: `text-2xl font-semibold tracking-tight`.
+- Description: `mt-1 max-w-2xl text-sm text-muted-foreground`.
+- Sidebar groups: `text-[11px] tracking-[0.14em] uppercase`.
+- Nav: `text-sm rounded-full px-3 py-2`, icons `size-4`.
+- Prefer tabular numbers for money and counts. NPR and INR are never summed.
 
 ## Radii
 
-Buttons pill; cards 14px; inputs 9px; dialogs 16px; badges pill.
+Buttons and inputs are pills. Cards and dialogs use `rounded-xl`. Radius token is `0.875rem`.
 
 ## Buttons
 
 Use `@/components/ui/button`.
 
-- Shape: pill (`rounded-full`) for buttons only.
-- Variants: default (primary), secondary, outline, ghost, destructive, link.
-- Sizes: `sm` (dense desktop), `default` and `lg` (about 40–44px tall), plus icon sizes.
+- Shape: pill (`rounded-full`).
+- Variants: default (primary), secondary, outline, ghost, destructive (tint), link.
+- Sizes: default `h-8`, `sm` `h-7`, `lg` `h-9`, `xs` `h-6`, plus icon sizes.
 - Loading: set `loading` so the control is disabled and `aria-busy`.
 - Default `type` is `button`. Set `type="submit"` only for real form submits.
 - Icon-only buttons need an accessible name.
@@ -89,7 +74,7 @@ Use `@/components/ui/button`.
 
 - Labels use the `Label` primitive with `htmlFor`.
 - Invalid fields need `aria-invalid` and a text error via `aria-describedby`.
-- Tables: white bordered wrapper, ~48px rows, title-case headers, right-aligned amounts.
+- Tables: `text-sm`, header `h-10 px-2`, cell `p-2`, row `border-b hover:bg-muted/50`.
 - Badges and alerts always include text. Color is never the only signal.
 - Dialogs use the local Radix-based `Dialog` primitive.
 

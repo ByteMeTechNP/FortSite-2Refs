@@ -51,18 +51,22 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 
 const palette = [
-  { name: 'Construction Amber', token: '--fs-amber', hex: '#F59E0B' },
-  { name: 'Graphite', token: '--fs-graphite', hex: '#1F2937' },
-  { name: 'Primary text', token: '--fs-foreground', hex: '#0F172A' },
-  { name: 'Secondary text', token: '--fs-foreground-secondary', hex: '#475569' },
-  { name: 'Muted text', token: '--fs-muted-foreground', hex: '#64748B' },
-  { name: 'Blueprint Blue', token: '--fs-blueprint', hex: '#2563EB' },
-  { name: 'Canvas', token: '--fs-canvas', hex: '#F8FAFC' },
-  { name: 'Surface', token: '--fs-surface', hex: '#FFFFFF' },
-  { name: 'Surface subtle', token: '--fs-surface-subtle', hex: '#F1F5F9' },
-  { name: 'Separator', token: '--fs-separator', hex: '#CBD5E1' },
-  { name: 'Input border', token: '--fs-input-border', hex: '#64748B' },
-  { name: 'Info', token: '--fs-info', hex: '#1D4ED8' },
+  { name: 'Construction Amber', token: '--primary', hex: '#F59E0B' },
+  {
+    name: 'Primary text on amber',
+    token: '--primary-foreground',
+    hex: '#111827',
+  },
+  { name: 'Graphite sidebar', token: '--sidebar', hex: '#1F2937' },
+  { name: 'Page text', token: '--foreground', hex: '#0F172A' },
+  { name: 'Muted text', token: '--muted-foreground', hex: '#64748B' },
+  { name: 'Blueprint', token: '--blueprint', hex: '#2563EB' },
+  { name: 'Canvas', token: '--background', hex: '#F8FAFC' },
+  { name: 'Surface', token: '--card', hex: '#FFFFFF' },
+  { name: 'Muted surface', token: '--muted', hex: '#F1F5F9' },
+  { name: 'Border', token: '--border', hex: '#E2E8F0' },
+  { name: 'Input border', token: '--input', hex: '#64748B' },
+  { name: 'Focus ring', token: '--ring', hex: '#D97706' },
 ] as const;
 
 const sampleRows = [
@@ -87,13 +91,13 @@ export function DesignSystemPage() {
   return (
     <main className="mx-auto flex w-full max-w-[var(--fs-content-max)] flex-col gap-10 px-4 py-8 sm:px-6 lg:px-8">
       <header className="flex flex-col gap-3">
-        <p className="text-foreground-secondary text-sm font-medium tracking-wide uppercase">
+        <p className="text-muted-foreground text-sm font-medium tracking-wide uppercase">
           Development only
         </p>
-        <h1 className="text-foreground text-3xl font-semibold">
+        <h1 className="text-foreground text-2xl font-semibold tracking-tight">
           FortSite Design System — Development Preview
         </h1>
-        <p className="text-foreground-secondary max-w-3xl text-base leading-relaxed">
+        <p className="text-muted-foreground max-w-3xl text-base leading-relaxed">
           This gallery demonstrates shared UI components and styles only.
           Examples are illustrative; nothing here is saved or connected to
           production data.
@@ -115,7 +119,7 @@ export function DesignSystemPage() {
           {palette.map((swatch) => (
             <div
               key={swatch.token}
-              className="border-border bg-card overflow-hidden rounded-[length:var(--fs-radius-card)] border shadow-[var(--fs-shadow-card)]"
+              className="border-border bg-card overflow-hidden rounded-xl border"
             >
               <div
                 className="border-border h-16 border-b"
@@ -126,10 +130,10 @@ export function DesignSystemPage() {
                 <span className="text-foreground font-medium">
                   {swatch.name}
                 </span>
-                <span className="text-foreground-secondary font-mono text-xs">
+                <span className="text-muted-foreground font-mono text-xs">
                   {swatch.token}
                 </span>
-                <span className="text-foreground-secondary font-mono text-xs">
+                <span className="text-muted-foreground font-mono text-xs">
                   {swatch.hex}
                 </span>
               </div>
@@ -139,15 +143,15 @@ export function DesignSystemPage() {
       </Section>
 
       <Section title="Typography">
-        <div className="border-border bg-card flex flex-col gap-3 rounded-[length:var(--fs-radius-card)] border p-4 shadow-[var(--fs-shadow-card)]">
-          <h1 className="text-3xl font-semibold">Page title</h1>
+        <div className="border-border bg-card flex flex-col gap-3 rounded-xl border p-4">
+          <h1 className="text-2xl font-semibold tracking-tight">Page title</h1>
           <h2 className="text-xl font-semibold">Section title</h2>
           <h3 className="text-lg font-semibold">Subsection title</h3>
           <p className="text-base leading-relaxed">
             Body text uses primary `#0F172A` on Canvas or Surface with a
             readable line height.
           </p>
-          <p className="text-foreground-secondary text-sm">
+          <p className="text-muted-foreground text-sm">
             Captions use secondary `#475569` (required on subtle surfaces).
             Muted `#64748B` is only for helpers on white or canvas.
           </p>
@@ -183,7 +187,7 @@ export function DesignSystemPage() {
               With icon
             </Button>
           </div>
-          <p className="text-foreground-secondary text-sm">
+          <p className="text-muted-foreground text-sm">
             Default and large buttons use a 44px-tall target. Small is a denser
             desktop size.
           </p>
@@ -224,17 +228,13 @@ export function DesignSystemPage() {
           <div className="grid gap-2">
             <Label htmlFor="gallery-name">Sample name</Label>
             <Input id="gallery-name" placeholder="Example value" />
-            <p
-              id="gallery-name-hint"
-              className="text-foreground-secondary text-sm"
-            >
+            <p id="gallery-name-hint" className="text-muted-foreground text-sm">
               Helper text stays associated with the field visually.
             </p>
           </div>
           <div className="grid gap-2">
             <Label htmlFor="gallery-notes">
-              Notes{' '}
-              <span className="text-foreground-secondary">(required)</span>
+              Notes <span className="text-muted-foreground">(required)</span>
             </Label>
             <Textarea
               id="gallery-notes"
@@ -309,12 +309,12 @@ export function DesignSystemPage() {
       </Section>
 
       <Section title="Table">
-        <p className="text-foreground-secondary text-sm">
+        <p className="text-muted-foreground text-sm">
           Fictitious example rows only. On narrow widths, scroll inside the
           table region.
         </p>
         <div
-          className="border-border w-full overflow-x-auto rounded-[length:var(--fs-radius-card)] border"
+          className="border-border w-full overflow-x-auto rounded-xl border"
           role="region"
           aria-label="Example data table"
           tabIndex={0}
@@ -365,7 +365,7 @@ export function DesignSystemPage() {
       </Section>
 
       <Section title="Navigation examples">
-        <p className="text-foreground-secondary text-sm">
+        <p className="text-muted-foreground text-sm">
           Generic section labels only. These are not product role menus.
         </p>
         <Breadcrumb>
@@ -394,13 +394,13 @@ export function DesignSystemPage() {
           </TabsList>
           <TabsContent
             value="one"
-            className="text-foreground-secondary pt-3 text-sm"
+            className="text-muted-foreground pt-3 text-sm"
           >
             First sample tab panel.
           </TabsContent>
           <TabsContent
             value="two"
-            className="text-foreground-secondary pt-3 text-sm"
+            className="text-muted-foreground pt-3 text-sm"
           >
             Second sample tab panel.
           </TabsContent>
@@ -426,7 +426,7 @@ export function DesignSystemPage() {
               Tailwind breakpoints: sm 640, md 768, lg 1024, xl 1280, 2xl 1536.
             </CardDescription>
           </CardHeader>
-          <CardContent className="text-foreground-secondary text-sm">
+          <CardContent className="text-muted-foreground text-sm">
             Resize this page. The palette grid collapses, the table scrolls
             inside its region, and dialogs stay within the viewport. Reduced
             motion preferences disable non-essential animation.

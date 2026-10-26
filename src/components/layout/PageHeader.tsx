@@ -11,10 +11,6 @@ type PageHeaderProps = Readonly<{
   className?: string;
 }>;
 
-/**
- * Shared page grammar: optional breadcrumb, title, one-line subtitle, actions.
- * Title is 28px/600 (24px on small screens). Page title lives here, not in the top bar.
- */
 export function PageHeader({
   eyebrow,
   title,
@@ -24,35 +20,25 @@ export function PageHeader({
   className,
 }: PageHeaderProps) {
   return (
-    <header
+    <div
       className={cn(
-        'flex flex-wrap items-start justify-between gap-4',
+        'mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between',
         className,
       )}
     >
-      <div className="flex min-w-0 flex-1 flex-col gap-2">
-        {breadcrumb ? (
-          <div className="text-foreground-secondary text-sm">{breadcrumb}</div>
-        ) : null}
-        {eyebrow ? (
-          <p className="text-foreground-secondary text-sm font-medium tracking-wide uppercase">
-            {eyebrow}
-          </p>
-        ) : null}
-        <h1 className="text-foreground text-2xl font-semibold tracking-tight sm:text-[length:var(--fs-text-page-title)]">
+      <div className="min-w-0">
+        {breadcrumb}
+        {eyebrow ? <p className="sr-only">{eyebrow}</p> : null}
+        <h1 className="text-foreground text-2xl font-semibold tracking-tight">
           {title}
         </h1>
         {description ? (
-          <p className="text-foreground-secondary max-w-2xl text-sm leading-relaxed">
+          <p className="text-muted-foreground mt-1 max-w-2xl text-sm">
             {description}
           </p>
         ) : null}
       </div>
-      {actions ? (
-        <div className="flex shrink-0 flex-wrap items-center gap-2">
-          {actions}
-        </div>
-      ) : null}
-    </header>
+      {actions ? <div className="flex flex-wrap gap-2">{actions}</div> : null}
+    </div>
   );
 }

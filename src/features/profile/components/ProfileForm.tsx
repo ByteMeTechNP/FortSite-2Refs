@@ -74,9 +74,7 @@ export function ProfileForm({ userId }: ProfileFormProps) {
   }
 
   if (loading) {
-    return (
-      <p className="text-foreground-secondary text-sm">Loading profile…</p>
-    );
+    return <p className="text-muted-foreground text-sm">Loading profile…</p>;
   }
 
   return (
@@ -87,7 +85,7 @@ export function ProfileForm({ userId }: ProfileFormProps) {
       }}
       noValidate
     >
-      <div className="flex flex-col gap-2">
+      <div className="grid gap-2">
         <Label htmlFor={fullNameId}>Full name</Label>
         <Input
           id={fullNameId}
@@ -97,7 +95,7 @@ export function ProfileForm({ userId }: ProfileFormProps) {
           disabled={saving || missingTable}
         />
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="grid gap-2">
         <Label htmlFor={displayNameId}>Display name</Label>
         <Input
           id={displayNameId}
@@ -121,7 +119,7 @@ export function ProfileForm({ userId }: ProfileFormProps) {
         </Alert>
       ) : null}
       {profile ? (
-        <p className="text-foreground-secondary text-xs">
+        <p className="text-muted-foreground text-xs">
           Profile row present. Updated{' '}
           {new Date(profile.updatedAt).toLocaleString()}.
         </p>

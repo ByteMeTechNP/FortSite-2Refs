@@ -121,7 +121,7 @@ export function PlanDetailView({
   }
 
   return (
-    <main className="flex flex-col gap-8 px-4 py-6 sm:px-6 sm:py-8">
+    <main className="flex flex-col gap-6">
       <PageHeader
         breadcrumb={
           <Link
@@ -144,7 +144,7 @@ export function PlanDetailView({
 
       <section className="flex flex-col gap-4">
         <h3 className="text-lg font-semibold">Versions</h3>
-        <p className="text-foreground-secondary text-sm">
+        <p className="text-muted-foreground text-sm">
           Published commercial terms are immutable. A change creates a new
           version. Existing subscriptions keep their snapshot.
         </p>
@@ -162,17 +162,17 @@ export function PlanDetailView({
           {detail.versions.map((version) => (
             <li
               key={version.id}
-              className="border-border rounded-[length:var(--fs-radius-card)] border p-4 text-sm"
+              className="border-border rounded-xl border p-4 text-sm"
             >
               <p className="font-medium">
                 Version {version.version_number} · {version.status}
               </p>
-              <p className="text-foreground-secondary mt-1">
+              <p className="text-muted-foreground mt-1">
                 {version.registration_country} / {version.currency} /{' '}
                 {version.billing_interval} / {version.price_kind}{' '}
                 {version.amount}
               </p>
-              <p className="text-foreground-secondary mt-1">
+              <p className="text-muted-foreground mt-1">
                 Trial {version.trial_days} days · Grace {version.grace_days}{' '}
                 days
               </p>

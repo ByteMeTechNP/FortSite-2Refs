@@ -7,6 +7,8 @@ import { EmptyState } from '@/components/states/EmptyState';
 import { ErrorState } from '@/components/states/ErrorState';
 import { LoadingState } from '@/components/states/LoadingState';
 import { Badge } from '@/components/ui/badge';
+import { StatusBadge } from '@/components/shared/status-badge';
+import { Label } from '@/components/ui/label';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -65,7 +67,7 @@ export function PlatformCompaniesPage() {
   }, [state, filter, country, query]);
 
   return (
-    <main className="flex flex-col gap-8 px-4 py-6 sm:px-6 sm:py-8">
+    <main className="flex flex-col gap-6">
       <PageHeader
         eyebrow="Companies"
         title="Company directory"
@@ -104,10 +106,11 @@ export function PlatformCompaniesPage() {
         </p>
       ) : null}
 
-      <div className="flex flex-wrap items-end gap-3">
-        <label className="text-foreground-secondary flex flex-col gap-1 text-sm">
-          Search
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-2">
+          <Label htmlFor="company-search">Search</Label>
           <Input
+            id="company-search"
             aria-label="Search companies"
             value={params.get('q') ?? ''}
             onChange={(event) => {
@@ -120,12 +123,13 @@ export function PlatformCompaniesPage() {
               setParams(next);
             }}
           />
-        </label>
-        <label className="text-foreground-secondary flex flex-col gap-1 text-sm">
-          Country
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="company-country">Country</Label>
           <select
+            id="company-country"
             aria-label="Country"
-            className="border-input bg-card h-10 rounded-[length:var(--fs-radius-control)] border px-3 md:h-11"
+            className="border-input focus-visible:border-ring focus-visible:ring-ring/50 h-9 w-full min-w-40 rounded-full border bg-transparent px-3 text-sm outline-none focus-visible:ring-3"
             value={country ?? ''}
             onChange={(event) => {
               const next = new URLSearchParams(params);
@@ -141,7 +145,7 @@ export function PlatformCompaniesPage() {
             <option value="Nepal">Nepal</option>
             <option value="India">India</option>
           </select>
-        </label>
+        </div>
       </div>
 
       {state.status === 'idle' || state.status === 'loading' ? (
@@ -171,7 +175,7 @@ export function PlatformCompaniesPage() {
       ) : null}
 
       {state.status === 'ready' && rows.length > 0 ? (
-        <div className="border-border overflow-x-auto rounded-[length:var(--fs-radius-card)] border">
+        <div className="border-border bg-card overflow-hidden rounded-xl border">
           <Table>
             <TableHeader>
               <TableRow>
@@ -200,11 +204,9 @@ export function PlatformCompaniesPage() {
                   </TableCell>
                   <TableCell>{company.registration_country}</TableCell>
                   <TableCell>
-                    <Badge variant="secondary">
-                      {company.lifecycle_status}
-                    </Badge>
+                    <StatusBadge value={company.lifecycle_status} />
                   </TableCell>
-                  <TableCell className="text-foreground-secondary text-xs">
+                  <TableCell className="text-muted-foreground text-xs">
                     {new Date(company.created_at).toLocaleString()}
                   </TableCell>
                 </TableRow>
@@ -212,16 +214,16 @@ export function PlatformCompaniesPage() {
             </TableBody>
           </Table>
           {filter && !country && !query ? (
-            <p className="text-foreground-secondary px-4 py-3 text-xs">
+            <p className="text-muted-foreground px-4 py-3 text-xs">
               Showing {rows.length} of {state.data.counts[filter]} expected for
               this status.
             </p>
           ) : country || query ? (
-            <p className="text-foreground-secondary px-4 py-3 text-xs">
+            <p className="text-muted-foreground px-4 py-3 text-xs">
               Showing {rows.length} matching companies.
             </p>
           ) : (
-            <p className="text-foreground-secondary px-4 py-3 text-xs">
+            <p className="text-muted-foreground px-4 py-3 text-xs">
               Showing {rows.length} of {state.data.counts.total} companies.
             </p>
           )}

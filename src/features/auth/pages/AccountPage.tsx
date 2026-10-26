@@ -57,7 +57,7 @@ export function AccountPage() {
           <h2 className="text-foreground text-xl font-semibold">
             Subscription status
           </h2>
-          <p className="text-foreground-secondary text-sm">
+          <p className="text-muted-foreground text-sm">
             Read-only summary for your founding-admin company. Plan and payment
             changes stay with the Platform Owner.
           </p>
@@ -73,16 +73,16 @@ export function AccountPage() {
               return (
                 <li
                   key={item.company_code ?? item.legal_name}
-                  className="border-border rounded-[length:var(--fs-radius-card)] border p-3"
+                  className="border-border rounded-xl border p-3"
                 >
                   <p className="font-medium">
                     {item.legal_name} ({item.company_code})
                   </p>
-                  <p className="text-foreground-secondary">
+                  <p className="text-muted-foreground">
                     {item.plan_name ?? 'No plan'} ·{' '}
                     {item.effective_status ?? 'no subscription'}
                   </p>
-                  <p className="text-foreground-secondary mt-1">
+                  <p className="text-muted-foreground mt-1">
                     {item.access?.explanation ??
                       (item.access?.allowed
                         ? 'Eligible'
@@ -108,7 +108,7 @@ export function AccountPage() {
 
       <section className="flex flex-col gap-4">
         <h2 className="text-foreground text-xl font-semibold">Profile</h2>
-        <p className="text-foreground-secondary text-sm">
+        <p className="text-muted-foreground text-sm">
           Profile fields are optional display details for this Auth user only.
           They are not a source of roles or tenant access.
         </p>

@@ -11,6 +11,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { buttonVariants } from '@/components/ui/button';
 import { EmptyState } from '@/components/states/EmptyState';
 import { LoadingState } from '@/components/states/LoadingState';
+import { CurrencyAmount } from '@/components/shared/currency-amount';
+import { PlansSubscriptionsTabs } from '@/features/platform/subscriptions/PlansSubscriptionsTabs';
 import {
   Table,
   TableBody,
@@ -103,12 +105,13 @@ export function SubscriptionsPage({
   }, [api, statusFilter]);
 
   return (
-    <main className="flex flex-col gap-8 px-4 py-6 sm:px-6 sm:py-8">
+    <main className="flex flex-col gap-6">
       <PageHeader
         eyebrow="Subscriptions"
         title="Company subscriptions"
         description="Current terms only. Eligibility uses company lifecycle and subscription status together. Payments never extend a term by themselves."
       />
+      <PlansSubscriptionsTabs active="subscriptions" />
 
       <div className="flex flex-wrap gap-2">
         <button
@@ -154,7 +157,7 @@ export function SubscriptionsPage({
         />
       ) : null}
       {!loading && !error && rows.length > 0 ? (
-        <div className="border-border overflow-x-auto rounded-[length:var(--fs-radius-card)] border">
+        <div className="border-border bg-card overflow-hidden rounded-xl border">
           <Table>
             <TableHeader>
               <TableRow>
@@ -175,7 +178,7 @@ export function SubscriptionsPage({
                     >
                       {row.company_code}
                     </Link>
-                    <div className="text-foreground-secondary">
+                    <div className="text-muted-foreground">
                       <Link
                         className="text-link hover:underline"
                         to={platformCompanyPath(row.company_id)}
@@ -187,14 +190,17 @@ export function SubscriptionsPage({
                   </TableCell>
                   <TableCell>
                     {row.plan_name}
-                    <div className="text-foreground-secondary font-mono text-xs">
+                    <div className="text-muted-foreground font-mono text-xs">
                       {row.plan_code}
                     </div>
                   </TableCell>
                   <TableCell>{row.effective_status}</TableCell>
                   <TableCell>{row.term_interval}</TableCell>
                   <TableCell className="text-right tabular-nums">
-                    {row.amount} {row.billing_currency}
+                    <CurrencyAmount
+                      amount={row.amount}
+                      currency={row.billing_currency}
+                    />
                   </TableCell>
                 </TableRow>
               ))}

@@ -29,7 +29,7 @@ export function ResetPasswordPage() {
         title="Set a new password"
         description="Checking the recovery session…"
       >
-        <p className="text-foreground-secondary text-sm">Loading…</p>
+        <p className="text-muted-foreground text-sm">Loading…</p>
       </AuthPageShell>
     );
   }
@@ -115,7 +115,7 @@ export function ResetPasswordPage() {
         }}
         noValidate
       >
-        <div className="flex flex-col gap-2">
+        <div className="grid gap-2">
           <Label htmlFor={passwordId}>New password</Label>
           <Input
             id={passwordId}
@@ -128,7 +128,7 @@ export function ResetPasswordPage() {
             required
           />
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="grid gap-2">
           <Label htmlFor={confirmId}>Confirm password</Label>
           <Input
             id={confirmId}

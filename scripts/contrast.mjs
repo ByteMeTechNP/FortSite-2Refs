@@ -40,7 +40,7 @@ const pairs = [
   },
   {
     name: 'Primary text on Construction Amber (primary button)',
-    fg: '#1F2937',
+    fg: '#111827',
     bg: '#F59E0B',
     threshold: 4.5,
   },
@@ -103,7 +103,7 @@ const pairs = [
   {
     name: 'Secondary button Graphite on secondary surface',
     fg: '#1F2937',
-    bg: '#E5E7EB',
+    bg: '#F1F5F9',
     threshold: 4.5,
   },
   {
@@ -113,10 +113,31 @@ const pairs = [
     threshold: 4.5,
   },
   {
-    name: 'Destructive button white on danger red',
-    fg: '#FFFFFF',
-    bg: '#DC2626',
+    name: 'Reference destructive text on pale red (fails 4.5:1)',
+    fg: '#DC2626',
+    bg: '#FEE2E2',
     threshold: 4.5,
+    expectFail: true,
+  },
+  {
+    name: 'Reference success text on pale green (fails 4.5:1)',
+    fg: '#16A34A',
+    bg: '#DCFCE7',
+    threshold: 4.5,
+    expectFail: true,
+  },
+  {
+    name: 'Reference amber ring on Surface (fails 3:1)',
+    fg: '#F59E0B',
+    bg: '#FFFFFF',
+    threshold: 3,
+    expectFail: true,
+  },
+  {
+    name: 'Applied focus ring on Surface (non-text UI)',
+    fg: '#D97706',
+    bg: '#FFFFFF',
+    threshold: 3,
   },
   {
     name: 'Success badge text on success background',
@@ -175,7 +196,7 @@ const pairs = [
     threshold: 3,
   },
   {
-    name: 'Blueprint focus ring on Surface (non-text UI)',
+    name: 'Blueprint link on Surface (non-text, also a link color)',
     fg: '#2563EB',
     bg: '#FFFFFF',
     threshold: 3,

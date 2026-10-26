@@ -1,9 +1,14 @@
 import type { ReactNode } from 'react';
-import { Boxes } from 'lucide-react';
+import { Hammer } from 'lucide-react';
 import { Link } from 'react-router';
 
 import { ROUTE_PATHS } from '@/app/route-paths';
-import { appEnv } from '@/config/env';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+} from '@/components/ui/card';
 
 type AuthPageShellProps = Readonly<{
   title: string;
@@ -17,34 +22,26 @@ export function AuthPageShell({
   children,
 }: AuthPageShellProps) {
   return (
-    <main className="bg-background flex min-h-svh flex-col items-center justify-center px-4 py-12">
-      <div className="border-border bg-card flex w-full max-w-[length:var(--fs-auth-max)] flex-col gap-6 rounded-[length:var(--fs-radius-card)] border p-6 sm:p-8">
-        <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-2.5">
-            <span
-              className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-lg"
-              aria-hidden="true"
-            >
-              <Boxes className="size-4" strokeWidth={1.75} />
-            </span>
-            <p className="text-foreground text-sm font-semibold tracking-tight">
-              {appEnv.appName}
-            </p>
+    <main className="bg-background flex min-h-svh items-center justify-center p-4">
+      <Card className="w-full max-w-md shadow-sm">
+        <CardHeader>
+          <div className="bg-primary text-primary-foreground mb-2 flex size-10 items-center justify-center rounded-lg">
+            <Hammer className="size-5" aria-hidden="true" />
           </div>
-          <h1 className="text-foreground text-2xl font-semibold tracking-tight">
+          <h1 className="font-heading text-base leading-snug font-medium">
             {title}
           </h1>
-          <p className="text-foreground-secondary text-sm leading-relaxed">
-            {description}
+          <CardDescription>{description}</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          {children}
+          <p className="text-sm">
+            <Link to={ROUTE_PATHS.home} className="text-link hover:underline">
+              Back to foundation home
+            </Link>
           </p>
-        </div>
-        {children}
-        <p className="text-foreground-secondary text-sm">
-          <Link to={ROUTE_PATHS.home} className="text-link hover:underline">
-            Back to foundation home
-          </Link>
-        </p>
-      </div>
+        </CardContent>
+      </Card>
     </main>
   );
 }
