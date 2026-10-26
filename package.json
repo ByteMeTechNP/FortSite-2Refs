@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.2.0",
   "type": "module",
-  "description": "FortSite construction management and ERP — Phase 03 design system",
+  "description": "FortSite construction management and ERP — Phase 04 Supabase Cloud client",
   "engines": {
     "node": ">=24.22.1 <25"
   },
@@ -17,10 +17,12 @@
     "test:watch": "vitest",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "contrast": "node scripts/contrast.mjs"
+    "contrast": "node scripts/contrast.mjs",
+    "scan:secrets": "node scripts/scan-secrets.mjs"
   },
   "dependencies": {
     "@fontsource-variable/geist": "5.3.0",
+    "@supabase/supabase-js": "2.118.0",
     "class-variance-authority": "0.7.1",
     "cn": "0.5.0",
     "lucide-react": "1.61.0",

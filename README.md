@@ -7,19 +7,21 @@ apartments, villas, small townships, restaurants, hotels, and warehouses.
 
 ## Current status
 
-**Phase 03 — construction design system and 21st.dev component governance.**
+**Phase 04 — Supabase Cloud/MCP environments, migrations and deployment controls.**
 
 This repository currently contains:
 
 - Phase 01 product and architecture documentation under `docs/fortsite/`
 - A React 19 + Vite + TypeScript web application foundation
 - A light construction design system with a development-only component gallery
+- A browser Supabase client that uses only the public project URL and publishable key
 
-Business modules, authentication, role workspaces, and Supabase integration are
-**not implemented** yet. The root page is a labelled development scaffold only.
-It is not an operational dashboard.
+Business modules, authentication, and role workspaces are **not implemented**
+yet. The root page is a labelled development scaffold only. It is not an
+operational dashboard. Supabase Cloud is the backend host. This repository does
+not run a local Supabase stack.
 
-Canonical roadmap: [`FortSite_Fresh_Start_Master_Roadmap_V3.md`](FortSite_Fresh_Start_Master_Roadmap_V3.md).
+Canonical roadmap: [`FortSite_Fresh_Start_Master_Roadmap_V4_Cloud.md`](FortSite_Fresh_Start_Master_Roadmap_V4_Cloud.md).
 
 Phase documentation:
 
@@ -27,6 +29,11 @@ Phase documentation:
 - Design system guide: [`docs/fortsite/design-system.md`](docs/fortsite/design-system.md)
 - Phase 02 engineering record: [`docs/engineering/phase-02-bootstrap.md`](docs/engineering/phase-02-bootstrap.md)
 - Phase 03 engineering record: [`docs/engineering/phase-03-design-system.md`](docs/engineering/phase-03-design-system.md)
+- Phase 04 engineering record: [`docs/engineering/phase-04-supabase.md`](docs/engineering/phase-04-supabase.md)
+- Cloud operations: [`docs/fortsite/supabase-cloud-operations.md`](docs/fortsite/supabase-cloud-operations.md)
+- Migrations: [`docs/fortsite/migration-workflow.md`](docs/fortsite/migration-workflow.md)
+- Environment: [`docs/fortsite/environment-configuration.md`](docs/fortsite/environment-configuration.md)
+- Recovery: [`docs/fortsite/cloud-deployment-and-recovery.md`](docs/fortsite/cloud-deployment-and-recovery.md)
 - Status register: [`docs/fortsite/phase-status.md`](docs/fortsite/phase-status.md)
 
 Open the design-system gallery only while the development server is running:
@@ -56,7 +63,8 @@ git clone <repository-url>
 cd FortSite-2Refs
 nvm use
 npm ci
-cp .env.example .env   # optional; defaults work without a local .env
+cp .env.example .env.local
+# Paste the publishable key into .env.local. Do not commit that file.
 npm run dev
 ```
 
@@ -64,17 +72,19 @@ Open the printed local URL. You should see the development scaffold at `/`.
 
 ## Scripts
 
-| Script                 | Purpose                                      |
-| ---------------------- | -------------------------------------------- |
-| `npm run dev`          | Start the Vite development server            |
-| `npm run build`        | Typecheck, then create the production build  |
-| `npm run preview`      | Preview the production build locally         |
-| `npm run lint`         | Lint application, tests, and relevant config |
-| `npm run typecheck`    | Run TypeScript project-reference checks      |
-| `npm test`             | Run Vitest once (non-watch)                  |
-| `npm run test:watch`   | Run Vitest in watch mode                     |
-| `npm run format`       | Format files with Prettier                   |
-| `npm run format:check` | Verify formatting without rewriting files    |
+| Script                 | Purpose                                                    |
+| ---------------------- | ---------------------------------------------------------- |
+| `npm run dev`          | Start the Vite development server                          |
+| `npm run build`        | Typecheck, then create the production build                |
+| `npm run preview`      | Preview the production build locally                       |
+| `npm run lint`         | Lint application, tests, and relevant config               |
+| `npm run typecheck`    | Run TypeScript project-reference checks                    |
+| `npm test`             | Run Vitest once (non-watch)                                |
+| `npm run test:watch`   | Run Vitest in watch mode                                   |
+| `npm run format`       | Format files with Prettier                                 |
+| `npm run format:check` | Verify formatting without rewriting files                  |
+| `npm run contrast`     | Measure design-token contrast ratios                       |
+| `npm run scan:secrets` | Scan the build and tracked source for secret-like material |
 
 Verification sequence for a clean clone:
 
@@ -85,6 +95,7 @@ npm run lint
 npm run typecheck
 npm test
 npm run build
+npm run scan:secrets
 ```
 
 ## Source tree
@@ -125,27 +136,33 @@ client code. Never put service-role keys, database passwords, provider secrets,
 or government credentials in `VITE_*` variables, source, logs, or ordinary
 profiles.
 
-Phase 02 only validates:
+The app validates:
 
 - `VITE_APP_NAME` — defaults to `FortSite`
 - `VITE_APP_ENV` — `development`, `test`, or `production`; defaults to `development`
+- `VITE_SUPABASE_URL` — required public API URL
+- `VITE_SUPABASE_PUBLISHABLE_KEY` — required publishable key
 
-See [`.env.example`](.env.example). Commit `.env.example` only. Do not commit
-`.env` or `.env.local`.
+See [`.env.example`](.env.example) and
+[`docs/fortsite/environment-configuration.md`](docs/fortsite/environment-configuration.md).
+Commit `.env.example` only. Do not commit `.env` or `.env.local`.
 
-## Supabase destination
+## Supabase Cloud
 
-| Item         | Exact name           |
-| ------------ | -------------------- |
-| Organization | `FortSite - 2Merged` |
-| Project      | `FortSite - 2Merged` |
+| Item         | Value                                               |
+| ------------ | --------------------------------------------------- |
+| Organization | `FortSite - 2Merged`                                |
+| Project      | `FortSite - 2Merged`                                |
+| Project ref  | `rvfoveqprrtobmywaodf`                              |
+| API URL      | `https://rvfoveqprrtobmywaodf.supabase.co`          |
+| Role         | Fresh development target. Not a production project. |
 
-These are human-readable destination names only. Phase 02 did **not** link to,
-inspect, configure, or mutate that remote project. Phase 04 owns Supabase CLI,
-migration, and public client environment setup. Do not invent a project ref,
-URL, or API key.
+Cursor's Supabase MCP plugin is the management interface. Phase 04 verified
+that identity with read-only tools and did not migrate, seed, or deploy.
+Details: [`docs/fortsite/supabase-cloud-operations.md`](docs/fortsite/supabase-cloud-operations.md).
 
 ## Dependency chain
 
-Phase 02 depends on Phase 01 documentation. Phase 03 depends on Phase 02. Do not
-start later phases from this foundation until their own exit gates are met.
+Phase 02 depends on Phase 01 documentation. Phase 03 depends on Phase 02.
+Phase 04 depends on Phases 01–02. Do not start Phase 05 until its own exit
+gate is met.
