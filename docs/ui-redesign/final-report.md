@@ -61,4 +61,18 @@ Re-read on this branch:
 
 ## Browser verification
 
-Pending harness run at desktop and 375px (and additional widths where available). Results will be appended after manual checks.
+Harness available. Exercised:
+
+| Flow | Width | Result |
+|---|---|---|
+| Foundation home | desktop | PASS — anchors not globally underlined |
+| Login auth card | desktop | PASS — FortSite mark, ~420px card, amber primary with Graphite text (CSS `--fs-primary-foreground`), Blueprint `text-link` with hover underline only |
+| Login | 375px | PASS — usable card, no overflow |
+| Change-initial-password (signed out) | desktop | PASS — redirects to login (gate preserved) |
+| `/platform` (signed out) | desktop | PASS — redirects to login |
+| Design gallery | desktop | PASS — tokens and buttons visible |
+| Platform shell (authenticated) | — | BLOCKED — no live Platform Owner in this environment; shell verified via unit test + code review |
+
+Additional widths 430 / 768 / 1024 / 1366 / 1920: not separately captured; 375 and desktop covered. No Cloud writes.
+
+Artifacts: `ui-redesign-login-desktop.png`, `ui-redesign-login-375.png`, `ui-redesign-design-system.png`, `ui-redesign-v3-walkthrough.mp4`.

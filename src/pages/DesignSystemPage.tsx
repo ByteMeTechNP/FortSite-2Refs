@@ -53,15 +53,16 @@ import { Textarea } from '@/components/ui/textarea';
 const palette = [
   { name: 'Construction Amber', token: '--fs-amber', hex: '#F59E0B' },
   { name: 'Graphite', token: '--fs-graphite', hex: '#1F2937' },
+  { name: 'Primary text', token: '--fs-foreground', hex: '#0F172A' },
+  { name: 'Secondary text', token: '--fs-foreground-secondary', hex: '#475569' },
+  { name: 'Muted text', token: '--fs-muted-foreground', hex: '#64748B' },
   { name: 'Blueprint Blue', token: '--fs-blueprint', hex: '#2563EB' },
   { name: 'Canvas', token: '--fs-canvas', hex: '#F8FAFC' },
   { name: 'Surface', token: '--fs-surface', hex: '#FFFFFF' },
-  { name: 'Steel Border', token: '--fs-steel', hex: '#E2E8F0' },
-  {
-    name: 'Strong Border',
-    token: '--fs-border-strong',
-    hex: '#64748B',
-  },
+  { name: 'Surface subtle', token: '--fs-surface-subtle', hex: '#F1F5F9' },
+  { name: 'Separator', token: '--fs-separator', hex: '#CBD5E1' },
+  { name: 'Input border', token: '--fs-input-border', hex: '#64748B' },
+  { name: 'Info', token: '--fs-info', hex: '#1D4ED8' },
 ] as const;
 
 const sampleRows = [
@@ -143,11 +144,12 @@ export function DesignSystemPage() {
           <h2 className="text-xl font-semibold">Section title</h2>
           <h3 className="text-lg font-semibold">Subsection title</h3>
           <p className="text-base leading-relaxed">
-            Body text uses Graphite on Canvas or Surface with a readable line
-            height.
+            Body text uses primary `#0F172A` on Canvas or Surface with a
+            readable line height.
           </p>
           <p className="text-foreground-secondary text-sm">
-            Helper and caption text uses the muted foreground token.
+            Captions use secondary `#475569` (required on subtle surfaces).
+            Muted `#64748B` is only for helpers on white or canvas.
           </p>
           <p className="font-mono text-sm tabular-nums">
             Numeric sample: 1,234.50 · 98,765.00
