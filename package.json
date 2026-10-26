@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.2.0",
   "type": "module",
-  "description": "FortSite construction management and ERP — Phase 04 Supabase Cloud client",
+  "description": "FortSite construction management and ERP — Phase 05 Auth (in progress)",
   "engines": {
     "node": ">=24.22.1 <25"
   },

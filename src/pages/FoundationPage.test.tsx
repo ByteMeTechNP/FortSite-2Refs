@@ -1,11 +1,16 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
 import { describe, expect, it } from 'vitest';
 
 import { FoundationPage } from '@/pages/FoundationPage';
 
 describe('FoundationPage', () => {
   it('renders the development scaffold message', () => {
-    render(<FoundationPage />);
+    render(
+      <MemoryRouter>
+        <FoundationPage />
+      </MemoryRouter>,
+    );
 
     expect(
       screen.getByRole('heading', {
@@ -20,5 +25,6 @@ describe('FoundationPage', () => {
     expect(
       screen.getByText('Development scaffold', { exact: true }),
     ).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Sign in' })).toBeInTheDocument();
   });
 });

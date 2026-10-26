@@ -23,6 +23,12 @@ lerna-debug.log*
 *.dump
 *.sql.gz
 
+# Local Auth fixture credentials (never commit)
+.env.phase05-fixtures.local.json
+.env.phase05-fixtures.pending.json
+.env.*.fixtures.local.json
+.env.*.fixtures.pending.json
+
 # Editor and OS
 .vscode/*
 !.vscode/extensions.json
