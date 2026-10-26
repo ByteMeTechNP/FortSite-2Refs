@@ -51,17 +51,22 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 
 const palette = [
-  { name: 'Construction Amber', token: '--fs-amber', hex: '#F59E0B' },
-  { name: 'Graphite', token: '--fs-graphite', hex: '#1F2937' },
-  { name: 'Blueprint Blue', token: '--fs-blueprint', hex: '#2563EB' },
-  { name: 'Canvas', token: '--fs-canvas', hex: '#F8FAFC' },
-  { name: 'Surface', token: '--fs-surface', hex: '#FFFFFF' },
-  { name: 'Steel Border', token: '--fs-steel', hex: '#E2E8F0' },
+  { name: 'Construction Amber', token: '--primary', hex: '#F59E0B' },
   {
-    name: 'Strong Border',
-    token: '--fs-border-strong',
-    hex: '#64748B',
+    name: 'Primary text on amber',
+    token: '--primary-foreground',
+    hex: '#111827',
   },
+  { name: 'Graphite sidebar', token: '--sidebar', hex: '#1F2937' },
+  { name: 'Page text', token: '--foreground', hex: '#0F172A' },
+  { name: 'Muted text', token: '--muted-foreground', hex: '#64748B' },
+  { name: 'Blueprint', token: '--blueprint', hex: '#2563EB' },
+  { name: 'Canvas', token: '--background', hex: '#F8FAFC' },
+  { name: 'Surface', token: '--card', hex: '#FFFFFF' },
+  { name: 'Muted surface', token: '--muted', hex: '#F1F5F9' },
+  { name: 'Border', token: '--border', hex: '#E2E8F0' },
+  { name: 'Input border', token: '--input', hex: '#64748B' },
+  { name: 'Focus ring', token: '--ring', hex: '#D97706' },
 ] as const;
 
 const sampleRows = [
@@ -89,7 +94,7 @@ export function DesignSystemPage() {
         <p className="text-muted-foreground text-sm font-medium tracking-wide uppercase">
           Development only
         </p>
-        <h1 className="text-foreground text-3xl font-semibold">
+        <h1 className="text-foreground text-2xl font-semibold tracking-tight">
           FortSite Design System — Development Preview
         </h1>
         <p className="text-muted-foreground max-w-3xl text-base leading-relaxed">
@@ -114,7 +119,7 @@ export function DesignSystemPage() {
           {palette.map((swatch) => (
             <div
               key={swatch.token}
-              className="border-border bg-card overflow-hidden rounded-[length:var(--fs-radius-card)] border shadow-[var(--fs-shadow-card)]"
+              className="border-border bg-card overflow-hidden rounded-xl border"
             >
               <div
                 className="border-border h-16 border-b"
@@ -138,16 +143,17 @@ export function DesignSystemPage() {
       </Section>
 
       <Section title="Typography">
-        <div className="border-border bg-card flex flex-col gap-3 rounded-[length:var(--fs-radius-card)] border p-4 shadow-[var(--fs-shadow-card)]">
-          <h1 className="text-3xl font-semibold">Page title</h1>
+        <div className="border-border bg-card flex flex-col gap-3 rounded-xl border p-4">
+          <h1 className="text-2xl font-semibold tracking-tight">Page title</h1>
           <h2 className="text-xl font-semibold">Section title</h2>
           <h3 className="text-lg font-semibold">Subsection title</h3>
           <p className="text-base leading-relaxed">
-            Body text uses Graphite on Canvas or Surface with a readable line
-            height.
+            Body text uses primary `#0F172A` on Canvas or Surface with a
+            readable line height.
           </p>
           <p className="text-muted-foreground text-sm">
-            Helper and caption text uses the muted foreground token.
+            Captions use secondary `#475569` (required on subtle surfaces).
+            Muted `#64748B` is only for helpers on white or canvas.
           </p>
           <p className="font-mono text-sm tabular-nums">
             Numeric sample: 1,234.50 · 98,765.00
@@ -308,7 +314,7 @@ export function DesignSystemPage() {
           table region.
         </p>
         <div
-          className="border-border w-full overflow-x-auto rounded-[length:var(--fs-radius-card)] border"
+          className="border-border w-full overflow-x-auto rounded-xl border"
           role="region"
           aria-label="Example data table"
           tabIndex={0}

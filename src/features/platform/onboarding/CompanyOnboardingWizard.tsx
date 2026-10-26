@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { Link } from 'react-router';
 
 import { platformCompanyPath, ROUTE_PATHS } from '@/app/route-paths';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -111,30 +112,44 @@ export function CompanyOnboardingWizard({
   }
 
   return (
-    <main className="flex flex-col gap-8 px-6 py-8">
-      <div className="flex flex-col gap-2">
-        <p className="text-muted-foreground text-sm font-medium tracking-wide uppercase">
-          Companies
-        </p>
-        <h2 className="text-2xl font-semibold">Create a company</h2>
-        <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
-          Nepal and India are the only registration countries. Currency and
-          timezone are locked from that choice. The founding administrator
-          password is generated on the server and shown once.
-        </p>
-      </div>
+    <main className="flex flex-col gap-6">
+      <PageHeader
+        eyebrow="Companies"
+        title="Create a company"
+        description="Nepal and India are the only registration countries. Currency and timezone are locked from that choice. The founding administrator password is generated on the server and shown once."
+      />
 
-      <ol className="text-muted-foreground flex flex-wrap gap-3 text-sm">
-        {STEPS.map((label, index) => (
-          <li
-            key={label}
-            className={
-              index === step ? 'text-foreground font-medium' : undefined
-            }
-          >
-            {index + 1}. {label}
-          </li>
-        ))}
+      <ol className="flex flex-wrap gap-2" aria-label="Onboarding steps">
+        {STEPS.map((label, index) => {
+          const active = index === step;
+          const done = index < step;
+          return (
+            <li
+              key={label}
+              className={[
+                'flex h-9 items-center gap-2 rounded-full border px-3 text-sm',
+                active
+                  ? 'border-primary bg-primary/15 text-foreground font-medium'
+                  : done
+                    ? 'border-border bg-card text-foreground'
+                    : 'border-border text-muted-foreground',
+              ].join(' ')}
+            >
+              <span
+                className={[
+                  'flex size-5 items-center justify-center rounded-full text-xs font-semibold',
+                  active || done
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-muted text-muted-foreground',
+                ].join(' ')}
+                aria-hidden="true"
+              >
+                {index + 1}
+              </span>
+              {label}
+            </li>
+          );
+        })}
       </ol>
 
       {message ? (
@@ -178,7 +193,7 @@ export function CompanyOnboardingWizard({
       >
         {step === 0 ? (
           <>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="legal-name">Legal name</Label>
               <Input
                 id="legal-name"
@@ -189,7 +204,7 @@ export function CompanyOnboardingWizard({
                 required
               />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="display-name">Display name</Label>
               <Input
                 id="display-name"
@@ -199,7 +214,7 @@ export function CompanyOnboardingWizard({
                 }}
               />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="contact-email">Contact email</Label>
               <Input
                 id="contact-email"
@@ -210,7 +225,7 @@ export function CompanyOnboardingWizard({
                 }}
               />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="contact-phone">Contact phone</Label>
               <Input
                 id="contact-phone"
@@ -220,7 +235,7 @@ export function CompanyOnboardingWizard({
                 }}
               />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="locality">Locality</Label>
               <Input
                 id="locality"
@@ -269,7 +284,7 @@ export function CompanyOnboardingWizard({
 
         {step === 2 ? (
           <>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="admin-email">Founding administrator email</Label>
               <Input
                 id="admin-email"
@@ -281,7 +296,7 @@ export function CompanyOnboardingWizard({
                 required
               />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="admin-name">Founding administrator name</Label>
               <Input
                 id="admin-name"
@@ -315,7 +330,7 @@ export function CompanyOnboardingWizard({
               Subscription intent is pending Phase 10. A plan code does not set
               a price, limit, duration, or entitlement.
             </p>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="plan-code">Requested plan code</Label>
               <Input
                 id="plan-code"
@@ -339,7 +354,7 @@ export function CompanyOnboardingWizard({
         ) : null}
 
         {step === 4 && jurisdiction ? (
-          <div className="border-border flex flex-col gap-2 rounded-[length:var(--fs-radius-card)] border p-4 text-sm">
+          <div className="border-border flex flex-col gap-2 rounded-xl border p-4 text-sm">
             <p>
               <span className="text-muted-foreground">Legal name. </span>
               {draft.legalName}
@@ -380,7 +395,7 @@ export function CompanyOnboardingWizard({
             </Button>
           ) : (
             <Link
-              className="text-muted-foreground self-center text-sm underline-offset-4 hover:underline"
+              className="text-muted-foreground self-center text-sm hover:underline"
               to={ROUTE_PATHS.platformCompanies}
             >
               Cancel

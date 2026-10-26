@@ -57,7 +57,8 @@ describe('platform routes', () => {
     await waitFor(() => {
       expect(screen.getByText('Page not found')).toBeInTheDocument();
     });
-    expect(screen.getByText('Platform Administration')).toBeInTheDocument();
+    expect(screen.getByLabelText('Platform navigation')).toBeInTheDocument();
+    expect(screen.getAllByText('FortSite').length).toBeGreaterThan(0);
     expect(screen.queryByText('Company directory')).not.toBeInTheDocument();
   });
 });

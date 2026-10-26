@@ -63,11 +63,11 @@ export function CompanyLifecycleActions({
         });
       }}
     >
-      <div className="flex flex-col gap-2">
+      <div className="grid gap-2">
         <Label htmlFor="lifecycle-next">Next status</Label>
         <select
           id="lifecycle-next"
-          className="border-input bg-card h-11 rounded-[length:var(--fs-radius-control)] border px-3 text-sm"
+          className="border-input focus-visible:border-ring focus-visible:ring-ring/50 h-9 w-full rounded-full border bg-transparent px-3 text-sm outline-none focus-visible:ring-3"
           value={selected}
           onChange={(event) => {
             setNextStatus(event.target.value as CompanyLifecycleStatus);
@@ -81,7 +81,7 @@ export function CompanyLifecycleActions({
           ))}
         </select>
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="grid gap-2">
         <Label htmlFor="lifecycle-reason">Reason</Label>
         <Textarea
           id="lifecycle-reason"
@@ -95,11 +95,11 @@ export function CompanyLifecycleActions({
         />
       </div>
       {selected === 'archived' ? (
-        <div className="flex flex-col gap-2">
+        <div className="grid gap-2">
           <Label htmlFor="lifecycle-archive">Type ARCHIVE to confirm</Label>
           <input
             id="lifecycle-archive"
-            className="border-input bg-card h-11 rounded-[length:var(--fs-radius-control)] border px-3 text-sm"
+            className="border-input focus-visible:border-ring focus-visible:ring-ring/50 h-9 w-full rounded-full border bg-transparent px-3 text-sm outline-none focus-visible:ring-3"
             value={confirmation}
             onChange={(event) => {
               setConfirmation(event.target.value);

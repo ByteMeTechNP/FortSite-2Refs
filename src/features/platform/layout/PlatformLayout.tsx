@@ -1,26 +1,39 @@
-import { NavLink, Outlet } from 'react-router';
+import { useState } from 'react';
+import { LogOut, Menu, UserRound } from 'lucide-react';
+import { Link, Outlet, useLocation } from 'react-router';
 
-import { ROUTE_PATHS } from '@/app/route-paths';
+import { AppSidebar } from '@/components/layout/app-sidebar';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
-import { appEnv } from '@/config/env';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 import { useAuth } from '@/features/auth/context/auth-context';
 
-const NAV_ITEMS = [
-  { to: ROUTE_PATHS.platform, label: 'Overview', end: true },
-  { to: ROUTE_PATHS.platformCompanies, label: 'Companies', end: false },
-  { to: ROUTE_PATHS.platformPlans, label: 'Plans', end: false },
-  {
-    to: ROUTE_PATHS.platformSubscriptions,
-    label: 'Subscriptions',
-    end: false,
-  },
-] as const;
-
-/**
- * Platform Administration shell. Distinct from the company workspace.
- */
 export function PlatformLayout() {
+  const location = useLocation();
   const { user, signOut, clearError } = useAuth();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const email = user?.email ?? 'Account';
+  const crumbs = location.pathname.split('/').filter(Boolean);
 
   async function handleSignOut() {
     clearError();
@@ -28,57 +41,87 @@ export function PlatformLayout() {
   }
 
   return (
-    <div className="bg-background text-foreground flex min-h-svh flex-col md:flex-row">
-      <aside className="border-border bg-card flex w-full flex-col gap-6 border-b px-5 py-6 md:w-64 md:border-r md:border-b-0">
-        <div className="flex flex-col gap-1">
-          <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
-            FortSite
-          </p>
-          <h1 className="text-lg font-semibold">Platform Administration</h1>
-          <p className="text-muted-foreground text-xs">
-            Environment: {appEnv.appEnv}
-          </p>
-        </div>
-
-        <nav aria-label="Platform" className="flex flex-col gap-1">
-          {NAV_ITEMS.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.end}
-              className={({ isActive }) =>
-                [
-                  'rounded-[length:var(--fs-radius-control)] px-3 py-2 text-sm font-medium',
-                  isActive
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-foreground hover:bg-muted',
-                ].join(' ')
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
-
-        <div className="mt-auto flex flex-col gap-3">
-          <p className="text-muted-foreground text-xs break-all">
-            Signed in as {user?.email ?? 'unknown'}
-          </p>
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              void handleSignOut();
-            }}
-          >
-            Sign out
-          </Button>
+    <div className="bg-background flex min-h-svh">
+      <aside
+        className="hidden w-64 shrink-0 md:block"
+        aria-label="Platform navigation"
+      >
+        <div className="sticky top-0 h-svh">
+          <AppSidebar />
         </div>
       </aside>
-
       <div className="flex min-w-0 flex-1 flex-col">
-        <Outlet />
+        <header className="border-border bg-card sticky top-0 z-20 flex h-16 items-center gap-3 border-b px-4">
+          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden"
+                aria-label="Open navigation"
+              >
+                <Menu className="size-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-72 p-0">
+              <SheetTitle className="sr-only">Platform navigation</SheetTitle>
+              <AppSidebar onNavigate={() => setMobileOpen(false)} />
+            </SheetContent>
+          </Sheet>
+          <Breadcrumb className="hidden min-w-0 sm:flex">
+            <BreadcrumbList>
+              {crumbs.map((crumb, index) => {
+                const href = `/${crumbs.slice(0, index + 1).join('/')}`;
+                const isLast = index === crumbs.length - 1;
+                return (
+                  <span key={href} className="contents">
+                    {index > 0 ? <BreadcrumbSeparator /> : null}
+                    <BreadcrumbItem>
+                      {isLast ? (
+                        <BreadcrumbPage className="capitalize">
+                          {crumb.replaceAll('-', ' ')}
+                        </BreadcrumbPage>
+                      ) : (
+                        <BreadcrumbLink asChild>
+                          <Link to={href} className="capitalize">
+                            {crumb.replaceAll('-', ' ')}
+                          </Link>
+                        </BreadcrumbLink>
+                      )}
+                    </BreadcrumbItem>
+                  </span>
+                );
+              })}
+            </BreadcrumbList>
+          </Breadcrumb>
+          <div className="ml-auto flex items-center gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <UserRound className="size-4" />
+                  <span className="max-w-40 truncate">{email}</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel className="font-normal">
+                  Platform owner
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => {
+                    void handleSignOut();
+                  }}
+                >
+                  <LogOut className="size-4" />
+                  Sign out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </header>
+        <main className="min-w-0 flex-1 p-4 md:p-6">
+          <Outlet />
+        </main>
       </div>
     </div>
   );

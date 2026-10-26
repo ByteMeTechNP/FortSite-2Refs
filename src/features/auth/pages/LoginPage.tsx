@@ -73,7 +73,7 @@ export function LoginPage() {
         }}
         noValidate
       >
-        <div className="flex flex-col gap-2">
+        <div className="grid gap-2">
           <Label htmlFor={emailId}>Email</Label>
           <Input
             id={emailId}
@@ -86,7 +86,7 @@ export function LoginPage() {
             required
           />
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="grid gap-2">
           <Label htmlFor={passwordId}>Password</Label>
           <Input
             id={passwordId}
@@ -111,7 +111,7 @@ export function LoginPage() {
       <p className="text-muted-foreground text-sm">
         <Link
           to={ROUTE_PATHS.authForgotPassword}
-          className="text-link underline-offset-4 hover:underline"
+          className="text-link hover:underline"
         >
           Forgot password
         </Link>

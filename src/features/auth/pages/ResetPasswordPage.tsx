@@ -47,7 +47,7 @@ export function ResetPasswordPage() {
         >
           <Link
             to={ROUTE_PATHS.authForgotPassword}
-            className="text-link text-sm underline-offset-4 hover:underline"
+            className="text-link text-sm hover:underline"
           >
             Request another email
           </Link>
@@ -115,7 +115,7 @@ export function ResetPasswordPage() {
         }}
         noValidate
       >
-        <div className="flex flex-col gap-2">
+        <div className="grid gap-2">
           <Label htmlFor={passwordId}>New password</Label>
           <Input
             id={passwordId}
@@ -128,7 +128,7 @@ export function ResetPasswordPage() {
             required
           />
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="grid gap-2">
           <Label htmlFor={confirmId}>Confirm password</Label>
           <Input
             id={confirmId}

@@ -83,7 +83,7 @@ export function ForgotPasswordPage() {
           }}
           noValidate
         >
-          <div className="flex flex-col gap-2">
+          <div className="grid gap-2">
             <Label htmlFor={emailId}>Email</Label>
             <Input
               id={emailId}
@@ -107,10 +107,7 @@ export function ForgotPasswordPage() {
         </form>
       )}
       <p className="text-muted-foreground text-sm">
-        <Link
-          to={ROUTE_PATHS.authLogin}
-          className="text-link underline-offset-4 hover:underline"
-        >
+        <Link to={ROUTE_PATHS.authLogin} className="text-link hover:underline">
           Back to sign in
         </Link>
       </p>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 
 import { ROUTE_PATHS } from '@/app/route-paths';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/button';
 import { AuthStatusView } from '@/features/auth/components/auth-status-view';
 import { useAuth } from '@/features/auth/context/auth-context';
@@ -44,17 +45,12 @@ export function AccountPage() {
   }
 
   return (
-    <main className="bg-background mx-auto flex min-h-svh max-w-2xl flex-col gap-8 px-6 py-12">
-      <div className="flex flex-col gap-2">
-        <p className="text-muted-foreground text-sm font-medium tracking-wide uppercase">
-          Account
-        </p>
-        <h1 className="text-foreground text-3xl font-semibold">Your account</h1>
-        <p className="text-muted-foreground text-sm leading-relaxed">
-          Signed in as {user?.email ?? 'unknown email'}. Authentication is not
-          company membership, a role, or platform authority.
-        </p>
-      </div>
+    <main className="bg-background mx-auto flex min-h-svh max-w-2xl flex-col gap-8 px-4 py-12 sm:px-6">
+      <PageHeader
+        eyebrow="Account"
+        title="Your account"
+        description={`Signed in as ${user?.email ?? 'unknown email'}. Authentication is not company membership, a role, or platform authority.`}
+      />
 
       {summary && summary.length > 0 ? (
         <section className="flex flex-col gap-3">
@@ -77,7 +73,7 @@ export function AccountPage() {
               return (
                 <li
                   key={item.company_code ?? item.legal_name}
-                  className="border-border rounded-[length:var(--fs-radius-card)] border p-3"
+                  className="border-border rounded-xl border p-3"
                 >
                   <p className="font-medium">
                     {item.legal_name} ({item.company_code})

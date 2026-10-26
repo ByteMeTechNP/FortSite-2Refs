@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
 
 import { ROUTE_PATHS } from '@/app/route-paths';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -109,7 +110,7 @@ export function PlanDetailView({
   }
   if (error || !detail) {
     return (
-      <main className="flex flex-col gap-4 px-6 py-8">
+      <main className="flex flex-col gap-4 px-4 py-6 sm:px-6 sm:py-8">
         <Alert variant="danger">
           <AlertTitle>Plan unavailable</AlertTitle>
           <AlertDescription>{error ?? 'Not found.'}</AlertDescription>
@@ -120,28 +121,19 @@ export function PlanDetailView({
   }
 
   return (
-    <main className="flex flex-col gap-8 px-6 py-8">
-      <div className="flex flex-col gap-2">
-        <Link
-          className="text-muted-foreground text-sm underline-offset-4 hover:underline"
-          to={ROUTE_PATHS.platformPlans}
-        >
-          Plans
-        </Link>
-        <h2 className="text-2xl font-semibold">{detail.plan.name}</h2>
-        <p className="font-mono text-sm">{detail.plan.code}</p>
-        <p className="text-muted-foreground text-sm">
-          Current subscriptions using this plan:{' '}
-          <span className="text-foreground tabular-nums">
-            {detail.current_subscription_count}
-          </span>
-        </p>
-        {detail.plan.description ? (
-          <p className="text-muted-foreground max-w-2xl text-sm">
-            {detail.plan.description}
-          </p>
-        ) : null}
-      </div>
+    <main className="flex flex-col gap-6">
+      <PageHeader
+        breadcrumb={
+          <Link
+            className="text-link hover:underline"
+            to={ROUTE_PATHS.platformPlans}
+          >
+            Plans
+          </Link>
+        }
+        title={detail.plan.name}
+        description={`${detail.plan.code} · ${detail.current_subscription_count} current subscription${detail.current_subscription_count === 1 ? '' : 's'}${detail.plan.description ? ` · ${detail.plan.description}` : ''}`}
+      />
 
       {message ? (
         <Alert variant="danger">
@@ -170,7 +162,7 @@ export function PlanDetailView({
           {detail.versions.map((version) => (
             <li
               key={version.id}
-              className="border-border rounded-[length:var(--fs-radius-card)] border p-4 text-sm"
+              className="border-border rounded-xl border p-4 text-sm"
             >
               <p className="font-medium">
                 Version {version.version_number} · {version.status}
@@ -221,7 +213,7 @@ export function PlanDetailPage() {
   const { planId } = useParams();
   if (!planId || !UUID.test(planId)) {
     return (
-      <main className="px-6 py-8">
+      <main className="px-4 py-6 sm:px-6 sm:py-8">
         <p>That plan is not available.</p>
       </main>
     );

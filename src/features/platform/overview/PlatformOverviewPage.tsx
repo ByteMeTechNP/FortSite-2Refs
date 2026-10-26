@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 
 import { ROUTE_PATHS } from '@/app/route-paths';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { EmptyState } from '@/components/states/EmptyState';
 import { ErrorState } from '@/components/states/ErrorState';
 import { LoadingState } from '@/components/states/LoadingState';
@@ -14,30 +15,24 @@ export function PlatformOverviewPage() {
   const { state, refresh } = usePlatformOverview();
 
   return (
-    <main className="flex flex-col gap-8 px-6 py-8">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div className="flex flex-col gap-2">
-          <p className="text-muted-foreground text-sm font-medium tracking-wide uppercase">
-            Overview
-          </p>
-          <h2 className="text-2xl font-semibold">Platform overview</h2>
-          <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
-            Company lifecycle counts come from the trusted Platform Owner
-            summary. Subscription counts come from current terms. Platform
-            events wait on Phase 11.
-          </p>
-        </div>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => {
-            refresh();
-          }}
-          disabled={state.status === 'loading'}
-        >
-          Refresh
-        </Button>
-      </div>
+    <main className="flex flex-col gap-6">
+      <PageHeader
+        eyebrow="Overview"
+        title="Platform overview"
+        description="Company lifecycle counts come from the trusted Platform Owner summary. Subscription counts come from current terms. Platform events wait on Phase 11."
+        actions={
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => {
+              refresh();
+            }}
+            disabled={state.status === 'loading'}
+          >
+            Refresh
+          </Button>
+        }
+      />
 
       {state.status === 'idle' || state.status === 'loading' ? (
         <LoadingState message="Loading platform metrics…" />

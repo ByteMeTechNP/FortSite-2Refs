@@ -10,7 +10,7 @@ export function FoundationPage() {
       <p className="text-muted-foreground text-sm font-medium tracking-wide uppercase">
         Development scaffold
       </p>
-      <h1 className="text-foreground text-3xl font-semibold">
+      <h1 className="text-foreground text-2xl font-semibold tracking-tight">
         {appEnv.appName} — application foundation
       </h1>
       <p className="text-muted-foreground text-base leading-relaxed">

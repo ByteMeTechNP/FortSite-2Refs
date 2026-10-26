@@ -2,10 +2,11 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router';
 
 import { ROUTE_PATHS } from '@/app/route-paths';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { ErrorState } from '@/components/states/ErrorState';
 import { LoadingState } from '@/components/states/LoadingState';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
+import { StatusBadge } from '@/components/shared/status-badge';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/features/auth/context/auth-context';
 import {
@@ -146,18 +147,23 @@ export function CompanyOnboardingDetailView({
   );
 
   return (
-    <main className="flex flex-col gap-8 px-6 py-8">
-      <div className="flex flex-col gap-2">
-        <Link
-          className="text-muted-foreground text-sm underline-offset-4 hover:underline"
-          to={ROUTE_PATHS.platformCompanies}
-        >
-          Companies
-        </Link>
-        <h2 className="text-2xl font-semibold">
-          {detail?.company.legalName ?? 'Company'}
-        </h2>
-      </div>
+    <main className="flex flex-col gap-6">
+      <PageHeader
+        breadcrumb={
+          <Link
+            className="text-link hover:underline"
+            to={ROUTE_PATHS.platformCompanies}
+          >
+            Companies
+          </Link>
+        }
+        title={detail?.company.legalName ?? 'Company'}
+        {...(detail
+          ? {
+              description: `${detail.company.companyCode} · ${detail.company.lifecycleStatus}`,
+            }
+          : {})}
+      />
 
       {message ? (
         <Alert variant="danger">
@@ -181,9 +187,7 @@ export function CompanyOnboardingDetailView({
           <section className="flex flex-col gap-3 text-sm">
             <p className="font-mono">{detail.company.companyCode}</p>
             <p>
-              <Badge variant="secondary">
-                {detail.company.lifecycleStatus}
-              </Badge>
+              <StatusBadge value={detail.company.lifecycleStatus} />
             </p>
             <p>
               {detail.company.registrationCountry} /{' '}
@@ -208,7 +212,7 @@ export function CompanyOnboardingDetailView({
             </p>
           </section>
 
-          <section className="border-border flex flex-col gap-3 rounded-[length:var(--fs-radius-card)] border p-4">
+          <section className="border-border flex flex-col gap-3 rounded-xl border p-4">
             <h3 className="text-lg font-semibold">
               Resolve subscription intent
             </h3>
@@ -219,7 +223,7 @@ export function CompanyOnboardingDetailView({
             <Label htmlFor="resolve-interval">Term</Label>
             <select
               id="resolve-interval"
-              className="border-input bg-background h-9 max-w-xs rounded-[length:var(--fs-radius-control)] border px-3 text-sm"
+              className="border-input focus-visible:border-ring focus-visible:ring-ring/50 h-9 w-full max-w-xs rounded-full border bg-transparent px-3 text-sm outline-none focus-visible:ring-3"
               value={termInterval}
               onChange={(event) => {
                 setTermInterval(event.target.value as BillingInterval | '');
@@ -233,7 +237,7 @@ export function CompanyOnboardingDetailView({
               ))}
             </select>
             {termInterval === 'annual' ? (
-              <div className="flex flex-col gap-2">
+              <div className="grid gap-2">
                 <Label htmlFor="annual-end">Annual ends at (UTC ISO)</Label>
                 <Input
                   id="annual-end"

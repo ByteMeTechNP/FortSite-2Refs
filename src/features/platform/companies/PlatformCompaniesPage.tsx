@@ -2,11 +2,15 @@ import { useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router';
 
 import { platformCompanyPath, ROUTE_PATHS } from '@/app/route-paths';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { EmptyState } from '@/components/states/EmptyState';
 import { ErrorState } from '@/components/states/ErrorState';
 import { LoadingState } from '@/components/states/LoadingState';
 import { Badge } from '@/components/ui/badge';
+import { StatusBadge } from '@/components/shared/status-badge';
+import { Label } from '@/components/ui/label';
 import { Button, buttonVariants } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -63,55 +67,51 @@ export function PlatformCompaniesPage() {
   }, [state, filter, country, query]);
 
   return (
-    <main className="flex flex-col gap-8 px-6 py-8">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div className="flex flex-col gap-2">
-          <p className="text-muted-foreground text-sm font-medium tracking-wide uppercase">
-            Companies
-          </p>
-          <h2 className="text-2xl font-semibold">Company directory</h2>
-          <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
-            Platform metadata only. This is not a company workspace and does not
-            open projects, files, or finance.
-          </p>
-          {filter ? (
-            <p className="text-sm">
-              Filtered to <Badge variant="secondary">{filter}</Badge>{' '}
-              <Link
-                className="text-primary underline-offset-4 hover:underline"
-                to={ROUTE_PATHS.platformCompanies}
-              >
-                Clear filter
-              </Link>
-            </p>
-          ) : null}
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Link
-            className={buttonVariants()}
-            to={ROUTE_PATHS.platformCompanyNew}
-          >
-            New company
-          </Link>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => {
-              refresh();
-            }}
-            disabled={state.status === 'loading'}
-          >
-            Refresh
-          </Button>
-        </div>
-      </div>
+    <main className="flex flex-col gap-6">
+      <PageHeader
+        eyebrow="Companies"
+        title="Company directory"
+        description="Platform metadata only. This is not a company workspace and does not open projects, files, or finance."
+        actions={
+          <>
+            <Link
+              className={buttonVariants()}
+              to={ROUTE_PATHS.platformCompanyNew}
+            >
+              New company
+            </Link>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                refresh();
+              }}
+              disabled={state.status === 'loading'}
+            >
+              Refresh
+            </Button>
+          </>
+        }
+      />
 
-      <div className="flex flex-wrap items-end gap-3">
-        <label className="flex flex-col gap-1 text-sm">
-          Search
-          <input
+      {filter ? (
+        <p className="text-sm">
+          Filtered to <Badge variant="secondary">{filter}</Badge>{' '}
+          <Link
+            className="text-link hover:underline"
+            to={ROUTE_PATHS.platformCompanies}
+          >
+            Clear filter
+          </Link>
+        </p>
+      ) : null}
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-2">
+          <Label htmlFor="company-search">Search</Label>
+          <Input
+            id="company-search"
             aria-label="Search companies"
-            className="border-input bg-card h-11 rounded-[length:var(--fs-radius-control)] border px-3"
             value={params.get('q') ?? ''}
             onChange={(event) => {
               const next = new URLSearchParams(params);
@@ -123,12 +123,13 @@ export function PlatformCompaniesPage() {
               setParams(next);
             }}
           />
-        </label>
-        <label className="flex flex-col gap-1 text-sm">
-          Country
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="company-country">Country</Label>
           <select
+            id="company-country"
             aria-label="Country"
-            className="border-input bg-card h-11 rounded-[length:var(--fs-radius-control)] border px-3"
+            className="border-input focus-visible:border-ring focus-visible:ring-ring/50 h-9 w-full min-w-40 rounded-full border bg-transparent px-3 text-sm outline-none focus-visible:ring-3"
             value={country ?? ''}
             onChange={(event) => {
               const next = new URLSearchParams(params);
@@ -144,7 +145,7 @@ export function PlatformCompaniesPage() {
             <option value="Nepal">Nepal</option>
             <option value="India">India</option>
           </select>
-        </label>
+        </div>
       </div>
 
       {state.status === 'idle' || state.status === 'loading' ? (
@@ -174,7 +175,7 @@ export function PlatformCompaniesPage() {
       ) : null}
 
       {state.status === 'ready' && rows.length > 0 ? (
-        <div className="border-border overflow-x-auto rounded-[length:var(--fs-radius-card)] border">
+        <div className="border-border bg-card overflow-hidden rounded-xl border">
           <Table>
             <TableHeader>
               <TableRow>
@@ -190,7 +191,7 @@ export function PlatformCompaniesPage() {
                 <TableRow key={company.id}>
                   <TableCell className="font-mono text-xs">
                     <Link
-                      className="underline-offset-4 hover:underline"
+                      className="text-link hover:underline"
                       to={platformCompanyPath(company.id)}
                     >
                       {company.company_code}
@@ -203,9 +204,7 @@ export function PlatformCompaniesPage() {
                   </TableCell>
                   <TableCell>{company.registration_country}</TableCell>
                   <TableCell>
-                    <Badge variant="secondary">
-                      {company.lifecycle_status}
-                    </Badge>
+                    <StatusBadge value={company.lifecycle_status} />
                   </TableCell>
                   <TableCell className="text-muted-foreground text-xs">
                     {new Date(company.created_at).toLocaleString()}

@@ -136,7 +136,7 @@ export function ChangeInitialPasswordPage() {
         }}
         noValidate
       >
-        <div className="flex flex-col gap-2">
+        <div className="grid gap-2">
           <Label htmlFor={passwordId}>New password</Label>
           <Input
             id={passwordId}
@@ -149,7 +149,7 @@ export function ChangeInitialPasswordPage() {
             required
           />
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="grid gap-2">
           <Label htmlFor={confirmId}>Confirm new password</Label>
           <Input
             id={confirmId}
@@ -195,10 +195,7 @@ export function ChangeInitialPasswordPage() {
         </div>
       </form>
       <p className="text-muted-foreground text-sm">
-        <Link
-          to={ROUTE_PATHS.authLogin}
-          className="text-link underline-offset-4 hover:underline"
-        >
+        <Link to={ROUTE_PATHS.authLogin} className="text-link hover:underline">
           Return to sign in
         </Link>
       </p>

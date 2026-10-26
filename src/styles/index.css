@@ -4,67 +4,11 @@
 @import 'shadcn/tailwind.css';
 @import '@fontsource-variable/geist';
 
-/**
- * Map FortSite tokens onto the shadcn semantic CSS variables
- * expected by the installed radix-nova / Tailwind v4 setup.
- * Brand hex values live only in tokens.css.
- */
-:root {
-  --background: var(--fs-background);
-  --foreground: var(--fs-foreground);
-  --card: var(--fs-surface);
-  --card-foreground: var(--fs-foreground);
-  --popover: var(--fs-surface);
-  --popover-foreground: var(--fs-foreground);
-  --primary: var(--fs-primary);
-  --primary-foreground: var(--fs-primary-foreground);
-  --secondary: var(--fs-secondary);
-  --secondary-foreground: var(--fs-secondary-foreground);
-  --muted: var(--fs-surface-muted);
-  --muted-foreground: var(--fs-muted-foreground);
-  --accent: var(--fs-surface-muted);
-  --accent-foreground: var(--fs-foreground);
-  --destructive: var(--fs-destructive);
-  --border: var(--fs-border);
-  --input: var(--fs-input-border);
-  --ring: var(--fs-ring);
-  --chart-1: var(--fs-blueprint);
-  --chart-2: var(--fs-amber);
-  --chart-3: var(--fs-success);
-  --chart-4: var(--fs-warning);
-  --chart-5: var(--fs-danger);
-  --radius: var(--fs-radius-control);
-  --sidebar: var(--fs-surface);
-  --sidebar-foreground: var(--fs-foreground);
-  --sidebar-primary: var(--fs-primary);
-  --sidebar-primary-foreground: var(--fs-primary-foreground);
-  --sidebar-accent: var(--fs-surface-muted);
-  --sidebar-accent-foreground: var(--fs-foreground);
-  --sidebar-border: var(--fs-border);
-  --sidebar-ring: var(--fs-ring);
-
-  /* Status helpers exposed for Tailwind theme */
-  --success: var(--fs-success);
-  --success-foreground: var(--fs-success-foreground);
-  --success-bg: var(--fs-success-bg);
-  --success-border: var(--fs-success-border);
-  --warning: var(--fs-warning);
-  --warning-foreground: var(--fs-warning-foreground);
-  --warning-bg: var(--fs-warning-bg);
-  --warning-border: var(--fs-warning-border);
-  --danger: var(--fs-danger);
-  --danger-foreground: var(--fs-danger-foreground);
-  --danger-bg: var(--fs-danger-bg);
-  --danger-border: var(--fs-danger-border);
-  --info: var(--fs-info);
-  --info-foreground: var(--fs-info-foreground);
-  --info-bg: var(--fs-info-bg);
-  --info-border: var(--fs-info-border);
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --font-heading: var(--font-sans);
-  --font-sans: var(--fs-font-sans);
+  --font-sans: 'Geist Variable', sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -101,65 +45,73 @@
   --color-success-bg: var(--success-bg);
   --color-success-border: var(--success-border);
   --color-warning: var(--warning);
-  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-foreground: var(--warning-text);
   --color-warning-bg: var(--warning-bg);
   --color-warning-border: var(--warning-border);
-  --color-danger: var(--danger);
-  --color-danger-foreground: var(--danger-foreground);
+  --color-danger: var(--destructive);
+  --color-danger-foreground: var(--danger-text);
   --color-danger-bg: var(--danger-bg);
   --color-danger-border: var(--danger-border);
-  --color-info: var(--info);
-  --color-info-foreground: var(--info-foreground);
+  --color-info: var(--info-text);
+  --color-info-foreground: var(--info-text);
   --color-info-bg: var(--info-bg);
   --color-info-border: var(--info-border);
-  --color-link: var(--fs-link);
-  --shadow-card: var(--fs-shadow-card);
+  --color-blueprint: var(--blueprint);
+  --color-link: var(--blueprint);
+  --color-foreground-secondary: var(--fs-foreground-secondary);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--fs-radius-card);
-  --radius-xl: calc(var(--fs-radius-card) * 1.15);
-  --radius-2xl: calc(var(--fs-radius-card) * 1.4);
-  --radius-3xl: calc(var(--fs-radius-card) * 1.7);
-  --radius-4xl: calc(var(--fs-radius-card) * 2);
-  --radius-pill: var(--fs-radius-pill);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
 @layer base {
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-
   * {
-    @apply border-border;
-  }
-
-  html {
-    @apply font-sans;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    @apply border-border outline-ring/50;
   }
 
   body {
     @apply bg-background text-foreground m-0 min-h-svh min-w-80;
-    line-height: var(--fs-leading-normal);
+  }
+
+  html {
+    @apply font-sans;
   }
 
   #root {
     @apply min-h-svh;
   }
 
-  :focus-visible {
-    outline: 2px solid var(--fs-ring);
-    outline-offset: 2px;
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
   }
 
+  /*
+   * Anchors are not underlined by default.
+   * Nav, breadcrumbs, and button-links stay plain.
+   * Real inline links opt into Blueprint with .text-link.
+   */
   a {
-    color: var(--fs-link);
-    text-decoration-line: underline;
+    color: inherit;
+    text-decoration-line: none;
+  }
+
+  .text-link {
+    color: var(--blueprint);
     text-underline-offset: 0.2em;
+  }
+
+  .text-link:hover {
+    text-decoration-line: underline;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
   }
 
   @media (prefers-reduced-motion: reduce) {

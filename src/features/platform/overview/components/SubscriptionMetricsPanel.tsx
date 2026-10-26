@@ -2,12 +2,9 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 
 import { ROUTE_PATHS } from '@/app/route-paths';
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { ErrorState } from '@/components/states/ErrorState';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   createBrowserSubscriptionApi,
   type SubscriptionApi,
@@ -50,20 +47,20 @@ export function SubscriptionMetricsPanel({
       <Card size="sm">
         <CardHeader>
           <CardTitle>Subscriptions</CardTitle>
-          <CardDescription>Loading subscription counts…</CardDescription>
         </CardHeader>
+        <CardContent>
+          <Skeleton className="h-16 w-full" />
+          <p className="text-muted-foreground mt-2 text-sm">
+            Loading subscription counts…
+          </p>
+        </CardContent>
       </Card>
     );
   }
 
   if (state.status === 'error') {
     return (
-      <Card size="sm">
-        <CardHeader>
-          <CardTitle>Subscriptions</CardTitle>
-          <CardDescription>{state.message}</CardDescription>
-        </CardHeader>
-      </Card>
+      <ErrorState title="Subscriptions unavailable" message={state.message} />
     );
   }
 
@@ -72,9 +69,9 @@ export function SubscriptionMetricsPanel({
     <Card size="sm">
       <CardHeader>
         <CardTitle>Subscriptions</CardTitle>
-        <CardDescription>
+        <p className="text-muted-foreground text-sm">
           Current terms only. Published plans: {counts.publishedPlans}.
-        </CardDescription>
+        </p>
       </CardHeader>
       <div className="grid grid-cols-2 gap-3 px-4 pb-4 text-sm">
         {(
@@ -89,11 +86,11 @@ export function SubscriptionMetricsPanel({
         ).map(([key, value]) => (
           <Link
             key={key}
-            className="hover:bg-muted/40 rounded-[length:var(--fs-radius-control)] p-2"
+            className="hover:bg-muted/40 rounded-full p-2"
             to={`${ROUTE_PATHS.platformSubscriptions}?status=${key}`}
           >
             <p className="text-muted-foreground capitalize">{key}</p>
-            <p className="text-xl font-semibold tabular-nums">{value}</p>
+            <p className="text-2xl font-semibold tabular-nums">{value}</p>
           </Link>
         ))}
       </div>
