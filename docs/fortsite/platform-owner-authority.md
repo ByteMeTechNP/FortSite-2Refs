@@ -49,3 +49,9 @@ Company policies from Phase 06 are unchanged. Do **not** add `OR is_platform_own
 ## Client helper
 
 [`src/features/platform/authority.ts`](../../src/features/platform/authority.ts) returns `owner` | `not_owner` | `unavailable`. Errors fail closed as `unavailable`.
+
+## Cloud evidence
+
+- Migration applied: `phase_07_platform_owner` / `20261026173350`.
+- Live suite: `scripts/phase07-authority-live.mjs` **PASSED 18/18**.
+- Synthetic fixtures removed. Live first-owner bootstrap remains **BLOCKED** until an operator supplies the Auth UUID.
