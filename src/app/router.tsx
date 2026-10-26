@@ -24,6 +24,10 @@ import { PlatformLayout } from '@/features/platform/layout/PlatformLayout';
 import { CompanyOnboardingDetailPage } from '@/features/platform/onboarding/CompanyOnboardingDetailPage';
 import { CompanyOnboardingPage } from '@/features/platform/onboarding/CompanyOnboardingPage';
 import { PlatformOverviewPage } from '@/features/platform/overview/PlatformOverviewPage';
+import { PlanDetailPage } from '@/features/platform/subscriptions/PlanDetailPage';
+import { PlansPage } from '@/features/platform/subscriptions/PlansPage';
+import { SubscriptionDetailPage } from '@/features/platform/subscriptions/SubscriptionDetailPage';
+import { SubscriptionsPage } from '@/features/platform/subscriptions/SubscriptionsPage';
 import { FoundationPage } from '@/pages/FoundationPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
@@ -92,6 +96,13 @@ export function AppRouter() {
           element={<CompanyOnboardingDetailPage />}
         />
         <Route path="companies" element={<PlatformCompaniesPage />} />
+        <Route path="plans/:planId" element={<PlanDetailPage />} />
+        <Route path="plans" element={<PlansPage />} />
+        <Route
+          path="subscriptions/:subscriptionId"
+          element={<SubscriptionDetailPage />}
+        />
+        <Route path="subscriptions" element={<SubscriptionsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
       {showDesignSystem && DesignSystemPage ? (

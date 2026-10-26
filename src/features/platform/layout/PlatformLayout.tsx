@@ -8,6 +8,12 @@ import { useAuth } from '@/features/auth/context/auth-context';
 const NAV_ITEMS = [
   { to: ROUTE_PATHS.platform, label: 'Overview', end: true },
   { to: ROUTE_PATHS.platformCompanies, label: 'Companies', end: false },
+  { to: ROUTE_PATHS.platformPlans, label: 'Plans', end: false },
+  {
+    to: ROUTE_PATHS.platformSubscriptions,
+    label: 'Subscriptions',
+    end: false,
+  },
 ] as const;
 
 /**

@@ -8,7 +8,7 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { usePlatformOverview } from '@/features/platform/data/use-platform-overview';
 import { CompanyStatusCards } from '@/features/platform/overview/components/CompanyStatusCards';
 import { PlatformEventsUnavailable } from '@/features/platform/overview/components/PlatformEventsUnavailable';
-import { SubscriptionMetricsUnavailable } from '@/features/platform/overview/components/SubscriptionMetricsUnavailable';
+import { SubscriptionMetricsPanel } from '@/features/platform/overview/components/SubscriptionMetricsPanel';
 
 export function PlatformOverviewPage() {
   const { state, refresh } = usePlatformOverview();
@@ -23,7 +23,8 @@ export function PlatformOverviewPage() {
           <h2 className="text-2xl font-semibold">Platform overview</h2>
           <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
             Company lifecycle counts come from the trusted Platform Owner
-            summary. Subscription and audit panels wait on later phases.
+            summary. Subscription counts come from current terms. Platform
+            events wait on Phase 11.
           </p>
         </div>
         <Button
@@ -68,7 +69,7 @@ export function PlatformOverviewPage() {
           />
           <CompanyStatusCards counts={state.data.counts} />
           <div className="grid gap-4 lg:grid-cols-2">
-            <SubscriptionMetricsUnavailable />
+            <SubscriptionMetricsPanel />
             <PlatformEventsUnavailable />
           </div>
         </div>
@@ -78,7 +79,7 @@ export function PlatformOverviewPage() {
         <div className="flex flex-col gap-6">
           <CompanyStatusCards counts={state.data.counts} />
           <div className="grid gap-4 lg:grid-cols-2">
-            <SubscriptionMetricsUnavailable />
+            <SubscriptionMetricsPanel />
             <PlatformEventsUnavailable />
           </div>
         </div>

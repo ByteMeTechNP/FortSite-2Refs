@@ -18,5 +18,6 @@ There is no `config.toml` or `seed.sql`. See [docs/fortsite/migration-workflow.m
 | `20261026200000_phase_08_platform_overview.sql`  | Applied as `phase_08_platform_overview` / `20261026175246`                                                                    |
 | `20261027010000_panel_managed_credentials.sql`   | Applied as `panel_managed_credentials` / `20261026182825`                                                                     |
 | `20261027020000_phase_09_company_onboarding.sql` | Applied as `phase_09_company_onboarding` / `20261026191919` through `phase_09_company_onboarding_overview` / `20261026192336` |
+| `20261027030000_phase_10_subscriptions.sql`      | Applied as ordered Cloud slices starting `phase_10_subscriptions` / `20261026195926` through owner/member RPC slices (helpers, access, plans, resolve, lifecycle, payments, my summary). See [`docs/engineering/phase-10-subscriptions.md`](../docs/engineering/phase-10-subscriptions.md) |
 
 Do not apply migrations without an explicit approval for the exact SQL body. First Platform Owner bootstrap is a separate manual runbook, not a migration.
