@@ -1,0 +1,8 @@
+node_modules
+dist
+coverage
+package-lock.json
+*.tsbuildinfo
+docs/fortsite
+FortSite_Fresh_Start_Master_Roadmap_V3.md
+FortSite_Fresh_Start_Master_Roadmap_V3.pdf
