@@ -8,9 +8,11 @@ type EmptyStateProps = Readonly<{
 
 export function EmptyState({ title, description, action }: EmptyStateProps) {
   return (
-    <section className="flex flex-col gap-2 text-neutral-800">
+    <section className="text-foreground flex flex-col gap-2">
       <h2 className="text-lg font-semibold">{title}</h2>
-      <p className="text-sm leading-relaxed text-neutral-600">{description}</p>
+      <p className="text-muted-foreground text-sm leading-relaxed">
+        {description}
+      </p>
       {action ? <div className="pt-1">{action}</div> : null}
     </section>
   );

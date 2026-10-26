@@ -7,12 +7,13 @@ apartments, villas, small townships, restaurants, hotels, and warehouses.
 
 ## Current status
 
-**Phase 02 — repository bootstrap and engineering standards.**
+**Phase 03 — construction design system and 21st.dev component governance.**
 
 This repository currently contains:
 
 - Phase 01 product and architecture documentation under `docs/fortsite/`
 - A React 19 + Vite + TypeScript web application foundation
+- A light construction design system with a development-only component gallery
 
 Business modules, authentication, role workspaces, and Supabase integration are
 **not implemented** yet. The root page is a labelled development scaffold only.
@@ -23,8 +24,18 @@ Canonical roadmap: [`FortSite_Fresh_Start_Master_Roadmap_V3.md`](FortSite_Fresh_
 Phase documentation:
 
 - Product and architecture: [`docs/fortsite/`](docs/fortsite/)
+- Design system guide: [`docs/fortsite/design-system.md`](docs/fortsite/design-system.md)
 - Phase 02 engineering record: [`docs/engineering/phase-02-bootstrap.md`](docs/engineering/phase-02-bootstrap.md)
+- Phase 03 engineering record: [`docs/engineering/phase-03-design-system.md`](docs/engineering/phase-03-design-system.md)
 - Status register: [`docs/fortsite/phase-status.md`](docs/fortsite/phase-status.md)
+
+Open the design-system gallery only while the development server is running:
+
+```text
+http://localhost:5173/__dev/design-system
+```
+
+The gallery route is not registered in production builds.
 
 ## Requirements
 

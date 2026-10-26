@@ -1,5 +1,6 @@
 export const ROUTE_PATHS = {
   home: '/',
+  designSystem: '/__dev/design-system',
   notFound: '*',
 } as const;
 
