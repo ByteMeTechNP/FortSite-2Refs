@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.2.0",
   "type": "module",
-  "description": "FortSite construction management and ERP — Phase 02 web foundation",
+  "description": "FortSite construction management and ERP — Phase 03 design system",
   "engines": {
     "node": ">=24.22.1 <25"
   },
@@ -16,11 +16,15 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "contrast": "node scripts/contrast.mjs"
   },
   "dependencies": {
     "@fontsource-variable/geist": "5.3.0",
+    "class-variance-authority": "0.7.1",
     "cn": "0.5.0",
+    "lucide-react": "1.61.0",
+    "radix-ui": "1.8.1",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "react-router": "8.5.0",

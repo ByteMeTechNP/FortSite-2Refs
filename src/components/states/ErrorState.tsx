@@ -12,14 +12,14 @@ export function ErrorState({
   retryLabel = 'Try again',
 }: ErrorStateProps) {
   return (
-    <section role="alert" className="flex flex-col gap-3 text-neutral-800">
+    <section role="alert" className="text-foreground flex flex-col gap-3">
       <h2 className="text-lg font-semibold">{title}</h2>
-      <p className="text-sm leading-relaxed text-neutral-600">{message}</p>
+      <p className="text-muted-foreground text-sm leading-relaxed">{message}</p>
       {onRetry ? (
         <button
           type="button"
           onClick={onRetry}
-          className="w-fit rounded-md border border-neutral-300 bg-white px-3 py-1.5 text-sm font-medium text-neutral-900 hover:bg-neutral-50"
+          className="border-input bg-card text-foreground hover:bg-muted focus-visible:outline-ring h-11 w-fit rounded-full border px-4 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2"
         >
           {retryLabel}
         </button>
