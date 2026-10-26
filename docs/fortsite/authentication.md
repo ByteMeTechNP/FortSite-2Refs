@@ -40,34 +40,42 @@ Authentication is not company membership, a role, or platform authority. A signe
 Password reset and invitation emails need:
 
 1. `VITE_AUTH_REDIRECT_ORIGIN` set to the approved application origin.
-2. The same origin plus `/auth/callback` (and invitation path if used) in the Supabase Auth redirect allow-list.
+2. The same origin plus Auth paths in the Supabase Auth redirect allow-list.
 3. Site URL set to that origin.
 
-Until those are approved, forgot-password and invitation email sending stay blocked in the UI. Proposed allow-list entries (not applied):
+**Approved development origin (Phase 05):** `http://127.0.0.1:5173`
 
-- Site URL: `<approved-origin>`
-- Additional redirect URLs: `<approved-origin>/auth/callback`, `<approved-origin>/auth/accept-invitation`, `<approved-origin>/auth/reset-password`
+Set in local env via `VITE_AUTH_REDIRECT_ORIGIN` (see `.env.example`). Paste the matching dashboard allow-list (MCP has no Auth URL writer):
+
+- Site URL: `http://127.0.0.1:5173`
+- Additional redirect URLs: `http://127.0.0.1:5173/auth/callback`, `http://127.0.0.1:5173/auth/accept-invitation`, `http://127.0.0.1:5173/auth/reset-password`
 
 Do not use a wildcard. Do not invent a production domain.
 
 ## Auth settings status
 
-The connected MCP has no Auth-settings inspection tool. These remain **UNKNOWN** until read from the Supabase dashboard:
+The connected MCP has no Auth-settings inspection or writer. Confirm in the Supabase dashboard:
 
 - Email provider enabled
-- Public sign-up enabled/disabled
+- Public sign-up enabled/disabled (desired default: disabled; invitations only)
 - Email confirmation policy
 - Password policy
-- Site URL and redirect allow-list
+- Site URL and redirect allow-list (approved values above)
 - Confirmation, recovery, and invitation templates
 
-Desired default for FortSite: public sign-up disabled; invitations only. Do not change dashboard settings without an explicit approval note.
+Do not change other dashboard settings without an explicit approval note.
 
 ## Profile migration
 
 File: `supabase/migrations/20261026120000_user_profiles.sql`
 
-Creates `public.user_profiles` with RLS so an authenticated user can read/insert/update only their own row. `anon` has no grants. No company or role columns. **Not applied** until you approve the SQL and an agent runs MCP `apply_migration` for project `rvfoveqprrtobmywaodf`.
+Creates `public.user_profiles` with RLS so an authenticated user can read/insert/update only their own row. `anon` has no grants. No company or role columns.
+
+**Applied** on project `rvfoveqprrtobmywaodf` after explicit approval (MCP migration name `user_profiles`, version `20261026170211`).
+
+## Live Auth / RLS fixtures
+
+Dedicated Cloud test users (A/B) exist for Phase 05 live checks. Credentials live only in gitignored `.env.phase05-fixtures.local.json`. Recreate with `scripts/phase05-create-fixtures.mjs` when a service-role key is available locally, or via approved MCP SQL. Run `node scripts/phase05-rls-live.mjs` for the 8-check suite (anon denied; self-only upsert/read; cross-user denied).
 
 ## Troubleshooting
 
@@ -75,5 +83,6 @@ Creates `public.user_profiles` with RLS so an authenticated user can read/insert
 | --- | --- |
 | Configuration screen on load | Missing `VITE_SUPABASE_URL` or publishable key |
 | Reset email blocked in UI | `VITE_AUTH_REDIRECT_ORIGIN` unset or origin mismatch |
+| Reset email fails after send | Dashboard redirect allow-list missing approved URLs |
 | Profile save unavailable | Migration not applied yet |
 | Signed in but no company data | Expected until Phase 06 memberships |

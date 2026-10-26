@@ -6,7 +6,7 @@
 
 Phases 02, 03, and 04 are **VERIFIED COMPLETE**. Phase 05 is **IN PROGRESS**. Phase 01 remains **NOT STARTED** pending product-owner sign-off. Phases 06–67 remain **NOT STARTED**.
 
-Phase 01 documents under `docs/fortsite/` are a draft for later sign-off. They do not verify Phase 01 complete. Phase 02 added the web application foundation and package lockfile. Phase 03 added the construction design tokens, local UI primitives, and a development-only gallery. Phase 04 added the public Supabase browser client and the Cloud migration workflow. Phase 05 added Auth screens and a pending `user_profiles` migration. It did not apply that migration, change Auth settings, create company membership, or start Phase 06.
+Phase 01 documents under `docs/fortsite/` are a draft for later sign-off. They do not verify Phase 01 complete. Phase 02 added the web application foundation and package lockfile. Phase 03 added the construction design tokens, local UI primitives, and a development-only gallery. Phase 04 added the public Supabase browser client and the Cloud migration workflow. Phase 05 added Auth screens, applied `user_profiles` after approval, set the approved Auth redirect origin, and ran live Auth/RLS with dedicated Cloud fixtures. Dashboard Site URL / redirect allow-list still needs a manual paste (no MCP Auth writer). It did not create company membership or start Phase 06.
 
 ## Why foundations come first
 
@@ -32,7 +32,7 @@ A missing prerequisite stops the dependent phase. Do not skip ahead with a short
 | 02 | Repository bootstrap and engineering standards | Phase 01. | VERIFIED COMPLETE | [`docs/engineering/phase-02-bootstrap.md`](../engineering/phase-02-bootstrap.md); `npm ci`, format check, lint, typecheck, tests, and production build pass |
 | 03 | Construction design system and 21st.dev component governance | Phase 02. | VERIFIED COMPLETE | [`docs/engineering/phase-03-design-system.md`](../engineering/phase-03-design-system.md); contrast script, gallery, format/lint/typecheck/tests/build pass |
 | 04 | Supabase Cloud/MCP environments, migrations and deployment controls | Phases 01–02. | VERIFIED COMPLETE | [`docs/engineering/phase-04-supabase.md`](../engineering/phase-04-supabase.md); MCP identity reads; format/lint/typecheck/tests/build/secret scan pass; no remote write |
-| 05 | Authentication, profiles and session lifecycle | Phases 02 and 04. | IN PROGRESS | [`docs/fortsite/authentication.md`](authentication.md); [`docs/engineering/phase-05-auth.md`](../engineering/phase-05-auth.md); migration file ready, not applied; Cloud Auth origin and live Auth tests blocked |
+| 05 | Authentication, profiles and session lifecycle | Phases 02 and 04. | IN PROGRESS | [`docs/fortsite/authentication.md`](authentication.md); [`docs/engineering/phase-05-auth.md`](../engineering/phase-05-auth.md); `user_profiles` applied (`20261026170211`); `VITE_AUTH_REDIRECT_ORIGIN=http://127.0.0.1:5173`; live RLS 8/8; dashboard Auth URL allow-list paste still open |
 | 06 | Company tenancy, memberships and tenant-safe data foundations | Phases 04–05. | NOT STARTED | none |
 | 07 | Secure platform-owner identity and privileged operations boundary | Phases 04–06. | NOT STARTED | none |
 | 08 | Super Admin panel shell and platform overview | Phases 02–03 and 07. | NOT STARTED | none |
@@ -121,7 +121,7 @@ Until that sign-off, Phase 01 remains **NOT STARTED**.
 | Blocker | Effect |
 |---|---|
 | No product-owner sign-off on scope. | Phase 01 cannot be verified complete. Later phases must not treat this draft as signed approval. |
-| No product-owner sign-off remains the Phase 01 gate. Project ref `rvfoveqprrtobmywaodf` was verified in Phase 04. | Phase 01 still needs sign-off. Phase 05 Auth remains blocked on an approved redirect origin and the unapplied `user_profiles` migration. |
+| No product-owner sign-off remains the Phase 01 gate. Project ref `rvfoveqprrtobmywaodf` was verified in Phase 04. | Phase 01 still needs sign-off. Phase 05 remains IN PROGRESS until the approved Auth Site URL / redirect allow-list is pasted in the Supabase dashboard. |
 | Open decisions OPEN-01 through OPEN-15 in [architecture-decisions.md](architecture-decisions.md). | They block only the phase named beside each decision. They do not block writing this documentation. Specialist limits, engineering standards, the notification provider, data residency, and the official IRD and IRP routes stay unresolved. |
 
 ## What this register is not

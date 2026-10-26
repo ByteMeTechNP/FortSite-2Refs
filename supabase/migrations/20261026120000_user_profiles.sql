@@ -1,7 +1,7 @@
 -- Phase 05: self-service user profiles only.
 -- Linked one-to-one to auth.users. No company, role, or platform fields.
--- NOT APPLIED in the Phase 05 implementation turn. Apply only after explicit
--- human approval via the connected Supabase MCP apply_migration tool.
+-- Applied to Cloud project rvfoveqprrtobmywaodf after explicit approval via
+-- MCP apply_migration (recorded name user_profiles, version 20261026170211).
 
 create table public.user_profiles (
   user_id uuid primary key references auth.users (id) on delete cascade,
