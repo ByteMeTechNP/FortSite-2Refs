@@ -21,6 +21,8 @@ import { PlatformOwnerGuard } from '@/features/platform/auth/platform-owner-guar
 import { PlatformUnauthorizedPage } from '@/features/platform/auth/PlatformUnauthorizedPage';
 import { PlatformCompaniesPage } from '@/features/platform/companies/PlatformCompaniesPage';
 import { PlatformLayout } from '@/features/platform/layout/PlatformLayout';
+import { CompanyOnboardingDetailPage } from '@/features/platform/onboarding/CompanyOnboardingDetailPage';
+import { CompanyOnboardingPage } from '@/features/platform/onboarding/CompanyOnboardingPage';
 import { PlatformOverviewPage } from '@/features/platform/overview/PlatformOverviewPage';
 import { FoundationPage } from '@/pages/FoundationPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
@@ -84,6 +86,11 @@ export function AppRouter() {
         }
       >
         <Route index element={<PlatformOverviewPage />} />
+        <Route path="companies/new" element={<CompanyOnboardingPage />} />
+        <Route
+          path="companies/:companyId"
+          element={<CompanyOnboardingDetailPage />}
+        />
         <Route path="companies" element={<PlatformCompaniesPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>

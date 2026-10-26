@@ -1,6 +1,7 @@
 export const COMPANY_LIFECYCLE_STATUSES = [
   'pending_setup',
   'active',
+  'paused',
   'suspended',
   'archived',
 ] as const;
@@ -11,6 +12,7 @@ export type CompanyLifecycleStatus =
 export type PlatformCompanyCounts = Readonly<{
   pending_setup: number;
   active: number;
+  paused: number;
   suspended: number;
   archived: number;
   total: number;
@@ -48,6 +50,7 @@ export function countsReconcile(counts: PlatformCompanyCounts): boolean {
   return (
     counts.pending_setup +
       counts.active +
+      counts.paused +
       counts.suspended +
       counts.archived ===
     counts.total

@@ -26,6 +26,7 @@ vi.mock('@/features/platform/data/use-platform-overview', () => ({
         counts: {
           pending_setup: 0,
           active: 0,
+          paused: 0,
           suspended: 0,
           archived: 0,
           total: 0,

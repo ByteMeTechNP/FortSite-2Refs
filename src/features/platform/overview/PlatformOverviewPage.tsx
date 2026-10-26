@@ -1,7 +1,10 @@
+import { Link } from 'react-router';
+
+import { ROUTE_PATHS } from '@/app/route-paths';
 import { EmptyState } from '@/components/states/EmptyState';
 import { ErrorState } from '@/components/states/ErrorState';
 import { LoadingState } from '@/components/states/LoadingState';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { usePlatformOverview } from '@/features/platform/data/use-platform-overview';
 import { CompanyStatusCards } from '@/features/platform/overview/components/CompanyStatusCards';
 import { PlatformEventsUnavailable } from '@/features/platform/overview/components/PlatformEventsUnavailable';
@@ -53,7 +56,15 @@ export function PlatformOverviewPage() {
         <div className="flex flex-col gap-6">
           <EmptyState
             title="No companies yet"
-            description="The company registry is empty. Platform onboarding in Phase 09 will create the first tenants."
+            description="The company registry is empty. Create the first company from the directory."
+            action={
+              <Link
+                className={buttonVariants()}
+                to={ROUTE_PATHS.platformCompanyNew}
+              >
+                New company
+              </Link>
+            }
           />
           <CompanyStatusCards counts={state.data.counts} />
           <div className="grid gap-4 lg:grid-cols-2">

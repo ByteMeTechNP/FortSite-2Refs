@@ -10,6 +10,7 @@ const sampleOverview = {
   counts: {
     pending_setup: 1,
     active: 1,
+    paused: 0,
     suspended: 0,
     archived: 0,
     total: 2,
@@ -43,11 +44,22 @@ describe('countsReconcile', () => {
       countsReconcile({
         pending_setup: 1,
         active: 0,
+        paused: 0,
         suspended: 0,
         archived: 0,
         total: 2,
       }),
     ).toBe(false);
+    expect(
+      countsReconcile({
+        pending_setup: 1,
+        active: 0,
+        paused: 1,
+        suspended: 0,
+        archived: 0,
+        total: 2,
+      }),
+    ).toBe(true);
   });
 });
 
@@ -63,6 +75,21 @@ describe('parsePlatformCompanyOverview', () => {
       parsePlatformCompanyOverview({
         ...sampleOverview,
         counts: { ...sampleOverview.counts, total: 3 },
+      }),
+    ).toBeNull();
+  });
+
+  it('rejects an overview that omits paused', () => {
+    expect(
+      parsePlatformCompanyOverview({
+        counts: {
+          pending_setup: 1,
+          active: 1,
+          suspended: 0,
+          archived: 0,
+          total: 2,
+        },
+        companies: sampleOverview.companies,
       }),
     ).toBeNull();
   });
@@ -86,6 +113,7 @@ describe('parsePlatformCompanyOverview', () => {
       counts: {
         pending_setup: 0,
         active: 0,
+        paused: 0,
         suspended: 0,
         archived: 0,
         total: 0,
@@ -123,6 +151,7 @@ describe('loadPlatformCompanyOverview', () => {
             counts: {
               pending_setup: 0,
               active: 0,
+              paused: 0,
               suspended: 0,
               archived: 0,
               total: 0,
