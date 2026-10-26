@@ -10,6 +10,10 @@ describe('resolveInternalReturnPath', () => {
   it('accepts known internal paths', () => {
     expect(resolveInternalReturnPath('/account')).toBe('/account');
     expect(resolveInternalReturnPath('/auth/login')).toBe('/auth/login');
+    expect(resolveInternalReturnPath('/platform')).toBe('/platform');
+    expect(resolveInternalReturnPath('/platform/companies')).toBe(
+      '/platform/companies',
+    );
   });
 
   it('rejects open redirects and unknown paths', () => {

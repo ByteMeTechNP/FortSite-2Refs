@@ -16,6 +16,11 @@ import { AuthCallbackPage } from '@/features/auth/pages/AuthCallbackPage';
 import { ForgotPasswordPage } from '@/features/auth/pages/ForgotPasswordPage';
 import { LoginPage } from '@/features/auth/pages/LoginPage';
 import { ResetPasswordPage } from '@/features/auth/pages/ResetPasswordPage';
+import { PlatformOwnerGuard } from '@/features/platform/auth/platform-owner-guard';
+import { PlatformUnauthorizedPage } from '@/features/platform/auth/PlatformUnauthorizedPage';
+import { PlatformCompaniesPage } from '@/features/platform/companies/PlatformCompaniesPage';
+import { PlatformLayout } from '@/features/platform/layout/PlatformLayout';
+import { PlatformOverviewPage } from '@/features/platform/overview/PlatformOverviewPage';
 import { FoundationPage } from '@/pages/FoundationPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
@@ -57,6 +62,26 @@ export function AppRouter() {
           </ProtectedRoute>
         }
       />
+      <Route
+        path={ROUTE_PATHS.platformUnauthorized}
+        element={
+          <ProtectedRoute>
+            <PlatformUnauthorizedPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path={ROUTE_PATHS.platform}
+        element={
+          <PlatformOwnerGuard>
+            <PlatformLayout />
+          </PlatformOwnerGuard>
+        }
+      >
+        <Route index element={<PlatformOverviewPage />} />
+        <Route path="companies" element={<PlatformCompaniesPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
       {showDesignSystem && DesignSystemPage ? (
         <Route
           path={ROUTE_PATHS.designSystem}
