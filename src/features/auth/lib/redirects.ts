@@ -9,6 +9,8 @@ const INTERNAL_PATHS = new Set<string>([
   ROUTE_PATHS.home,
   ROUTE_PATHS.platform,
   ROUTE_PATHS.platformCompanies,
+  ROUTE_PATHS.platformPlans,
+  ROUTE_PATHS.platformSubscriptions,
   ROUTE_PATHS.platformUnauthorized,
   ROUTE_PATHS.authChangeInitialPassword,
 ]);

@@ -11,6 +11,8 @@ export const ROUTE_PATHS = {
   platform: '/platform',
   platformCompanies: '/platform/companies',
   platformCompanyNew: '/platform/companies/new',
+  platformPlans: '/platform/plans',
+  platformSubscriptions: '/platform/subscriptions',
   platformUnauthorized: '/platform/unauthorized',
   notFound: '*',
 } as const;
@@ -21,4 +23,12 @@ export type RouteName = keyof typeof ROUTE_PATHS;
 
 export function platformCompanyPath(companyId: string): string {
   return `/platform/companies/${companyId}`;
+}
+
+export function platformPlanPath(planId: string): string {
+  return `/platform/plans/${planId}`;
+}
+
+export function platformSubscriptionPath(subscriptionId: string): string {
+  return `/platform/subscriptions/${subscriptionId}`;
 }

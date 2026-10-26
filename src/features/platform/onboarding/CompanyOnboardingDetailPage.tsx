@@ -21,6 +21,16 @@ import {
 import { TemporaryPasswordDialog } from '@/features/platform/onboarding/TemporaryPasswordDialog';
 import { useOneTimePassword } from '@/features/platform/onboarding/use-one-time-password';
 import type { CompanyLifecycleStatus } from '@/features/platform/types';
+import {
+  createBrowserSubscriptionApi,
+  type SubscriptionApi,
+} from '@/features/platform/subscriptions/api';
+import {
+  BILLING_INTERVALS,
+  type BillingInterval,
+} from '@/features/platform/subscriptions/types';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 const UUID_PATTERN =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -46,18 +56,25 @@ type DetailState =
 type CompanyOnboardingDetailViewProps = Readonly<{
   companyId: string;
   api: OnboardingApi;
+  subscriptionApi?: SubscriptionApi;
   signedIn: boolean;
 }>;
 
 export function CompanyOnboardingDetailView({
   companyId,
   api,
+  subscriptionApi = createBrowserSubscriptionApi(),
   signedIn,
 }: CompanyOnboardingDetailViewProps) {
   const [state, setState] = useState<DetailState>({ status: 'loading' });
   const [message, setMessage] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
+  const [termInterval, setTermInterval] = useState<BillingInterval | ''>('');
+  const [annualEndsAt, setAnnualEndsAt] = useState('');
+  const [resolveReason, setResolveReason] = useState(
+    'resolve onboarding intent',
+  );
   const secret = useOneTimePassword(signedIn);
   const companyIdValid = UUID_PATTERN.test(companyId);
 
@@ -182,9 +199,97 @@ export function CompanyOnboardingDetailView({
               Subscription intent
               {detail.subscriptionIntent?.requestedPlanCode
                 ? ` ${detail.subscriptionIntent.requestedPlanCode}`
-                : ''}{' '}
-              is pending Phase 10 and is not an entitlement.
+                : ' (no plan code)'}
+              {detail.subscriptionIntent?.trialRequested
+                ? ', trial requested'
+                : ''}
+              . Phase 09 did not store a term; resolve it below against a
+              published plan.
             </p>
+          </section>
+
+          <section className="border-border flex flex-col gap-3 rounded-[length:var(--fs-radius-card)] border p-4">
+            <h3 className="text-lg font-semibold">
+              Resolve subscription intent
+            </h3>
+            <p className="text-muted-foreground text-sm">
+              Choose the term here. A missing or unpublished plan code blocks
+              resolution without substituting another plan.
+            </p>
+            <Label htmlFor="resolve-interval">Term</Label>
+            <select
+              id="resolve-interval"
+              className="border-input bg-background h-9 max-w-xs rounded-[length:var(--fs-radius-control)] border px-3 text-sm"
+              value={termInterval}
+              onChange={(event) => {
+                setTermInterval(event.target.value as BillingInterval | '');
+              }}
+            >
+              <option value="">Choose…</option>
+              {BILLING_INTERVALS.map((interval) => (
+                <option key={interval} value={interval}>
+                  {interval}
+                </option>
+              ))}
+            </select>
+            {termInterval === 'annual' ? (
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="annual-end">Annual ends at (UTC ISO)</Label>
+                <Input
+                  id="annual-end"
+                  value={annualEndsAt}
+                  onChange={(event) => {
+                    setAnnualEndsAt(event.target.value);
+                  }}
+                />
+              </div>
+            ) : null}
+            <Label htmlFor="resolve-reason">Reason</Label>
+            <Input
+              id="resolve-reason"
+              value={resolveReason}
+              onChange={(event) => {
+                setResolveReason(event.target.value);
+              }}
+            />
+            <Button
+              type="button"
+              disabled={pending}
+              onClick={() => {
+                void (async () => {
+                  if (!termInterval) {
+                    setMessage('Choose a term interval.');
+                    return;
+                  }
+                  if (
+                    termInterval === 'annual' &&
+                    annualEndsAt.trim().length < 10
+                  ) {
+                    setMessage('An annual term requires an end date.');
+                    return;
+                  }
+                  setPending(true);
+                  setMessage(null);
+                  const result = await subscriptionApi.resolveIntent({
+                    companyId,
+                    termInterval,
+                    endsAt:
+                      termInterval === 'annual' ? annualEndsAt.trim() : null,
+                    idempotencyKey: crypto.randomUUID(),
+                    reason: resolveReason.trim() || 'resolve onboarding intent',
+                  });
+                  setPending(false);
+                  if (!result.ok) {
+                    setMessage(result.message);
+                    return;
+                  }
+                  setState({ status: 'loading' });
+                  setReloadKey((value) => value + 1);
+                })();
+              }}
+            >
+              Resolve intent
+            </Button>
           </section>
 
           <section className="flex flex-col gap-3">

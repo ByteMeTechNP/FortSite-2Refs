@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 
 import { ROUTE_PATHS } from '@/app/route-paths';
@@ -5,13 +6,37 @@ import { Button } from '@/components/ui/button';
 import { AuthStatusView } from '@/features/auth/components/auth-status-view';
 import { useAuth } from '@/features/auth/context/auth-context';
 import { ProfileForm } from '@/features/profile/components/ProfileForm';
+import { createBrowserSubscriptionApi } from '@/features/platform/subscriptions/api';
 
 /**
- * Signed-in account shell. Shows Auth identity and self-service profile only.
- * Organization access is not provisioned in Phase 05.
+ * Signed-in account shell. Shows Auth identity, self-service profile, and a
+ * founding-admin subscription summary when one exists.
  */
 export function AccountPage() {
   const { user, signOut, lastError, clearError } = useAuth();
+  const [summary, setSummary] = useState<unknown[] | null>(null);
+  const [summaryError, setSummaryError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    void createBrowserSubscriptionApi()
+      .getMySummary()
+      .then((result) => {
+        if (cancelled) {
+          return;
+        }
+        if (!result.ok) {
+          setSummary(null);
+          setSummaryError(null);
+          return;
+        }
+        setSummary(Array.isArray(result.data) ? result.data : []);
+        setSummaryError(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [user?.id]);
 
   async function handleSignOut() {
     clearError();
@@ -31,11 +56,59 @@ export function AccountPage() {
         </p>
       </div>
 
-      <AuthStatusView
-        title="Account authenticated; organization access is not yet provisioned"
-        description="Phase 06 creates company memberships. Until then, this account cannot open company data or role workspaces."
-        variant="warning"
-      />
+      {summary && summary.length > 0 ? (
+        <section className="flex flex-col gap-3">
+          <h2 className="text-foreground text-xl font-semibold">
+            Subscription status
+          </h2>
+          <p className="text-muted-foreground text-sm">
+            Read-only summary for your founding-admin company. Plan and payment
+            changes stay with the Platform Owner.
+          </p>
+          <ul className="flex flex-col gap-3 text-sm">
+            {summary.map((row) => {
+              const item = row as {
+                company_code?: string;
+                legal_name?: string;
+                plan_name?: string;
+                effective_status?: string;
+                access?: { explanation?: string; allowed?: boolean };
+              };
+              return (
+                <li
+                  key={item.company_code ?? item.legal_name}
+                  className="border-border rounded-[length:var(--fs-radius-card)] border p-3"
+                >
+                  <p className="font-medium">
+                    {item.legal_name} ({item.company_code})
+                  </p>
+                  <p className="text-muted-foreground">
+                    {item.plan_name ?? 'No plan'} ·{' '}
+                    {item.effective_status ?? 'no subscription'}
+                  </p>
+                  <p className="text-muted-foreground mt-1">
+                    {item.access?.explanation ??
+                      (item.access?.allowed
+                        ? 'Eligible'
+                        : 'Not eligible for normal use')}
+                  </p>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ) : (
+        <AuthStatusView
+          title="Account authenticated"
+          description="Company membership and subscription summaries appear here for founding administrators after Phase 09/10 provisioning."
+          variant="warning"
+        />
+      )}
+      {summaryError ? (
+        <p role="alert" className="text-destructive text-sm">
+          {summaryError}
+        </p>
+      ) : null}
 
       <section className="flex flex-col gap-4">
         <h2 className="text-foreground text-xl font-semibold">Profile</h2>
