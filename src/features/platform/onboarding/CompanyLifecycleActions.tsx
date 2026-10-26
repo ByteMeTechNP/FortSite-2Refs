@@ -40,7 +40,7 @@ export function CompanyLifecycleActions({
 
   if (!selected || targets.length === 0) {
     return (
-      <p className="text-muted-foreground text-sm">
+      <p className="text-foreground-secondary text-sm">
         Archived companies stay archived. There is no delete and no ordinary
         unarchive.
       </p>

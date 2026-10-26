@@ -86,13 +86,13 @@ export function DesignSystemPage() {
   return (
     <main className="mx-auto flex w-full max-w-[var(--fs-content-max)] flex-col gap-10 px-4 py-8 sm:px-6 lg:px-8">
       <header className="flex flex-col gap-3">
-        <p className="text-muted-foreground text-sm font-medium tracking-wide uppercase">
+        <p className="text-foreground-secondary text-sm font-medium tracking-wide uppercase">
           Development only
         </p>
         <h1 className="text-foreground text-3xl font-semibold">
           FortSite Design System — Development Preview
         </h1>
-        <p className="text-muted-foreground max-w-3xl text-base leading-relaxed">
+        <p className="text-foreground-secondary max-w-3xl text-base leading-relaxed">
           This gallery demonstrates shared UI components and styles only.
           Examples are illustrative; nothing here is saved or connected to
           production data.
@@ -125,10 +125,10 @@ export function DesignSystemPage() {
                 <span className="text-foreground font-medium">
                   {swatch.name}
                 </span>
-                <span className="text-muted-foreground font-mono text-xs">
+                <span className="text-foreground-secondary font-mono text-xs">
                   {swatch.token}
                 </span>
-                <span className="text-muted-foreground font-mono text-xs">
+                <span className="text-foreground-secondary font-mono text-xs">
                   {swatch.hex}
                 </span>
               </div>
@@ -146,7 +146,7 @@ export function DesignSystemPage() {
             Body text uses Graphite on Canvas or Surface with a readable line
             height.
           </p>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-foreground-secondary text-sm">
             Helper and caption text uses the muted foreground token.
           </p>
           <p className="font-mono text-sm tabular-nums">
@@ -181,7 +181,7 @@ export function DesignSystemPage() {
               With icon
             </Button>
           </div>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-foreground-secondary text-sm">
             Default and large buttons use a 44px-tall target. Small is a denser
             desktop size.
           </p>
@@ -222,13 +222,17 @@ export function DesignSystemPage() {
           <div className="grid gap-2">
             <Label htmlFor="gallery-name">Sample name</Label>
             <Input id="gallery-name" placeholder="Example value" />
-            <p id="gallery-name-hint" className="text-muted-foreground text-sm">
+            <p
+              id="gallery-name-hint"
+              className="text-foreground-secondary text-sm"
+            >
               Helper text stays associated with the field visually.
             </p>
           </div>
           <div className="grid gap-2">
             <Label htmlFor="gallery-notes">
-              Notes <span className="text-muted-foreground">(required)</span>
+              Notes{' '}
+              <span className="text-foreground-secondary">(required)</span>
             </Label>
             <Textarea
               id="gallery-notes"
@@ -303,7 +307,7 @@ export function DesignSystemPage() {
       </Section>
 
       <Section title="Table">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-foreground-secondary text-sm">
           Fictitious example rows only. On narrow widths, scroll inside the
           table region.
         </p>
@@ -359,7 +363,7 @@ export function DesignSystemPage() {
       </Section>
 
       <Section title="Navigation examples">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-foreground-secondary text-sm">
           Generic section labels only. These are not product role menus.
         </p>
         <Breadcrumb>
@@ -388,13 +392,13 @@ export function DesignSystemPage() {
           </TabsList>
           <TabsContent
             value="one"
-            className="text-muted-foreground pt-3 text-sm"
+            className="text-foreground-secondary pt-3 text-sm"
           >
             First sample tab panel.
           </TabsContent>
           <TabsContent
             value="two"
-            className="text-muted-foreground pt-3 text-sm"
+            className="text-foreground-secondary pt-3 text-sm"
           >
             Second sample tab panel.
           </TabsContent>
@@ -420,7 +424,7 @@ export function DesignSystemPage() {
               Tailwind breakpoints: sm 640, md 768, lg 1024, xl 1280, 2xl 1536.
             </CardDescription>
           </CardHeader>
-          <CardContent className="text-muted-foreground text-sm">
+          <CardContent className="text-foreground-secondary text-sm">
             Resize this page. The palette grid collapses, the table scrolls
             inside its region, and dialogs stay within the viewport. Reduced
             motion preferences disable non-essential animation.

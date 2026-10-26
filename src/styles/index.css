@@ -34,13 +34,13 @@
   --chart-4: var(--fs-warning);
   --chart-5: var(--fs-danger);
   --radius: var(--fs-radius-control);
-  --sidebar: var(--fs-surface);
-  --sidebar-foreground: var(--fs-foreground);
+  --sidebar: var(--fs-shell);
+  --sidebar-foreground: var(--fs-shell-foreground);
   --sidebar-primary: var(--fs-primary);
   --sidebar-primary-foreground: var(--fs-primary-foreground);
-  --sidebar-accent: var(--fs-surface-muted);
-  --sidebar-accent-foreground: var(--fs-foreground);
-  --sidebar-border: var(--fs-border);
+  --sidebar-accent: var(--fs-shell-raised);
+  --sidebar-accent-foreground: var(--fs-shell-foreground);
+  --sidebar-border: var(--fs-shell-border);
   --sidebar-ring: var(--fs-ring);
 
   /* Status helpers exposed for Tailwind theme */
@@ -113,11 +113,18 @@
   --color-info-bg: var(--info-bg);
   --color-info-border: var(--info-border);
   --color-link: var(--fs-link);
+  --color-foreground-secondary: var(--fs-foreground-secondary);
+  --color-shell: var(--fs-shell);
+  --color-shell-raised: var(--fs-shell-raised);
+  --color-shell-border: var(--fs-shell-border);
+  --color-shell-foreground: var(--fs-shell-foreground);
+  --color-shell-muted: var(--fs-shell-muted);
   --shadow-card: var(--fs-shadow-card);
+  --shadow-overlay: var(--fs-shadow-overlay);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--fs-radius-card);
-  --radius-xl: calc(var(--fs-radius-card) * 1.15);
+  --radius-xl: var(--fs-radius-dialog);
   --radius-2xl: calc(var(--fs-radius-card) * 1.4);
   --radius-3xl: calc(var(--fs-radius-card) * 1.7);
   --radius-4xl: calc(var(--fs-radius-card) * 2);
@@ -156,10 +163,23 @@
     outline-offset: 2px;
   }
 
+  /*
+   * Anchors inherit color and are not underlined by default.
+   * NavLink, buttons-as-links, and nav items must not pick up Blueprint underline.
+   * Opt-in text links use .text-link (and optional underline utilities).
+   */
   a {
+    color: inherit;
+    text-decoration-line: none;
+  }
+
+  .text-link {
     color: var(--fs-link);
-    text-decoration-line: underline;
     text-underline-offset: 0.2em;
+  }
+
+  .text-link:hover {
+    text-decoration-line: underline;
   }
 
   @media (prefers-reduced-motion: reduce) {

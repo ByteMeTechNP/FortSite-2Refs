@@ -108,10 +108,10 @@ export function LoginPage() {
           Sign in
         </Button>
       </form>
-      <p className="text-muted-foreground text-sm">
+      <p className="text-foreground-secondary text-sm">
         <Link
           to={ROUTE_PATHS.authForgotPassword}
-          className="text-link underline-offset-4 hover:underline"
+          className="text-link hover:underline"
         >
           Forgot password
         </Link>

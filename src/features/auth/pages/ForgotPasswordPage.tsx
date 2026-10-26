@@ -106,11 +106,8 @@ export function ForgotPasswordPage() {
           </Button>
         </form>
       )}
-      <p className="text-muted-foreground text-sm">
-        <Link
-          to={ROUTE_PATHS.authLogin}
-          className="text-link underline-offset-4 hover:underline"
-        >
+      <p className="text-foreground-secondary text-sm">
+        <Link to={ROUTE_PATHS.authLogin} className="text-link hover:underline">
           Back to sign in
         </Link>
       </p>

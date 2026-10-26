@@ -29,7 +29,7 @@ export function ResetPasswordPage() {
         title="Set a new password"
         description="Checking the recovery session…"
       >
-        <p className="text-muted-foreground text-sm">Loading…</p>
+        <p className="text-foreground-secondary text-sm">Loading…</p>
       </AuthPageShell>
     );
   }
@@ -47,7 +47,7 @@ export function ResetPasswordPage() {
         >
           <Link
             to={ROUTE_PATHS.authForgotPassword}
-            className="text-link text-sm underline-offset-4 hover:underline"
+            className="text-link text-sm hover:underline"
           >
             Request another email
           </Link>

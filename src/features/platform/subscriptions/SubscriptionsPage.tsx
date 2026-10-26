@@ -6,10 +6,19 @@ import {
   platformCompanyPath,
   platformSubscriptionPath,
 } from '@/app/route-paths';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { buttonVariants } from '@/components/ui/button';
 import { EmptyState } from '@/components/states/EmptyState';
 import { LoadingState } from '@/components/states/LoadingState';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import {
   createBrowserSubscriptionApi,
   type SubscriptionApi,
@@ -94,18 +103,12 @@ export function SubscriptionsPage({
   }, [api, statusFilter]);
 
   return (
-    <main className="flex flex-col gap-8 px-6 py-8">
-      <div className="flex flex-col gap-2">
-        <p className="text-muted-foreground text-sm font-medium tracking-wide uppercase">
-          Subscriptions
-        </p>
-        <h2 className="text-2xl font-semibold">Company subscriptions</h2>
-        <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
-          Current terms only. Eligibility uses company lifecycle and
-          subscription status together. Payments never extend a term by
-          themselves.
-        </p>
-      </div>
+    <main className="flex flex-col gap-8 px-4 py-6 sm:px-6 sm:py-8">
+      <PageHeader
+        eyebrow="Subscriptions"
+        title="Company subscriptions"
+        description="Current terms only. Eligibility uses company lifecycle and subscription status together. Payments never extend a term by themselves."
+      />
 
       <div className="flex flex-wrap gap-2">
         <button
@@ -151,52 +154,52 @@ export function SubscriptionsPage({
         />
       ) : null}
       {!loading && !error && rows.length > 0 ? (
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[48rem] text-left text-sm">
-            <thead>
-              <tr className="border-border border-b">
-                <th className="py-2 font-medium">Company</th>
-                <th className="py-2 font-medium">Plan</th>
-                <th className="py-2 font-medium">Effective</th>
-                <th className="py-2 font-medium">Term</th>
-                <th className="py-2 font-medium">Amount</th>
-              </tr>
-            </thead>
-            <tbody>
+        <div className="border-border overflow-x-auto rounded-[length:var(--fs-radius-card)] border">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Company</TableHead>
+                <TableHead>Plan</TableHead>
+                <TableHead>Effective</TableHead>
+                <TableHead>Term</TableHead>
+                <TableHead className="text-right">Amount</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {rows.map((row) => (
-                <tr key={row.id} className="border-border border-b">
-                  <td className="py-2">
+                <TableRow key={row.id}>
+                  <TableCell>
                     <Link
-                      className="text-primary underline-offset-4 hover:underline"
+                      className="text-link hover:underline"
                       to={platformSubscriptionPath(row.id)}
                     >
                       {row.company_code}
                     </Link>
-                    <div className="text-muted-foreground">
+                    <div className="text-foreground-secondary">
                       <Link
-                        className="underline-offset-4 hover:underline"
+                        className="text-link hover:underline"
                         to={platformCompanyPath(row.company_id)}
                       >
                         {row.legal_name}
                       </Link>{' '}
                       · {row.lifecycle_status}
                     </div>
-                  </td>
-                  <td className="py-2">
+                  </TableCell>
+                  <TableCell>
                     {row.plan_name}
-                    <div className="text-muted-foreground font-mono text-xs">
+                    <div className="text-foreground-secondary font-mono text-xs">
                       {row.plan_code}
                     </div>
-                  </td>
-                  <td className="py-2">{row.effective_status}</td>
-                  <td className="py-2">{row.term_interval}</td>
-                  <td className="py-2 tabular-nums">
+                  </TableCell>
+                  <TableCell>{row.effective_status}</TableCell>
+                  <TableCell>{row.term_interval}</TableCell>
+                  <TableCell className="text-right tabular-nums">
                     {row.amount} {row.billing_currency}
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       ) : null}
 

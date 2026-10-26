@@ -2,12 +2,21 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 
 import { ROUTE_PATHS, platformPlanPath } from '@/app/route-paths';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { LoadingState } from '@/components/states/LoadingState';
 import { EmptyState } from '@/components/states/EmptyState';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import {
   createBrowserSubscriptionApi,
   type SubscriptionApi,
@@ -113,20 +122,15 @@ export function PlansPage({
   }
 
   return (
-    <main className="flex flex-col gap-8 px-6 py-8">
-      <div className="flex flex-col gap-2">
-        <p className="text-muted-foreground text-sm font-medium tracking-wide uppercase">
-          Plans
-        </p>
-        <h2 className="text-2xl font-semibold">Subscription plans</h2>
-        <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
-          Create drafts, publish immutable versions, and retire plans. Prices
-          are owner-configured. There is no payment gateway.
-        </p>
-      </div>
+    <main className="flex flex-col gap-8 px-4 py-6 sm:px-6 sm:py-8">
+      <PageHeader
+        eyebrow="Plans"
+        title="Subscription plans"
+        description="Create drafts, publish immutable versions, and retire plans. Prices are owner-configured. There is no payment gateway."
+      />
 
-      <section className="border-border flex max-w-xl flex-col gap-4 rounded-[length:var(--fs-radius-card)] border p-4">
-        <h3 className="text-lg font-semibold">New draft</h3>
+      <section className="border-border bg-card flex max-w-xl flex-col gap-4 rounded-[length:var(--fs-radius-card)] border p-4 sm:p-6">
+        <h2 className="text-lg font-semibold">New draft</h2>
         {message ? (
           <Alert variant="danger">
             <AlertTitle>Draft needs attention</AlertTitle>
@@ -277,47 +281,45 @@ export function PlansPage({
         />
       ) : null}
       {!loading && !error && plans.length > 0 ? (
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[40rem] text-left text-sm">
-            <thead>
-              <tr className="border-border border-b">
-                <th className="py-2 font-medium">Code</th>
-                <th className="py-2 font-medium">Name</th>
-                <th className="py-2 font-medium">Status</th>
-                <th className="py-2 font-medium">Country</th>
-                <th className="py-2 font-medium">Amount</th>
-                <th className="py-2 font-medium">Current subs</th>
-              </tr>
-            </thead>
-            <tbody>
+        <div className="border-border overflow-x-auto rounded-[length:var(--fs-radius-card)] border">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Code</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Country</TableHead>
+                <TableHead className="text-right">Amount</TableHead>
+                <TableHead className="text-right">Current Subs</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {plans.map((plan) => (
-                <tr key={plan.plan_id} className="border-border border-b">
-                  <td className="py-2">
+                <TableRow key={plan.plan_id}>
+                  <TableCell>
                     <Link
-                      className="text-primary underline-offset-4 hover:underline"
+                      className="text-link hover:underline"
                       to={platformPlanPath(plan.plan_id)}
                     >
                       {plan.code}
                     </Link>
-                  </td>
-                  <td className="py-2">{plan.name}</td>
-                  <td className="py-2">
-                    {plan.current_version?.status ?? '—'}
-                  </td>
-                  <td className="py-2">
+                  </TableCell>
+                  <TableCell>{plan.name}</TableCell>
+                  <TableCell>{plan.current_version?.status ?? '—'}</TableCell>
+                  <TableCell>
                     {plan.current_version?.registration_country ?? '—'} /{' '}
                     {plan.current_version?.currency ?? '—'}
-                  </td>
-                  <td className="py-2 tabular-nums">
+                  </TableCell>
+                  <TableCell className="text-right tabular-nums">
                     {plan.current_version?.amount ?? '—'}
-                  </td>
-                  <td className="py-2 tabular-nums">
+                  </TableCell>
+                  <TableCell className="text-right tabular-nums">
                     {plan.current_subscription_count ?? 0}
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       ) : null}
 

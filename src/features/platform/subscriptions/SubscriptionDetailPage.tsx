@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router';
 
 import { ROUTE_PATHS, platformCompanyPath } from '@/app/route-paths';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -128,7 +129,7 @@ export function SubscriptionDetailView({
   }
   if (error || !detail) {
     return (
-      <main className="flex flex-col gap-4 px-6 py-8">
+      <main className="flex flex-col gap-4 px-4 py-6 sm:px-6 sm:py-8">
         <Alert variant="danger">
           <AlertTitle>Subscription unavailable</AlertTitle>
           <AlertDescription>{error ?? 'Not found.'}</AlertDescription>
@@ -141,40 +142,36 @@ export function SubscriptionDetailView({
   const currency = detail.subscription.billing_currency;
 
   return (
-    <main className="flex flex-col gap-8 px-6 py-8">
-      <div className="flex flex-col gap-2">
-        <Link
-          className="text-muted-foreground text-sm underline-offset-4 hover:underline"
-          to={ROUTE_PATHS.platformSubscriptions}
-        >
-          Subscriptions
-        </Link>
-        <h2 className="text-2xl font-semibold">{detail.company.legal_name}</h2>
-        <p className="text-sm">
+    <main className="flex flex-col gap-8 px-4 py-6 sm:px-6 sm:py-8">
+      <PageHeader
+        breadcrumb={
           <Link
-            className="text-primary underline-offset-4 hover:underline"
-            to={platformCompanyPath(detail.company.id)}
+            className="text-link hover:underline"
+            to={ROUTE_PATHS.platformSubscriptions}
           >
-            {detail.company.company_code}
-          </Link>{' '}
-          · company {detail.company.lifecycle_status}
-        </p>
-        <p className="text-muted-foreground text-sm">
-          {detail.plan.name} ({detail.plan.code}) · stored{' '}
-          {detail.subscription.status} · effective{' '}
-          {detail.subscription.effective_status} ·{' '}
-          {detail.subscription.term_interval} · {detail.subscription.amount}{' '}
-          {currency}
-        </p>
-        <Alert variant={detail.access.allowed ? 'success' : 'warning'}>
-          <AlertTitle>
-            {detail.access.allowed ? 'Eligible' : 'Not eligible'}
-          </AlertTitle>
-          <AlertDescription>
-            {detail.access.explanation} ({detail.access.reason_code})
-          </AlertDescription>
-        </Alert>
-      </div>
+            Subscriptions
+          </Link>
+        }
+        title={detail.company.legal_name}
+        description={`${detail.plan.name} (${detail.plan.code}) · stored ${detail.subscription.status} · effective ${detail.subscription.effective_status} · ${detail.subscription.term_interval} · ${detail.subscription.amount} ${currency}`}
+      />
+      <p className="text-sm">
+        <Link
+          className="text-link hover:underline"
+          to={platformCompanyPath(detail.company.id)}
+        >
+          {detail.company.company_code}
+        </Link>{' '}
+        · company {detail.company.lifecycle_status}
+      </p>
+      <Alert variant={detail.access.allowed ? 'success' : 'warning'}>
+        <AlertTitle>
+          {detail.access.allowed ? 'Eligible' : 'Not eligible'}
+        </AlertTitle>
+        <AlertDescription>
+          {detail.access.explanation} ({detail.access.reason_code})
+        </AlertDescription>
+      </Alert>
 
       {message ? (
         <Alert variant="danger">
@@ -185,7 +182,7 @@ export function SubscriptionDetailView({
 
       <section className="border-border flex max-w-xl flex-col gap-3 rounded-[length:var(--fs-radius-card)] border p-4">
         <h3 className="font-semibold">Lifecycle actions</h3>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-foreground-secondary text-sm">
           These change the subscription only. They do not change company
           lifecycle.
         </p>
@@ -344,7 +341,7 @@ export function SubscriptionDetailView({
 
       <section className="border-border flex max-w-xl flex-col gap-3 rounded-[length:var(--fs-radius-card)] border p-4">
         <h3 className="font-semibold">Record manual payment</h3>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-foreground-secondary text-sm">
           Currency is locked to {currency}. Recording a payment does not renew
           or reactivate the subscription.
         </p>
@@ -404,7 +401,7 @@ export function SubscriptionDetailView({
         >
           Record payment
         </Button>
-        <ul className="text-muted-foreground mt-2 flex flex-col gap-1 text-sm">
+        <ul className="text-foreground-secondary mt-2 flex flex-col gap-1 text-sm">
           {detail.payments.map((payment) => (
             <li key={payment.id}>
               {payment.received_on}: {payment.amount} {payment.currency} via{' '}
@@ -421,7 +418,7 @@ export function SubscriptionDetailPage() {
   const { subscriptionId } = useParams();
   if (!subscriptionId || !UUID.test(subscriptionId)) {
     return (
-      <main className="px-6 py-8">
+      <main className="px-4 py-6 sm:px-6 sm:py-8">
         <p>That subscription is not available.</p>
       </main>
     );

@@ -1,26 +1,34 @@
 /**
  * FortSite design tokens — single source of truth for brand hex values.
  * Components must use semantic variables/utilities, not these raw anchors.
- * Light theme only. Dark mode is out of scope for Phase 03.
+ * Light theme only. Dark mode is out of scope.
+ * Visual contract: UI redesign checkpoint (V3 quiet industrial).
  */
 
 :root {
-  /* Brand anchors (mandatory) */
+  /* Brand anchors */
   --fs-amber: #f59e0b;
+  --fs-amber-soft: #fef3c7;
   --fs-graphite: #1f2937;
+  --fs-graphite-raised: #374151;
+  --fs-graphite-border: #4b5563;
   --fs-blueprint: #2563eb;
   --fs-canvas: #f8fafc;
   --fs-surface: #ffffff;
+  --fs-surface-subtle: #f1f5f9;
+  --fs-surface-hover: #e2e8f0;
   --fs-steel: #e2e8f0;
+  --fs-separator: #cbd5e1;
 
-  /* Stronger control border — Steel is decorative only (fails non-text contrast) */
+  /* Stronger control border — separators fail non-text contrast for interactive edges */
   --fs-border-strong: #64748b;
 
   /* Semantic application surfaces */
   --fs-background: var(--fs-canvas);
-  --fs-foreground: var(--fs-graphite);
-  --fs-surface-muted: #f1f5f9;
-  --fs-border: var(--fs-steel);
+  --fs-foreground: #0f172a;
+  --fs-foreground-secondary: #475569;
+  --fs-surface-muted: var(--fs-surface-subtle);
+  --fs-border: var(--fs-separator);
   --fs-input-border: var(--fs-border-strong);
   --fs-ring: var(--fs-blueprint);
   --fs-link: var(--fs-blueprint);
@@ -56,13 +64,26 @@
   --fs-danger-bg: #fee2e2;
   --fs-danger-border: #fca5a5;
 
-  --fs-info: #1e40af;
-  --fs-info-foreground: #1e40af;
+  /* Info: #1D4ED8 on #DBEAFE ≈ 5.49:1 (passes 4.5:1) */
+  --fs-info: #1d4ed8;
+  --fs-info-foreground: #1d4ed8;
   --fs-info-bg: #dbeafe;
   --fs-info-border: #93c5fd;
 
-  /* Muted text */
-  --fs-muted-foreground: #4b5563;
+  /*
+   * Muted text #64748B on #F1F5F9 fails (~4.34:1). Use secondary on subtle surfaces.
+   * Muted is for helper copy on white/canvas when contrast ≥ 4.5:1.
+   */
+  --fs-muted-foreground: #64748b;
+  --fs-disabled-foreground: #94a3b8;
+
+  /* Platform shell */
+  --fs-shell: var(--fs-graphite);
+  --fs-shell-raised: var(--fs-graphite-raised);
+  --fs-shell-border: var(--fs-graphite-border);
+  --fs-shell-foreground: #f8fafc;
+  --fs-shell-muted: #cbd5e1;
+  --fs-shell-active-marker: var(--fs-amber);
 
   /* Typography */
   --fs-font-sans:
@@ -75,27 +96,40 @@
   --fs-text-xl: 1.25rem;
   --fs-text-2xl: 1.5rem;
   --fs-text-3xl: 1.875rem;
+  --fs-text-page-title: 1.75rem; /* 28px */
+  --fs-text-page-title-sm: 1.5rem; /* 24px mobile */
   --fs-leading-tight: 1.25;
   --fs-leading-normal: 1.5;
   --fs-leading-relaxed: 1.625;
 
-  /* Spacing (4px base) */
-  --fs-space-1: 0.25rem;
-  --fs-space-2: 0.5rem;
-  --fs-space-3: 0.75rem;
-  --fs-space-4: 1rem;
-  --fs-space-6: 1.5rem;
-  --fs-space-8: 2rem;
-  --fs-space-12: 3rem;
-  --fs-content-max: 72rem;
+  /* Spacing (4px base) — V3 scale */
+  --fs-space-1: 0.25rem; /* 4 */
+  --fs-space-2: 0.5rem; /* 8 */
+  --fs-space-3: 0.75rem; /* 12 */
+  --fs-space-4: 1rem; /* 16 */
+  --fs-space-5: 1.25rem; /* 20 */
+  --fs-space-6: 1.5rem; /* 24 */
+  --fs-space-8: 2rem; /* 32 */
+  --fs-space-10: 2.5rem; /* 40 */
+  --fs-space-12: 3rem; /* 48 */
+  --fs-space-14: 3.5rem; /* 56 */
+  --fs-space-16: 4rem; /* 64 */
+  --fs-space-20: 5rem; /* 80 */
+  --fs-content-max: 97.5rem; /* 1560px */
+  --fs-auth-max: 26.25rem; /* 420px */
+  --fs-shell-width: 15.75rem; /* 252px */
+  --fs-topbar-height: 4rem; /* 64px */
 
   /* Radii */
-  --fs-radius-card: 0.875rem; /* 14px within 12–16px */
-  --fs-radius-control: 0.5rem;
+  --fs-radius-card: 0.875rem; /* 14px */
+  --fs-radius-control: 0.5625rem; /* 9px inputs */
+  --fs-radius-dialog: 1rem; /* 16px */
+  --fs-radius-menu: 0.75rem; /* 12px */
   --fs-radius-pill: 9999px;
 
-  /* Elevation */
-  --fs-shadow-card: 0 1px 2px rgb(15 23 42 / 6%), 0 1px 3px rgb(15 23 42 / 8%);
+  /* Elevation — one soft overlay; cards prefer 1px border */
+  --fs-shadow-card: 0 1px 2px rgb(15 23 42 / 4%);
+  --fs-shadow-overlay: 0 8px 24px rgb(15 23 42 / 12%);
 
   /* Motion */
   --fs-duration-fast: 120ms;

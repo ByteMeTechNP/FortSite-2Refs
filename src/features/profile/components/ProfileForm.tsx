@@ -74,7 +74,9 @@ export function ProfileForm({ userId }: ProfileFormProps) {
   }
 
   if (loading) {
-    return <p className="text-muted-foreground text-sm">Loading profile…</p>;
+    return (
+      <p className="text-foreground-secondary text-sm">Loading profile…</p>
+    );
   }
 
   return (
@@ -119,7 +121,7 @@ export function ProfileForm({ userId }: ProfileFormProps) {
         </Alert>
       ) : null}
       {profile ? (
-        <p className="text-muted-foreground text-xs">
+        <p className="text-foreground-secondary text-xs">
           Profile row present. Updated{' '}
           {new Date(profile.updatedAt).toLocaleString()}.
         </p>

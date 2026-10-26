@@ -92,7 +92,7 @@ export function SubscriptionMetricsPanel({
             className="hover:bg-muted/40 rounded-[length:var(--fs-radius-control)] p-2"
             to={`${ROUTE_PATHS.platformSubscriptions}?status=${key}`}
           >
-            <p className="text-muted-foreground capitalize">{key}</p>
+            <p className="text-foreground-secondary capitalize">{key}</p>
             <p className="text-xl font-semibold tabular-nums">{value}</p>
           </Link>
         ))}

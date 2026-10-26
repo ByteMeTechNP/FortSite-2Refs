@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 
 import { ROUTE_PATHS } from '@/app/route-paths';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/button';
 import { AuthStatusView } from '@/features/auth/components/auth-status-view';
 import { useAuth } from '@/features/auth/context/auth-context';
@@ -44,24 +45,19 @@ export function AccountPage() {
   }
 
   return (
-    <main className="bg-background mx-auto flex min-h-svh max-w-2xl flex-col gap-8 px-6 py-12">
-      <div className="flex flex-col gap-2">
-        <p className="text-muted-foreground text-sm font-medium tracking-wide uppercase">
-          Account
-        </p>
-        <h1 className="text-foreground text-3xl font-semibold">Your account</h1>
-        <p className="text-muted-foreground text-sm leading-relaxed">
-          Signed in as {user?.email ?? 'unknown email'}. Authentication is not
-          company membership, a role, or platform authority.
-        </p>
-      </div>
+    <main className="bg-background mx-auto flex min-h-svh max-w-2xl flex-col gap-8 px-4 py-12 sm:px-6">
+      <PageHeader
+        eyebrow="Account"
+        title="Your account"
+        description={`Signed in as ${user?.email ?? 'unknown email'}. Authentication is not company membership, a role, or platform authority.`}
+      />
 
       {summary && summary.length > 0 ? (
         <section className="flex flex-col gap-3">
           <h2 className="text-foreground text-xl font-semibold">
             Subscription status
           </h2>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-foreground-secondary text-sm">
             Read-only summary for your founding-admin company. Plan and payment
             changes stay with the Platform Owner.
           </p>
@@ -82,11 +78,11 @@ export function AccountPage() {
                   <p className="font-medium">
                     {item.legal_name} ({item.company_code})
                   </p>
-                  <p className="text-muted-foreground">
+                  <p className="text-foreground-secondary">
                     {item.plan_name ?? 'No plan'} ·{' '}
                     {item.effective_status ?? 'no subscription'}
                   </p>
-                  <p className="text-muted-foreground mt-1">
+                  <p className="text-foreground-secondary mt-1">
                     {item.access?.explanation ??
                       (item.access?.allowed
                         ? 'Eligible'
@@ -112,7 +108,7 @@ export function AccountPage() {
 
       <section className="flex flex-col gap-4">
         <h2 className="text-foreground text-xl font-semibold">Profile</h2>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-foreground-secondary text-sm">
           Profile fields are optional display details for this Auth user only.
           They are not a source of roles or tenant access.
         </p>

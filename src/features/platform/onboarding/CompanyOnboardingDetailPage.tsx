@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router';
 
 import { ROUTE_PATHS } from '@/app/route-paths';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { ErrorState } from '@/components/states/ErrorState';
 import { LoadingState } from '@/components/states/LoadingState';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -146,18 +147,23 @@ export function CompanyOnboardingDetailView({
   );
 
   return (
-    <main className="flex flex-col gap-8 px-6 py-8">
-      <div className="flex flex-col gap-2">
-        <Link
-          className="text-muted-foreground text-sm underline-offset-4 hover:underline"
-          to={ROUTE_PATHS.platformCompanies}
-        >
-          Companies
-        </Link>
-        <h2 className="text-2xl font-semibold">
-          {detail?.company.legalName ?? 'Company'}
-        </h2>
-      </div>
+    <main className="flex flex-col gap-8 px-4 py-6 sm:px-6 sm:py-8">
+      <PageHeader
+        breadcrumb={
+          <Link
+            className="text-link hover:underline"
+            to={ROUTE_PATHS.platformCompanies}
+          >
+            Companies
+          </Link>
+        }
+        title={detail?.company.legalName ?? 'Company'}
+        {...(detail
+          ? {
+              description: `${detail.company.companyCode} · ${detail.company.lifecycleStatus}`,
+            }
+          : {})}
+      />
 
       {message ? (
         <Alert variant="danger">
@@ -189,13 +195,13 @@ export function CompanyOnboardingDetailView({
               {detail.company.registrationCountry} /{' '}
               {detail.company.defaultCurrency} / {detail.company.timezone}
             </p>
-            <p className="text-muted-foreground">
+            <p className="text-foreground-secondary">
               Compliance is not connected. Government filing is pending Phase 67
               {detail.compliance
                 ? ` (${detail.compliance.routeKey}, ${detail.compliance.setupState}).`
                 : '.'}
             </p>
-            <p className="text-muted-foreground">
+            <p className="text-foreground-secondary">
               Subscription intent
               {detail.subscriptionIntent?.requestedPlanCode
                 ? ` ${detail.subscriptionIntent.requestedPlanCode}`
@@ -212,7 +218,7 @@ export function CompanyOnboardingDetailView({
             <h3 className="text-lg font-semibold">
               Resolve subscription intent
             </h3>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-foreground-secondary text-sm">
               Choose the term here. A missing or unpublished plan code blocks
               resolution without substituting another plan.
             </p>
@@ -300,7 +306,7 @@ export function CompanyOnboardingDetailView({
                   {detail.provisioning.adminDisplayName} (
                   {detail.provisioning.adminEmail})
                 </p>
-                <p className="text-muted-foreground text-sm">
+                <p className="text-foreground-secondary text-sm">
                   Provisioning {detail.provisioning.state}. Credential handoff{' '}
                   {detail.provisioning.handoff === 'issued'
                     ? 'issued'
@@ -327,7 +333,7 @@ export function CompanyOnboardingDetailView({
                 </Button>
               </>
             ) : (
-              <p className="text-muted-foreground text-sm">
+              <p className="text-foreground-secondary text-sm">
                 No founding administrator has been recorded.
               </p>
             )}

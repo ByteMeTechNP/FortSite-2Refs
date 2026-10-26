@@ -2,11 +2,13 @@ import { useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router';
 
 import { platformCompanyPath, ROUTE_PATHS } from '@/app/route-paths';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { EmptyState } from '@/components/states/EmptyState';
 import { ErrorState } from '@/components/states/ErrorState';
 import { LoadingState } from '@/components/states/LoadingState';
 import { Badge } from '@/components/ui/badge';
 import { Button, buttonVariants } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -63,55 +65,50 @@ export function PlatformCompaniesPage() {
   }, [state, filter, country, query]);
 
   return (
-    <main className="flex flex-col gap-8 px-6 py-8">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div className="flex flex-col gap-2">
-          <p className="text-muted-foreground text-sm font-medium tracking-wide uppercase">
-            Companies
-          </p>
-          <h2 className="text-2xl font-semibold">Company directory</h2>
-          <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
-            Platform metadata only. This is not a company workspace and does not
-            open projects, files, or finance.
-          </p>
-          {filter ? (
-            <p className="text-sm">
-              Filtered to <Badge variant="secondary">{filter}</Badge>{' '}
-              <Link
-                className="text-primary underline-offset-4 hover:underline"
-                to={ROUTE_PATHS.platformCompanies}
-              >
-                Clear filter
-              </Link>
-            </p>
-          ) : null}
-        </div>
-        <div className="flex flex-wrap gap-2">
+    <main className="flex flex-col gap-8 px-4 py-6 sm:px-6 sm:py-8">
+      <PageHeader
+        eyebrow="Companies"
+        title="Company directory"
+        description="Platform metadata only. This is not a company workspace and does not open projects, files, or finance."
+        actions={
+          <>
+            <Link
+              className={buttonVariants()}
+              to={ROUTE_PATHS.platformCompanyNew}
+            >
+              New company
+            </Link>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                refresh();
+              }}
+              disabled={state.status === 'loading'}
+            >
+              Refresh
+            </Button>
+          </>
+        }
+      />
+
+      {filter ? (
+        <p className="text-sm">
+          Filtered to <Badge variant="secondary">{filter}</Badge>{' '}
           <Link
-            className={buttonVariants()}
-            to={ROUTE_PATHS.platformCompanyNew}
+            className="text-link hover:underline"
+            to={ROUTE_PATHS.platformCompanies}
           >
-            New company
+            Clear filter
           </Link>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => {
-              refresh();
-            }}
-            disabled={state.status === 'loading'}
-          >
-            Refresh
-          </Button>
-        </div>
-      </div>
+        </p>
+      ) : null}
 
       <div className="flex flex-wrap items-end gap-3">
-        <label className="flex flex-col gap-1 text-sm">
+        <label className="text-foreground-secondary flex flex-col gap-1 text-sm">
           Search
-          <input
+          <Input
             aria-label="Search companies"
-            className="border-input bg-card h-11 rounded-[length:var(--fs-radius-control)] border px-3"
             value={params.get('q') ?? ''}
             onChange={(event) => {
               const next = new URLSearchParams(params);
@@ -124,11 +121,11 @@ export function PlatformCompaniesPage() {
             }}
           />
         </label>
-        <label className="flex flex-col gap-1 text-sm">
+        <label className="text-foreground-secondary flex flex-col gap-1 text-sm">
           Country
           <select
             aria-label="Country"
-            className="border-input bg-card h-11 rounded-[length:var(--fs-radius-control)] border px-3"
+            className="border-input bg-card h-10 rounded-[length:var(--fs-radius-control)] border px-3 md:h-11"
             value={country ?? ''}
             onChange={(event) => {
               const next = new URLSearchParams(params);
@@ -190,7 +187,7 @@ export function PlatformCompaniesPage() {
                 <TableRow key={company.id}>
                   <TableCell className="font-mono text-xs">
                     <Link
-                      className="underline-offset-4 hover:underline"
+                      className="text-link hover:underline"
                       to={platformCompanyPath(company.id)}
                     >
                       {company.company_code}
@@ -207,7 +204,7 @@ export function PlatformCompaniesPage() {
                       {company.lifecycle_status}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-muted-foreground text-xs">
+                  <TableCell className="text-foreground-secondary text-xs">
                     {new Date(company.created_at).toLocaleString()}
                   </TableCell>
                 </TableRow>
@@ -215,16 +212,16 @@ export function PlatformCompaniesPage() {
             </TableBody>
           </Table>
           {filter && !country && !query ? (
-            <p className="text-muted-foreground px-4 py-3 text-xs">
+            <p className="text-foreground-secondary px-4 py-3 text-xs">
               Showing {rows.length} of {state.data.counts[filter]} expected for
               this status.
             </p>
           ) : country || query ? (
-            <p className="text-muted-foreground px-4 py-3 text-xs">
+            <p className="text-foreground-secondary px-4 py-3 text-xs">
               Showing {rows.length} matching companies.
             </p>
           ) : (
-            <p className="text-muted-foreground px-4 py-3 text-xs">
+            <p className="text-foreground-secondary px-4 py-3 text-xs">
               Showing {rows.length} of {state.data.counts.total} companies.
             </p>
           )}

@@ -48,7 +48,7 @@ export function ChangeInitialPasswordPage() {
         title="Change initial password"
         description="Checking the account security state…"
       >
-        <p className="text-muted-foreground text-sm">Loading…</p>
+        <p className="text-foreground-secondary text-sm">Loading…</p>
       </AuthPageShell>
     );
   }
@@ -194,11 +194,8 @@ export function ChangeInitialPasswordPage() {
           </Button>
         </div>
       </form>
-      <p className="text-muted-foreground text-sm">
-        <Link
-          to={ROUTE_PATHS.authLogin}
-          className="text-link underline-offset-4 hover:underline"
-        >
+      <p className="text-foreground-secondary text-sm">
+        <Link to={ROUTE_PATHS.authLogin} className="text-link hover:underline">
           Return to sign in
         </Link>
       </p>

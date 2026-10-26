@@ -14,7 +14,9 @@ export function ErrorState({
   return (
     <section role="alert" className="text-foreground flex flex-col gap-3">
       <h2 className="text-lg font-semibold">{title}</h2>
-      <p className="text-muted-foreground text-sm leading-relaxed">{message}</p>
+      <p className="text-foreground-secondary text-sm leading-relaxed">
+        {message}
+      </p>
       {onRetry ? (
         <button
           type="button"

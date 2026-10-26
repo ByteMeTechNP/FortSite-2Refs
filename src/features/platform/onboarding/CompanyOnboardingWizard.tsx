@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { Link } from 'react-router';
 
 import { platformCompanyPath, ROUTE_PATHS } from '@/app/route-paths';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -111,30 +112,44 @@ export function CompanyOnboardingWizard({
   }
 
   return (
-    <main className="flex flex-col gap-8 px-6 py-8">
-      <div className="flex flex-col gap-2">
-        <p className="text-muted-foreground text-sm font-medium tracking-wide uppercase">
-          Companies
-        </p>
-        <h2 className="text-2xl font-semibold">Create a company</h2>
-        <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
-          Nepal and India are the only registration countries. Currency and
-          timezone are locked from that choice. The founding administrator
-          password is generated on the server and shown once.
-        </p>
-      </div>
+    <main className="flex flex-col gap-8 px-4 py-6 sm:px-6 sm:py-8">
+      <PageHeader
+        eyebrow="Companies"
+        title="Create a company"
+        description="Nepal and India are the only registration countries. Currency and timezone are locked from that choice. The founding administrator password is generated on the server and shown once."
+      />
 
-      <ol className="text-muted-foreground flex flex-wrap gap-3 text-sm">
-        {STEPS.map((label, index) => (
-          <li
-            key={label}
-            className={
-              index === step ? 'text-foreground font-medium' : undefined
-            }
-          >
-            {index + 1}. {label}
-          </li>
-        ))}
+      <ol className="flex flex-wrap gap-2" aria-label="Onboarding steps">
+        {STEPS.map((label, index) => {
+          const active = index === step;
+          const done = index < step;
+          return (
+            <li
+              key={label}
+              className={[
+                'flex h-9 items-center gap-2 rounded-full border px-3 text-sm',
+                active
+                  ? 'border-primary bg-primary/15 text-foreground font-medium'
+                  : done
+                    ? 'border-border bg-card text-foreground'
+                    : 'border-border text-foreground-secondary',
+              ].join(' ')}
+            >
+              <span
+                className={[
+                  'flex size-5 items-center justify-center rounded-full text-xs font-semibold',
+                  active || done
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-muted text-foreground-secondary',
+                ].join(' ')}
+                aria-hidden="true"
+              >
+                {index + 1}
+              </span>
+              {label}
+            </li>
+          );
+        })}
       </ol>
 
       {message ? (
@@ -253,13 +268,13 @@ export function CompanyOnboardingWizard({
               </label>
             ))}
             {jurisdiction ? (
-              <p className="text-muted-foreground text-sm">
+              <p className="text-foreground-secondary text-sm">
                 Locked currency {jurisdiction.currency}. Locked timezone{' '}
                 {jurisdiction.timezone}. Compliance route{' '}
                 {jurisdiction.routeKey} stays not connected, pending Phase 67.
               </p>
             ) : (
-              <p className="text-muted-foreground text-sm">
+              <p className="text-foreground-secondary text-sm">
                 Choose a country to lock currency and timezone. There is no
                 separate currency field.
               </p>
@@ -311,7 +326,7 @@ export function CompanyOnboardingWizard({
 
         {step === 3 ? (
           <>
-            <p className="text-muted-foreground text-sm leading-relaxed">
+            <p className="text-foreground-secondary text-sm leading-relaxed">
               Subscription intent is pending Phase 10. A plan code does not set
               a price, limit, duration, or entitlement.
             </p>
@@ -341,16 +356,16 @@ export function CompanyOnboardingWizard({
         {step === 4 && jurisdiction ? (
           <div className="border-border flex flex-col gap-2 rounded-[length:var(--fs-radius-card)] border p-4 text-sm">
             <p>
-              <span className="text-muted-foreground">Legal name. </span>
+              <span className="text-foreground-secondary">Legal name. </span>
               {draft.legalName}
             </p>
             <p>
-              <span className="text-muted-foreground">Country. </span>
+              <span className="text-foreground-secondary">Country. </span>
               {draft.registrationCountry} / {jurisdiction.currency} /{' '}
               {jurisdiction.timezone}
             </p>
             <p>
-              <span className="text-muted-foreground">Administrator. </span>
+              <span className="text-foreground-secondary">Administrator. </span>
               {draft.adminDisplayName} ({draft.adminEmail})
             </p>
             <p>
@@ -380,7 +395,7 @@ export function CompanyOnboardingWizard({
             </Button>
           ) : (
             <Link
-              className="text-muted-foreground self-center text-sm underline-offset-4 hover:underline"
+              className="text-foreground-secondary self-center text-sm hover:underline"
               to={ROUTE_PATHS.platformCompanies}
             >
               Cancel

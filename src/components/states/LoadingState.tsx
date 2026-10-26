@@ -6,7 +6,7 @@ export function LoadingState({ message = 'Loading…' }: LoadingStateProps) {
   return (
     <div
       role="status"
-      className="text-muted-foreground flex items-center gap-2 text-sm"
+      className="text-foreground-secondary flex items-center gap-2 text-sm"
     >
       <span
         aria-hidden="true"

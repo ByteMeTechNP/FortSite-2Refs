@@ -6,7 +6,7 @@ export function NotFoundPage() {
   return (
     <main className="mx-auto flex min-h-svh max-w-2xl flex-col justify-center gap-4 px-6 py-12">
       <h1 className="text-foreground text-3xl font-semibold">Page not found</h1>
-      <p className="text-muted-foreground text-base leading-relaxed">
+      <p className="text-foreground-secondary text-base leading-relaxed">
         The path you opened is not part of this application foundation.
       </p>
       <p>
