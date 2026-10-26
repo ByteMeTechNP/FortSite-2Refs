@@ -96,7 +96,7 @@ A missing prerequisite stops the dependent phase. Do not skip ahead with a short
 | 66 | Complete end-to-end validation, restore drills, pilot and release readiness | Phases 01–65. Government production connectors remain disabled; use test adapters and fixtures. | NOT STARTED | none |
 | 67 | FINAL: Nepal IRD/CBMS and India IRP government billing integrations | Phases 09, 13, 48–54 and 66. Live activation also requires an approved authority or provider path and applicable credentials. | NOT STARTED | none |
 
-Count: 67 phases. Status count: 65 NOT STARTED, 0 IN PROGRESS, 0 BLOCKED, 2 VERIFIED COMPLETE (Phases 02 and 03).
+Count: 67 phases. Status count: 63 NOT STARTED, 1 IN PROGRESS (Phase 05), 0 BLOCKED, 3 VERIFIED COMPLETE (Phases 02–04).
 
 Phase 67 is the final numbered phase. Its dependency list includes Phase 66. Phase 66 cannot enable production government connectors.
 
@@ -121,7 +121,7 @@ Until that sign-off, Phase 01 remains **NOT STARTED**.
 | Blocker | Effect |
 |---|---|
 | No product-owner sign-off on scope. | Phase 01 cannot be verified complete. Later phases must not treat this draft as signed approval. |
-| No Supabase project ref, URL, or credential, by design of this phase. | Phase 04 cannot link or deploy until those values are read from the dashboard. Do not invent them. |
+| No product-owner sign-off remains the Phase 01 gate. Project ref `rvfoveqprrtobmywaodf` was verified in Phase 04. | Phase 01 still needs sign-off. Phase 05 Auth remains blocked on an approved redirect origin and the unapplied `user_profiles` migration. |
 | Open decisions OPEN-01 through OPEN-15 in [architecture-decisions.md](architecture-decisions.md). | They block only the phase named beside each decision. They do not block writing this documentation. Specialist limits, engineering standards, the notification provider, data residency, and the official IRD and IRP routes stay unresolved. |
 
 ## What this register is not
