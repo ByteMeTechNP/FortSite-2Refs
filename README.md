@@ -7,7 +7,7 @@ apartments, villas, small townships, restaurants, hotels, and warehouses.
 
 ## Current status
 
-**Phase 04 — Supabase Cloud/MCP environments, migrations and deployment controls.**
+**Phase 05 — Authentication, profiles and session lifecycle (IN PROGRESS).**
 
 This repository currently contains:
 
@@ -15,11 +15,11 @@ This repository currently contains:
 - A React 19 + Vite + TypeScript web application foundation
 - A light construction design system with a development-only component gallery
 - A browser Supabase client that uses only the public project URL and publishable key
+- Email/password Auth screens, session restore, and a self-service profile form
 
-Business modules, authentication, and role workspaces are **not implemented**
-yet. The root page is a labelled development scaffold only. It is not an
-operational dashboard. Supabase Cloud is the backend host. This repository does
-not run a local Supabase stack.
+Business modules, company membership, and role workspaces are **not implemented**
+yet. The root page is a labelled development scaffold. Supabase Cloud is the
+backend host. This repository does not run a local Supabase stack.
 
 Canonical roadmap: [`FortSite_Fresh_Start_Master_Roadmap_V4_Cloud.md`](FortSite_Fresh_Start_Master_Roadmap_V4_Cloud.md).
 
@@ -34,6 +34,8 @@ Phase documentation:
 - Migrations: [`docs/fortsite/migration-workflow.md`](docs/fortsite/migration-workflow.md)
 - Environment: [`docs/fortsite/environment-configuration.md`](docs/fortsite/environment-configuration.md)
 - Recovery: [`docs/fortsite/cloud-deployment-and-recovery.md`](docs/fortsite/cloud-deployment-and-recovery.md)
+- Authentication: [`docs/fortsite/authentication.md`](docs/fortsite/authentication.md)
+- Phase 05 engineering record: [`docs/engineering/phase-05-auth.md`](docs/engineering/phase-05-auth.md)
 - Status register: [`docs/fortsite/phase-status.md`](docs/fortsite/phase-status.md)
 
 Open the design-system gallery only while the development server is running:

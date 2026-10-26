@@ -1,3 +1,7 @@
+import { Link } from 'react-router';
+
+import { ROUTE_PATHS } from '@/app/route-paths';
+import { Button } from '@/components/ui/button';
 import { appEnv } from '@/config/env';
 
 export function FoundationPage() {
@@ -14,10 +18,18 @@ export function FoundationPage() {
         phases.
       </p>
       <p className="text-muted-foreground text-sm">
-        Environment: {appEnv.appEnv}. Authentication and business modules are
-        not implemented yet. The browser uses the public Supabase API only, and
-        this page does not query data.
+        Environment: {appEnv.appEnv}. Email/password Auth screens are available.
+        Organization membership and business modules are not implemented yet.
+        The browser uses the public Supabase API only.
       </p>
+      <div className="flex flex-wrap gap-3 pt-2">
+        <Button asChild>
+          <Link to={ROUTE_PATHS.authLogin}>Sign in</Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link to={ROUTE_PATHS.account}>Account</Link>
+        </Button>
+      </div>
     </main>
   );
 }

@@ -4,9 +4,9 @@
 **Canonical plan:** [`FortSite_Fresh_Start_Master_Roadmap_V4_Cloud.md`](../../FortSite_Fresh_Start_Master_Roadmap_V4_Cloud.md).  
 **Rule:** a phase is **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, or **VERIFIED COMPLETE**. Do not infer completion from a document, a menu item, or a table.
 
-Phases 02, 03, and 04 are **VERIFIED COMPLETE**. Phase 01 remains **NOT STARTED** pending product-owner sign-off. Phases 05–67 remain **NOT STARTED**.
+Phases 02, 03, and 04 are **VERIFIED COMPLETE**. Phase 05 is **IN PROGRESS**. Phase 01 remains **NOT STARTED** pending product-owner sign-off. Phases 06–67 remain **NOT STARTED**.
 
-Phase 01 documents under `docs/fortsite/` are a draft for later sign-off. They do not verify Phase 01 complete. Phase 02 added the web application foundation and package lockfile. Phase 03 added the construction design tokens, local UI primitives, and a development-only gallery. Phase 04 added the public Supabase browser client and the Cloud migration workflow. It did not add SQL migrations, business tables, Auth configuration, Storage buckets, Edge Functions, Realtime settings, or any remote project mutation.
+Phase 01 documents under `docs/fortsite/` are a draft for later sign-off. They do not verify Phase 01 complete. Phase 02 added the web application foundation and package lockfile. Phase 03 added the construction design tokens, local UI primitives, and a development-only gallery. Phase 04 added the public Supabase browser client and the Cloud migration workflow. Phase 05 added Auth screens and a pending `user_profiles` migration. It did not apply that migration, change Auth settings, create company membership, or start Phase 06.
 
 ## Why foundations come first
 
@@ -32,7 +32,7 @@ A missing prerequisite stops the dependent phase. Do not skip ahead with a short
 | 02 | Repository bootstrap and engineering standards | Phase 01. | VERIFIED COMPLETE | [`docs/engineering/phase-02-bootstrap.md`](../engineering/phase-02-bootstrap.md); `npm ci`, format check, lint, typecheck, tests, and production build pass |
 | 03 | Construction design system and 21st.dev component governance | Phase 02. | VERIFIED COMPLETE | [`docs/engineering/phase-03-design-system.md`](../engineering/phase-03-design-system.md); contrast script, gallery, format/lint/typecheck/tests/build pass |
 | 04 | Supabase Cloud/MCP environments, migrations and deployment controls | Phases 01–02. | VERIFIED COMPLETE | [`docs/engineering/phase-04-supabase.md`](../engineering/phase-04-supabase.md); MCP identity reads; format/lint/typecheck/tests/build/secret scan pass; no remote write |
-| 05 | Authentication, profiles and session lifecycle | Phases 02 and 04. | NOT STARTED | none |
+| 05 | Authentication, profiles and session lifecycle | Phases 02 and 04. | IN PROGRESS | [`docs/fortsite/authentication.md`](authentication.md); [`docs/engineering/phase-05-auth.md`](../engineering/phase-05-auth.md); migration file ready, not applied; Cloud Auth origin and live Auth tests blocked |
 | 06 | Company tenancy, memberships and tenant-safe data foundations | Phases 04–05. | NOT STARTED | none |
 | 07 | Secure platform-owner identity and privileged operations boundary | Phases 04–06. | NOT STARTED | none |
 | 08 | Super Admin panel shell and platform overview | Phases 02–03 and 07. | NOT STARTED | none |

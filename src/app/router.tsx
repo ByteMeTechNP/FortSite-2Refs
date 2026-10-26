@@ -9,6 +9,13 @@ import { Route, Routes } from 'react-router';
 import { isDesignSystemGalleryEnabled } from '@/app/dev-routes';
 import { ROUTE_PATHS } from '@/app/route-paths';
 import { LoadingState } from '@/components/states/LoadingState';
+import { ProtectedRoute } from '@/features/auth/components/protected-route';
+import { AcceptInvitationPage } from '@/features/auth/pages/AcceptInvitationPage';
+import { AccountPage } from '@/features/auth/pages/AccountPage';
+import { AuthCallbackPage } from '@/features/auth/pages/AuthCallbackPage';
+import { ForgotPasswordPage } from '@/features/auth/pages/ForgotPasswordPage';
+import { LoginPage } from '@/features/auth/pages/LoginPage';
+import { ResetPasswordPage } from '@/features/auth/pages/ResetPasswordPage';
 import { FoundationPage } from '@/pages/FoundationPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
@@ -28,6 +35,28 @@ export function AppRouter() {
   return (
     <Routes>
       <Route path={ROUTE_PATHS.home} element={<FoundationPage />} />
+      <Route path={ROUTE_PATHS.authLogin} element={<LoginPage />} />
+      <Route
+        path={ROUTE_PATHS.authForgotPassword}
+        element={<ForgotPasswordPage />}
+      />
+      <Route
+        path={ROUTE_PATHS.authResetPassword}
+        element={<ResetPasswordPage />}
+      />
+      <Route path={ROUTE_PATHS.authCallback} element={<AuthCallbackPage />} />
+      <Route
+        path={ROUTE_PATHS.authAcceptInvitation}
+        element={<AcceptInvitationPage />}
+      />
+      <Route
+        path={ROUTE_PATHS.account}
+        element={
+          <ProtectedRoute>
+            <AccountPage />
+          </ProtectedRoute>
+        }
+      />
       {showDesignSystem && DesignSystemPage ? (
         <Route
           path={ROUTE_PATHS.designSystem}
