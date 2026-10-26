@@ -6,7 +6,7 @@
 
 ## Current binding
 
-Read-only check on 27 October 2026: `platform_admins` has **0** rows. No Platform Owner is bound. The two existing Auth users are Phase 05 `fortsite.test` fixtures. Do not promote them and do not delete them as part of this procedure.
+Read-only check after remediation: `platform_admins` has **0** rows. No Platform Owner is bound. The two existing Auth users are Phase 05 `fortsite.test` fixtures. Do not promote them and do not delete them as part of this procedure.
 
 ## Procedure when an email is approved
 
